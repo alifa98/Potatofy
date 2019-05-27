@@ -1,5 +1,9 @@
-# Advanced Programming Course Project
-This is our first java project for AP course.
-We :
-    Erfan Hadizadeh
-    Ali Faraji
+# Advanced Programming Course Project (Spring 2019)
+## Jpotify
+This is our first **java** project for _AP course_.
+
+
+We are:
+    * Erfan Hadizadeh
+    * Ali Faraji
+    
