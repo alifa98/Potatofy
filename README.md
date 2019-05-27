@@ -4,6 +4,6 @@ This is our first **java** project for _AP course_.
 
 
 We are:
-    * Erfan Hadizadeh
-    * Ali Faraji
+ * Erfan Hadizadeh
+ * Ali Faraji
     
