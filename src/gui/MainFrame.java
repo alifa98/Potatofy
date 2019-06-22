@@ -17,6 +17,7 @@ public class MainFrame extends JFrame {
         int width =  (int) (screenSize.width * 0.8);
         int height =  (int) (screenSize.height * 0.75);
         this.setSize(width, height);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         //Setting Default Panels
         topPanel = new TopPanel();
