@@ -80,7 +80,7 @@ public class AdvancedPlayerWrapper {
         if (runnablePlayer.isPlaying()) {
 
             date=new Date();
-            System.out.println("frames since lastFrame: "+((int) ((date.getTime() - runnablePlayer.getLastPlayTime()) / msPerFrame)));
+            //System.out.println("frames since lastFrame: "+((int) ((date.getTime() - runnablePlayer.getLastPlayTime()) / msPerFrame)));
             return lastFrame + ((int) ((date.getTime() - runnablePlayer.getLastPlayTime()) / msPerFrame));
 
         }
