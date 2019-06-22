@@ -1,10 +1,15 @@
 package gui;
 
+import gui.bottomPanels.BottomPanel;
+import gui.mainPanels.SongsPanel;
+import gui.sidePanels.SidePanel;
+import gui.topPanels.TopPanel;
+
 import javax.swing.*;
 import java.awt.*;
 
 public class MainFrame extends JFrame {
-    private Panel topPanel, bottomPanel, sidePanel;
+    private Panel topPanel, bottomPanel, sidePanel, mainPanel;
     public MainFrame(String title){
         super(title);
         this.setLayout(new BorderLayout());
@@ -14,11 +19,18 @@ public class MainFrame extends JFrame {
         this.setSize(width, height);
 
         //Setting Default Panels
-
+        topPanel = new TopPanel();
+        sidePanel = new SidePanel();
+        mainPanel = new SongsPanel();
+        bottomPanel = new BottomPanel();
     }
 
     public Panel getBottomPanel() {
         return bottomPanel;
+    }
+
+    public void setMainPanel(Panel mainPanel) {
+        this.mainPanel = mainPanel;
     }
 
     public Panel getTopPanel() {
