@@ -1,6 +1,8 @@
 package gui.mainPanels;
 
+import javax.swing.*;
 import java.awt.*;
 
-public class SongsPanel extends Panel {
+public class SongsPanel extends JPanel {
+
 }

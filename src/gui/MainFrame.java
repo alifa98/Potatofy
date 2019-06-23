@@ -9,7 +9,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class MainFrame extends JFrame {
-    private Panel topPanel, bottomPanel, sidePanel, mainPanel;
+    private JPanel topPanel, bottomPanel, sidePanel, mainPanel;
     public MainFrame(String title){
         super(title);
         this.setLayout(new BorderLayout());
@@ -18,7 +18,8 @@ public class MainFrame extends JFrame {
         int height =  (int) (screenSize.height * 0.75);
         this.setSize(width, height);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+        this.setBackground(new Color(255,255,255));
+        this.setLocationRelativeTo(null);
         //Setting Default Panels
         topPanel = new TopPanel();
         sidePanel = new SidePanel();
@@ -26,19 +27,19 @@ public class MainFrame extends JFrame {
         bottomPanel = new BottomPanel();
     }
 
-    public Panel getBottomPanel() {
+    public JPanel getBottomPanel() {
         return bottomPanel;
     }
 
-    public void setMainPanel(Panel mainPanel) {
+    public void setMainPanel(JPanel mainPanel) {
         this.mainPanel = mainPanel;
     }
 
-    public Panel getTopPanel() {
+    public JPanel getTopPanel() {
         return topPanel;
     }
 
-    public Panel getSidePanel() {
+    public JPanel getSidePanel() {
         return sidePanel;
     }
 }

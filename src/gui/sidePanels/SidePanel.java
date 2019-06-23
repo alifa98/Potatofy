@@ -1,6 +1,7 @@
 package gui.sidePanels;
 
-import java.awt.*;
+import javax.swing.*;
 
-public class SidePanel extends Panel {
+public class SidePanel extends JPanel {
+
 }
