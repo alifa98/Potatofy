@@ -9,7 +9,11 @@ import javax.swing.*;
 import java.awt.*;
 
 public class MainFrame extends JFrame {
-    private JPanel topPanel, bottomPanel, sidePanel, mainPanel;
+    private TopPanel topPanel;
+    private BottomPanel bottomPanel;
+    private JPanel mainPanel;
+    private SidePanel sidePanel;
+
     public MainFrame(String title){
         super(title);
         this.setLayout(new BorderLayout());
@@ -25,9 +29,14 @@ public class MainFrame extends JFrame {
         sidePanel = new SidePanel();
         mainPanel = new SongsPanel();
         bottomPanel = new BottomPanel();
+
+        this.add(topPanel,BorderLayout.NORTH);
+        this.add(sidePanel,BorderLayout.WEST);
+        this.add(mainPanel,BorderLayout.CENTER);
+        this.add(bottomPanel,BorderLayout.SOUTH);
     }
 
-    public JPanel getBottomPanel() {
+    public BottomPanel getBottomPanel() {
         return bottomPanel;
     }
 
@@ -35,11 +44,11 @@ public class MainFrame extends JFrame {
         this.mainPanel = mainPanel;
     }
 
-    public JPanel getTopPanel() {
+    public TopPanel getTopPanel() {
         return topPanel;
     }
 
-    public JPanel getSidePanel() {
+    public SidePanel getSidePanel() {
         return sidePanel;
     }
 }

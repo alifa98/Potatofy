@@ -30,6 +30,9 @@ public class FriendCard extends JPanel {
         Insets padding  = new Insets(10,20,10,10);
         this.setBorder(new EmptyBorder(padding));
 
+        //Register Icon Pack
+        IconFontSwing.register(GoogleMaterialDesignIcons.getIconFont());
+
         Border paddingForElements = new EmptyBorder(new Insets(5,5,5,5));
 
         setBackground(CustomColors.PRIMARY_BRIGHTER);
@@ -49,7 +52,6 @@ public class FriendCard extends JPanel {
         gridBagLayout.setConstraints(image, gridBagConstraints);
         this.add(image);
 
-        IconFontSwing.register(GoogleMaterialDesignIcons.getIconFont());
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.gridwidth = 1;
