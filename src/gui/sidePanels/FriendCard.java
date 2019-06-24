@@ -3,7 +3,6 @@ package gui.sidePanels;
 import com.TimeData;
 import com.UserInfoCard;
 import gui.ImageLabel;
-import gui.RoundedPanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -54,19 +53,19 @@ public class FriendCard extends JPanel {
         this.add(musicNameLabel);
     }
 
-    public static void main(String[] args) {
-        long d  = new Date().getTime() - 137777777;
-        FriendCard c = new FriendCard(new UserInfoCard(
-                new File("src\\gui\\icons\\png\\64\\default-boy-avatar.png"),
-                "Ali",
-                new TimeData(d), "Shape of my heart"));
-        JFrame frame = new JFrame("Test");
-        JPanel p = new RoundedPanel(50,50,new Color(128,128,255),0,0,0);
-        p.add(c);
-        frame.setLayout(new FlowLayout());
-        frame.setSize(300,200);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.add(p);
-        frame.setVisible(true);
-    }
+//    public static void main(String[] args) {
+//        long d  = new Date().getTime() - 137777777;
+//        FriendCard c = new FriendCard(new UserInfoCard(
+//                new File("src\\gui\\icons\\png\\64\\default-boy-avatar.png"),
+//                "Ali",
+//                new TimeData(d), "Shape of my heart"));
+//        JFrame frame = new JFrame("Test");
+//        JPanel p = new RoundedPanel(50,50,new Color(128,128,255),0,0,0);
+//        p.add(c);
+//        frame.setLayout(new FlowLayout());
+//        frame.setSize(300,200);
+//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        frame.add(p);
+//        frame.setVisible(true);
+//    }
 }
