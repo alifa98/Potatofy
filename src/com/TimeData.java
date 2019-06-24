@@ -19,16 +19,25 @@ public class TimeData {
         Date date = new Date();
         long currentTime = date.getTime();
         long difference = currentTime - timestamp;
-        if (difference > 0 && difference < ((long) 60 * 60 * 1000)) {
-            str = "About" + (difference / (60 * 1000)) + "minutes ago";
-        } else if (difference < 24 * 60 * 60 * 1000) {
-            str = "About " + (difference / ((long) 60 * 60 * 1000)) + "hour(s) ago";
+        long num;
+        if (difference > 0 && difference < ((long) 60 * 1000)) {
+            num = difference / (1000);
+            str = "About " + num + " second"+ ((num>1)?"s":"" )+" ago";
+        }else if(difference < ((long) 60 * 60 * 1000)){
+            num = difference / (60 * 1000);
+            str = "About " + num + " minute"+ ((num>1)?"s":"" )+" ago";
+        } else if (difference < 24 * 60 * 60 * 1000)  {
+            num = difference / ((long) 60 * 60 * 1000);
+            str = "About " + num + " hour"+ ((num>1)?"s":"" )+" ago";
         } else if (difference < 7 * 24 * 60 * 60 * 1000) {
-            str = "About " + (difference / (24 * 60 * 60 * 1000)) + "day(s) ago";
+            num = difference / (24 * 60 * 60 * 1000);
+            str = "About " + num+ " day"+ ((num>1)?"s":"" )+" ago";
         } else if (difference < ((long) 4 * 7 * 24 * 60 * 60 * 1000)) {
-            str = "About " + (difference / (7 * 24 * 60 * 60 * 1000)) + "week(s) ago";
+            num = difference / (7 * 24 * 60 * 60 * 1000);
+            str = "About " + num + " week"+ ((num>1)?"s":"" )+" ago";
         } else {
-            str = "About " + (difference / ((long) 4 * 7 * 24 * 60 * 60 * 1000)) + "month(s) ago";
+            num = difference / ( 4 * 7 * 24 * 60 * 60 * 1000L);
+            str = "About " + num + " month"+ ((num>1)?"s":"" )+" ago";
         }
         return str;
     }
