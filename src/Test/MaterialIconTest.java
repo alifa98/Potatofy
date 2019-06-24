@@ -11,6 +11,12 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+//Maven Dependency ::
+
+//com.github.jiconfont:jiconfont-swing:1.0.0
+//com.github.jiconfont:jiconfont-google_material_design_icons:2.2.0.2
+
+
 public class MaterialIconTest {
    public static JLabel label;
     public static void main(String[] args) {
