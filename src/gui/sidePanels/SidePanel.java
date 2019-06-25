@@ -36,13 +36,14 @@ public class SidePanel extends JPanel {
 
         //Layout of main cards container
         mainCardContainer.setLayout(new BoxLayout(mainCardContainer, BoxLayout.Y_AXIS));
-
+        mainCardContainer.setAlignmentX(JPanel.LEFT_ALIGNMENT); // alignment of Components in BoxLayout should be the same to align really.
 
         //Register Icon Package
         IconFontSwing.register(GoogleMaterialDesignIcons.getIconFont());
 
         //title For left side panel
-        JLabel sideTitle = new JLabel("Friends Activity");
+        JLabel sideTitle = new JLabel("Friends Activity", SwingConstants.LEFT);
+        sideTitle.setAlignmentX(JLabel.LEFT_ALIGNMENT); // alignment of Components in BoxLayout should be the same to align really.
         Icon sideTitleIcon = IconFontSwing.buildIcon(GoogleMaterialDesignIcons.HISTORY, 20, new Color(0, 0, 0));
         sideTitle.setIcon(sideTitleIcon);
         sideTitle.setFont(MaterialFonts.BOLD);
