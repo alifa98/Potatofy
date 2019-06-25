@@ -5,6 +5,7 @@ import jiconfont.icons.google_material_design_icons.GoogleMaterialDesignIcons;
 import jiconfont.swing.IconFontSwing;
 import mdlaf.MaterialLookAndFeel;
 import mdlaf.utils.MaterialFonts;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
@@ -13,9 +14,7 @@ import java.util.ArrayList;
 public class SidePanel extends JPanel {
 
     private ArrayList<FriendCard> cards; //This Arraylist keeps friendcards
-    private int cardOrder = 10000;
-    private GridBagLayout gridBagLayout = new GridBagLayout();
-    private GridBagConstraints gridBagConstraints = new GridBagConstraints();
+
     private JPanel mainCardContainer = new JPanel(); //this panel keeps cards.
 
     public SidePanel() {
@@ -28,23 +27,18 @@ public class SidePanel extends JPanel {
         }
 
 
-        setBackground(new Color(255,255,255));
-        setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
+        setBackground(new Color(255, 255, 255));
 
 
-        gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = GridBagConstraints.NORTHWEST;
+        //set layout for side panel
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        BoxLayout boxlayout = new BoxLayout(this, BoxLayout.Y_AXIS);
-        this.setLayout(boxlayout);
 
         //Layout of main cards container
-        mainCardContainer.setLayout(gridBagLayout);
+        mainCardContainer.setLayout(new BoxLayout(mainCardContainer, BoxLayout.Y_AXIS));
 
 
-
-
-        //Register Icon Pack
+        //Register Icon Package
         IconFontSwing.register(GoogleMaterialDesignIcons.getIconFont());
 
         //title For left side panel
@@ -54,16 +48,14 @@ public class SidePanel extends JPanel {
         sideTitle.setFont(MaterialFonts.BOLD);
         sideTitle.setBorder(new EmptyBorder(new Insets(5, 5, 5, 5))); // Add Padding to title
 
+        add(sideTitle);
+        add(mainCardContainer);
 
-        this.add(sideTitle);
-        this.add(mainCardContainer);
     }
 
     public void addCard(UserInfoCard info) {
         FriendCard newCard = new FriendCard(info);
-        gridBagConstraints.gridy = --cardOrder; // add to top of cards list
-        gridBagLayout.setConstraints(newCard, gridBagConstraints);
-        mainCardContainer.add(newCard);
+        mainCardContainer.add(newCard,0);
         cards.add(newCard);
         validate();
     }
