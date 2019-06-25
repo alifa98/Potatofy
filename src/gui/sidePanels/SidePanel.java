@@ -1,6 +1,7 @@
 package gui.sidePanels;
 
 import com.UserInfoCard;
+import gui.CustomScrollBarUI;
 import jiconfont.icons.google_material_design_icons.GoogleMaterialDesignIcons;
 import jiconfont.swing.IconFontSwing;
 import mdlaf.MaterialLookAndFeel;
@@ -34,9 +35,14 @@ public class SidePanel extends JPanel {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
 
-        //Layout of main cards container
+        //Layout of main cards container and add scroll pane
         mainCardContainer.setLayout(new BoxLayout(mainCardContainer, BoxLayout.Y_AXIS));
         mainCardContainer.setAlignmentX(JPanel.LEFT_ALIGNMENT); // alignment of Components in BoxLayout should be the same to align really.
+        JScrollPane mainScrollableCardPanel = new JScrollPane(mainCardContainer);
+        mainScrollableCardPanel.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        mainScrollableCardPanel.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        mainScrollableCardPanel.getVerticalScrollBar().setUI(new CustomScrollBarUI());
+
 
         //Register Icon Package
         IconFontSwing.register(GoogleMaterialDesignIcons.getIconFont());
@@ -50,7 +56,7 @@ public class SidePanel extends JPanel {
         sideTitle.setBorder(new EmptyBorder(new Insets(5, 5, 5, 5))); // Add Padding to title
 
         add(sideTitle);
-        add(mainCardContainer);
+        add(mainScrollableCardPanel);
 
     }
 
