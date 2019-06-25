@@ -1,19 +1,25 @@
 package gui.topPanels;
 
+import com.Profile;
+import mdlaf.MaterialLookAndFeel;
+
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
 public class TopPanel extends JPanel {
-    public TopPanel(){
-        this.setLayout(new GridBagLayout());
+    ProfilePanel profilePanel;
 
-        GridBagConstraints gbc = new GridBagConstraints();
+    public TopPanel() {
 
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.gridwidth  = 3;
-        gbc.gridheight = 1;
-        SearchBox searchBox = new SearchBox();
-        this.add(searchBox);
+        //setting Border layout for top panel
+        setLayout(new BorderLayout());
 
+
+        //create and add profile panel to left side of top panel (WEST)
+        profilePanel =  new ProfilePanel();
+        add(profilePanel,BorderLayout.WEST);
     }
+
 }
+
