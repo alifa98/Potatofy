@@ -15,11 +15,13 @@ public class TopPanel extends JPanel {
         //setting Border layout for top panel
         setLayout(new BorderLayout());
 
-
         //create and add profile panel to left side of top panel (WEST)
         profilePanel =  new ProfilePanel();
         add(profilePanel,BorderLayout.WEST);
     }
 
+    public ProfilePanel getProfilePanel() {
+        return profilePanel;
+    }
 }
 
