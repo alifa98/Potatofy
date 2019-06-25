@@ -30,9 +30,7 @@ public class FriendCard extends JPanel {
         Insets padding  = new Insets(10,20,10,10);
         this.setBorder(new EmptyBorder(padding));
 
-        //Register Icon Pack
-        IconFontSwing.register(GoogleMaterialDesignIcons.getIconFont());
-
+        //padding prepare for labels
         Border paddingForElements = new EmptyBorder(new Insets(5,5,5,5));
 
         setBackground(CustomColors.PRIMARY_BRIGHTER);
@@ -86,6 +84,10 @@ public class FriendCard extends JPanel {
         musicNameLabel.setBorder(paddingForElements);
         gridBagLayout.setConstraints(musicNameLabel, gridBagConstraints);
         this.add(musicNameLabel);
+
+        //BoxLayout is one of the few layout managers that respects the minimum and maximum sizes of a component.
+        //so following code prevent a panel from stretching
+        setMaximumSize(this.getPreferredSize() );
     }
 
 //    public static void main(String[] args) {
