@@ -15,17 +15,11 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.io.File;
-import java.util.Date;
 
 public class FriendCard extends JPanel {
 
     public FriendCard(UserInfoCard userInfo) {
-        try {
-            UIManager.setLookAndFeel(new MaterialLookAndFeel());
-        } catch (UnsupportedLookAndFeelException var24) {
-            var24.printStackTrace();
-        }
+
         //padding to Friend Card
         Insets padding  = new Insets(10,20,10,10);
         this.setBorder(new EmptyBorder(padding));

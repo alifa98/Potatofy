@@ -6,6 +6,7 @@ import gui.sidePanels.SidePanel;
 import gui.topPanels.TopPanel;
 import jiconfont.icons.google_material_design_icons.GoogleMaterialDesignIcons;
 import jiconfont.swing.IconFontSwing;
+import mdlaf.MaterialLookAndFeel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,6 +19,15 @@ public class MainFrame extends JFrame {
 
     public MainFrame(String title){
         super(title);
+
+        // Initialize the Look and feel to material design
+        try {
+            UIManager.setLookAndFeel(new MaterialLookAndFeel());
+        } catch (UnsupportedLookAndFeelException e) {
+            e.printStackTrace();
+        }
+
+
         this.setLayout(new BorderLayout());
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         int width =  1500; //we can use screen size
