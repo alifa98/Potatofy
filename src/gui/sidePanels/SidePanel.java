@@ -1,6 +1,7 @@
 package gui.sidePanels;
 
 import com.UserInfoCard;
+import gui.CustomColors;
 import gui.CustomScrollBarUI;
 import jiconfont.icons.google_material_design_icons.GoogleMaterialDesignIcons;
 import jiconfont.swing.IconFontSwing;
@@ -38,6 +39,7 @@ public class SidePanel extends JPanel {
         //Layout of main cards container and add scroll pane
         mainCardContainer.setLayout(new BoxLayout(mainCardContainer, BoxLayout.Y_AXIS));
         mainCardContainer.setAlignmentX(JPanel.LEFT_ALIGNMENT); // alignment of Components in BoxLayout should be the same to align really.
+
         JScrollPane mainScrollableCardPanel = new JScrollPane(mainCardContainer);
         mainScrollableCardPanel.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         mainScrollableCardPanel.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
@@ -58,6 +60,9 @@ public class SidePanel extends JPanel {
         add(sideTitle);
         add(mainScrollableCardPanel);
 
+        //set panel size equal to sidebar size
+        Dimension panelSize = new Dimension(300, getPreferredSize().height);
+        setPreferredSize(panelSize);
     }
 
     public void addCard(UserInfoCard info) {
