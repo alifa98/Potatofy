@@ -1,12 +1,9 @@
 package gui.topPanels;
 
 import com.Profile;
-import gui.CustomColors;
 import gui.ImageLabel;
 import jiconfont.icons.google_material_design_icons.GoogleMaterialDesignIcons;
 import jiconfont.swing.IconFontSwing;
-import mdlaf.MaterialLookAndFeel;
-import mdlaf.animation.MaterialUIMovement;
 import mdlaf.utils.MaterialFonts;
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -32,6 +29,7 @@ public class ProfilePanel extends JPanel {
         GridBagConstraints gridBagConstraints = new GridBagConstraints();
         gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
         setLayout(gridBagLayout);
+        gridBagConstraints.anchor = GridBagConstraints.FIRST_LINE_START;
         setAlignmentX(Panel.LEFT_ALIGNMENT);
 
         //setting avatar position and adding to panel
@@ -49,6 +47,7 @@ public class ProfilePanel extends JPanel {
         gridBagConstraints.gridy = 0;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.gridheight = 1;
+        gridBagConstraints.weightx= 1;
         nameLabel = new JLabel("Guest", SwingConstants.LEFT);
         nameLabel.setFont(MaterialFonts.BOLD);
         gridBagLayout.setConstraints(nameLabel, gridBagConstraints);
