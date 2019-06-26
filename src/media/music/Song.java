@@ -111,4 +111,8 @@ public class Song {
 
         return residedImag;
     }
+
+    public double getMSPerFrame(){
+        return songLengthMilliseconds/frameCount;
+    }
 }

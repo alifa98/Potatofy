@@ -41,4 +41,10 @@ public class TimeData {
         }
         return str;
     }
+
+    public static String reformatMilisecForSong(long time){
+        int totalSecs=(int)(time/1000);
+        return String.format("%2d:%02d",totalSecs/60,totalSecs%60);
+
+    }
 }

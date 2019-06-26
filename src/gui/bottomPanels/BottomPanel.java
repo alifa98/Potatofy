@@ -1,13 +1,14 @@
 package gui.bottomPanels;
 
-import mdlaf.MaterialLookAndFeel;
-import mdlaf.animation.MaterialUIMovement;
+import com.TimeData;
+import com.mpatric.mp3agic.InvalidDataException;
+import com.mpatric.mp3agic.UnsupportedTagException;
 import mdlaf.utils.MaterialColors;
 import media.music.Song;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
+import java.io.IOException;
 
 public class BottomPanel extends JPanel {
 
@@ -17,13 +18,16 @@ public class BottomPanel extends JPanel {
     private VolumeControl volumeControl;
     private Song displaySong;
 
+    private long totalSongLengthMS;
+    private long currentPlaytimeMS;
+
+    private static final int MAX_SLIDER_VALUE=65535;
+
+    private static final int ALBUM_IMAGE_DIMENSION =64;
+
     public BottomPanel(){
         super();
-        try {
-            UIManager.setLookAndFeel(new MaterialLookAndFeel());
-        } catch (UnsupportedLookAndFeelException var24) {
-            var24.printStackTrace();
-        }
+
 
         songInfo=new SongInfo();
         controlButtons=new ControlButtons();
@@ -58,16 +62,44 @@ public class BottomPanel extends JPanel {
 
     }
 
-    public void setSong(Song song){
+    public void setSong(Song song) throws InvalidDataException, IOException, UnsupportedTagException {
         //should update Album Art, title , artist, Slider label ,song slider
         displaySong=song;
+        currentPlaytimeMS=0;
         updatePanels();
+        setCurrentTime(0);
     }
 
-    private void updatePanels(){
-        //update everything
+    private void updatePanels() throws InvalidDataException, IOException, UnsupportedTagException {
+        songInfo.setArtist(displaySong.getArtist());
+        songInfo.setSongTitle(displaySong.getTitle());
+        songInfo.setAlbumImage(displaySong.getAlbumImageAsSize(ALBUM_IMAGE_DIMENSION, ALBUM_IMAGE_DIMENSION));
+        songSlider.setTotalSongTime(TimeData.reformatMilisecForSong(displaySong.getSongLengthMilliseconds()));
+        totalSongLengthMS=displaySong.getSongLengthMilliseconds();
     }
 
+    /**
+     *
+     * @param playTime  play time in milliseconds
+     */
+    public void setCurrentTime(long playTime){
+        songSlider.setCurrentSongTime(TimeData.reformatMilisecForSong(playTime));
+        currentPlaytimeMS=playTime;
+        int sliderPosition;
+
+        songSlider.setSliderPosition(calculateSliderPosition());
+    }
+
+
+    private int calculateSliderPosition(){
+        double result;
+        result =currentPlaytimeMS;
+        result/=totalSongLengthMS;
+        result*=MAX_SLIDER_VALUE;
+
+        return (int)result;
+
+    }
 
 
 }

@@ -1,4 +1,5 @@
 package com;
+import com.manager.Manager;
 import gui.MainFrame;
 
 import javax.swing.*;
@@ -6,8 +7,7 @@ import javax.swing.*;
 public class Main {
     public static void main(String[] args) {
 
-        JFrame mainFrame=new MainFrame("potato");
-        mainFrame.setVisible(true);
+        Manager manager=new Manager();
 
     }
 }
