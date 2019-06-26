@@ -11,21 +11,24 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 class SongSlider extends JPanel {
-    SongSlider() {
 
+    private JLabel currentSongTime;
+    private JSlider slider;
+    private JLabel totalSongTime;
+
+    SongSlider() {
         setLayout(new BorderLayout());
         setBorder(new EmptyBorder(new Insets(5, 10, 5, 10)));
         setMinimumSize(new Dimension(250,64));
 
-        //add(new JLabel("SongSlider"));
 
-        JLabel currentSongTime=new JLabel("00:00");
+
+        currentSongTime = new JLabel("");
         currentSongTime.setForeground(CustomColors.DARK_GRAY);
         add(currentSongTime,BorderLayout.WEST);
 
-        JSlider slider = new JSlider(JSlider.HORIZONTAL, 0, 65535, 2);
-        //UIManager sliderUI=new UIManager();
-        //slider.setUI(new CustomSliderUi(slider));
+
+        slider = new JSlider(JSlider.HORIZONTAL, 0, 65535, 2);
         slider.setForeground(CustomColors.PRIMARY);
         slider.setBorder(new EmptyBorder(new Insets(5, 5, 5, 5)));
         slider.setOpaque(false);
@@ -43,16 +46,28 @@ class SongSlider extends JPanel {
         });
         add(slider,BorderLayout.CENTER);
 
-        JLabel totalSongTime=new JLabel("00:00");
+
+        totalSongTime = new JLabel("");
         totalSongTime.setForeground(CustomColors.DARK_GRAY);
         add(totalSongTime,BorderLayout.EAST);
 
     }
 
+    void setTotalSongTime(String totalSongTime) {
+        this.totalSongTime.setText(totalSongTime);
+    }
+
+    void setCurrentSongTime(String currentSongTime) {
+        this.currentSongTime.setText(currentSongTime);
+    }
+
+    /**
+     *
+     * @param position the maximum value is 65535 and the minimum is 0
+     */
+    void setSliderPosition(int position){
+        slider.setValue(position);
+    }
+
 }
 
-//class CustomSliderUi extends MaterialSliderUI {
-//     CustomSliderUi(JSlider slider) {
-//        super(slider);
-//    }
-//}

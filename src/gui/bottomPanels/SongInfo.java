@@ -7,13 +7,18 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
 class SongInfo extends JPanel {
+
+    private JLabel imagePanel;
+    private JPanel textContainer;
+    private JLabel songTitle;
+    private JLabel artist;
      SongInfo(){
          super();
          //add(new JLabel("song info"));
          setBackground(MaterialColors.WHITE);
          setBorder(new EmptyBorder(new Insets(5,5,5,5)));
          setLayout(new BorderLayout());
-         JLabel imagePanel;
+
          imagePanel = new JLabel();
 
          imagePanel.setPreferredSize(new Dimension(64,64));
@@ -21,18 +26,18 @@ class SongInfo extends JPanel {
          add(imagePanel,BorderLayout.WEST);
 
 
-         JPanel textContainer;
+
          textContainer = new JPanel();
 
          textContainer.setLayout(new BorderLayout());
 
-         JLabel songTitle;
+
          songTitle = new JLabel();
 
          songTitle.setText("The song title");
          textContainer.add(songTitle,BorderLayout.NORTH);
 
-         JLabel artist;
+
          artist = new JLabel();
 
          artist.setText("artist");
@@ -44,5 +49,17 @@ class SongInfo extends JPanel {
          add(textContainer,BorderLayout.CENTER);
 
      }
+
+     void setSongTitle(String songTitle) {
+        this.songTitle.setText(songTitle);
+    }
+
+     void setArtist(String artist) {
+        this.artist.setText(artist);
+    }
+
+    void setAlbumImage(Icon imageIcon){
+         imagePanel.setIcon(imageIcon);
+    }
 
 }
