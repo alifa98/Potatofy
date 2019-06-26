@@ -1,4 +1,4 @@
-package gui.mainPanels;
+package gui.mainPanels.cards;
 
 public class AlbumCard {
 }

@@ -1,4 +1,5 @@
-package gui.mainPanels.cards;
+package gui.mainPanels;
 
 public class ArtistsPanel {
+    
 }
