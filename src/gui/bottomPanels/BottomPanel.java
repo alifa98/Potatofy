@@ -1,22 +1,39 @@
 package gui.bottomPanels;
 
-import mdlaf.MaterialLookAndFeel;
-import mdlaf.animation.MaterialUIMovement;
+import com.TimeData;
+import com.mpatric.mp3agic.InvalidDataException;
+import com.mpatric.mp3agic.UnsupportedTagException;
 import mdlaf.utils.MaterialColors;
+import media.music.Song;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
+import java.io.IOException;
 
 public class BottomPanel extends JPanel {
 
+    private SongInfo songInfo;
+    private ControlButtons controlButtons;
+    private SongSlider songSlider;
+    private VolumeControl volumeControl;
+    private Song displaySong;
+
+    private long totalSongLengthMS;
+    private long currentPlaytimeMS;
+
+    private static final int MAX_SLIDER_VALUE=65535;
+
+    private static final int ALBUM_IMAGE_DIMENSION =64;
+
     public BottomPanel(){
         super();
-        try {
-            UIManager.setLookAndFeel(new MaterialLookAndFeel());
-        } catch (UnsupportedLookAndFeelException var24) {
-            var24.printStackTrace();
-        }
+
+
+        songInfo=new SongInfo();
+        controlButtons=new ControlButtons();
+        songSlider=new SongSlider();
+        volumeControl=new VolumeControl();
+
         setLayout(new GridBagLayout());
         setSize(0,500);
         setMaximumSize(new Dimension(0,500));
@@ -28,45 +45,61 @@ public class BottomPanel extends JPanel {
         c.gridy=0;
         c.gridheight=500;
         c.weightx=1;
-        add(new SongInfo(),c);
+        add(songInfo,c);
 
         c.weightx=1;
         c.gridx=2;
-        add(new ControlButtons(),c);
+        add(controlButtons,c);
 
         c.gridx=3;
-        //JPanel testPanel=new JPanel();
         c.weightx=5;
-        add(new SongSlider(),c);
-        //testPanel.setOpaque(false);
+        add(songSlider,c);
 
-//
-//        JButton buttonWarning = new JButton();
-//        buttonWarning.setOpaque(false);
-//        buttonWarning.setBackground(MaterialColors.YELLOW_800);
-//        buttonWarning.addMouseListener(MaterialUIMovement.getMovement(buttonWarning, MaterialColors.YELLOW_600));
-//        class WarningMessage extends AbstractAction {
-//
-//            public WarningMessage() {
-//                putValue(Action.NAME, "Info warning panel");
-//            }
-//
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//
-//                JOptionPane optionPane = new JOptionPane();
-//                //optionPane.showMessageDialog(this, "This is message warning", "Message warning", JOptionPane.WARNING_MESSAGE);
-//            }
-//
-//        }
-//
-//        buttonWarning.setAction(new WarningMessage());
         c.gridx=4;
-        c.gridy=0;
         c.weightx=1;
-        add(new VolumeControl(),c);
+        add(volumeControl,c);
 
 
     }
+
+    public void setSong(Song song) throws InvalidDataException, IOException, UnsupportedTagException {
+        //should update Album Art, title , artist, Slider label ,song slider
+        displaySong=song;
+        currentPlaytimeMS=0;
+        updatePanels();
+        setCurrentTime(0);
+    }
+
+    private void updatePanels() throws InvalidDataException, IOException, UnsupportedTagException {
+        songInfo.setArtist(displaySong.getArtist());
+        songInfo.setSongTitle(displaySong.getTitle());
+        songInfo.setAlbumImage(displaySong.getAlbumImageAsSize(ALBUM_IMAGE_DIMENSION, ALBUM_IMAGE_DIMENSION));
+        songSlider.setTotalSongTime(TimeData.reformatMilisecForSong(displaySong.getSongLengthMilliseconds()));
+        totalSongLengthMS=displaySong.getSongLengthMilliseconds();
+    }
+
+    /**
+     *
+     * @param playTime  play time in milliseconds
+     */
+    public void setCurrentTime(long playTime){
+        songSlider.setCurrentSongTime(TimeData.reformatMilisecForSong(playTime));
+        currentPlaytimeMS=playTime;
+        int sliderPosition;
+
+        songSlider.setSliderPosition(calculateSliderPosition());
+    }
+
+
+    private int calculateSliderPosition(){
+        double result;
+        result =currentPlaytimeMS;
+        result/=totalSongLengthMS;
+        result*=MAX_SLIDER_VALUE;
+
+        return (int)result;
+
+    }
+
 
 }

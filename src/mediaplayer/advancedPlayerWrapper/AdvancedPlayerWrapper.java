@@ -3,9 +3,6 @@ package mediaplayer.advancedPlayerWrapper;
 import javazoom.jl.decoder.JavaLayerException;
 import javazoom.jl.player.advanced.AdvancedPlayer;
 import javazoom.jl.player.advanced.PlaybackEvent;
-import javazoom.jl.player.advanced.PlaybackListener;
-import mediaplayer.advancedPlayerWrapper.SongEventListener;
-import mediaplayer.advancedPlayerWrapper.SongPlayerThread;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -18,22 +15,23 @@ public class AdvancedPlayerWrapper {
     private volatile AdvancedPlayer player;
     private volatile File songFile;
     private volatile InputStream inputStream;
-    private volatile SongEventListener playBackListner;
+    private volatile SongEventListener playBackListener;
     private volatile Thread playerThread;
     private volatile SongPlayerThread runnablePlayer;
     private volatile int lastFrame;
 
-    private static final double msPerFrame = 26.122449;
+    private  double msPerFrame ;
     private static Date date = new Date();
 
-    public AdvancedPlayerWrapper(File source) throws FileNotFoundException, JavaLayerException {
+    public AdvancedPlayerWrapper(File source,double msPerFrame) throws FileNotFoundException, JavaLayerException {
         songFile = source;
         inputStream = new FileInputStream(source);
         player = new AdvancedPlayer(inputStream);
-        playBackListner = new SongEventListener(this);
-        player.setPlayBackListener(playBackListner);
+        playBackListener = new SongEventListener(this);
+        player.setPlayBackListener(playBackListener);
         runnablePlayer = new SongPlayerThread(player);
         playerThread = new Thread(runnablePlayer);
+        this.msPerFrame=msPerFrame;
         playerThread.start();
         lastFrame = 0;
 
@@ -76,7 +74,7 @@ public class AdvancedPlayerWrapper {
 
     }
 
-    public synchronized int getCurrentFrame() throws FileNotFoundException, JavaLayerException {
+    public synchronized int getCurrentFrame() {
         if (runnablePlayer.isPlaying()) {
 
             date=new Date();
@@ -88,11 +86,19 @@ public class AdvancedPlayerWrapper {
 
     }
 
+    public void setSongFile(File songFile) throws FileNotFoundException, JavaLayerException {
+        this.songFile = songFile;
+        makeNewPlayer();
+        lastFrame=0;
+        runnablePlayer.updatePlayer(player);
+
+    }
+
     private synchronized void makeNewPlayer() throws FileNotFoundException, JavaLayerException {
         runnablePlayer.setStartingFrame(lastFrame);
         inputStream = new FileInputStream(songFile);
         player = new AdvancedPlayer(inputStream);
-        player.setPlayBackListener(playBackListner);
+        player.setPlayBackListener(playBackListener);
     }
 
 
@@ -103,7 +109,7 @@ public class AdvancedPlayerWrapper {
     }
 
     synchronized void listenerPlaybackFinished(PlaybackEvent playbackEvent) {
-        lastFrame += playbackEvent.getFrame() / msPerFrame;//todo. maybe generalize the hardcoded number
+        lastFrame += playbackEvent.getFrame() / msPerFrame;
 
     }
 
