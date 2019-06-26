@@ -1,9 +1,11 @@
 package gui.topPanels;
 
 import com.Profile;
+import gui.CustomColors;
 import gui.ImageLabel;
 import jiconfont.icons.google_material_design_icons.GoogleMaterialDesignIcons;
 import jiconfont.swing.IconFontSwing;
+import mdlaf.utils.MaterialColors;
 import mdlaf.utils.MaterialFonts;
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -31,6 +33,9 @@ public class ProfilePanel extends JPanel {
         setLayout(gridBagLayout);
         gridBagConstraints.anchor = GridBagConstraints.FIRST_LINE_START;
         setAlignmentX(Panel.LEFT_ALIGNMENT);
+
+        //setting Background color
+        setBackground(CustomColors.PRIMARY_BRIGHT_1);
 
         //setting avatar position and adding to panel
         gridBagConstraints.gridx = 0;
