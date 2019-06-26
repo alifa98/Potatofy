@@ -17,11 +17,15 @@ public class SongCard extends JPanel {
     private String musicName;
     private JLabel stateIcon;
     private boolean favorite = false;
-    public SongCard(String musicName, String albumName, File coverFile, long musicLength,boolean isFavorite){
+    private GridBagLayout gridBagLayout = new GridBagLayout();
+    private GridBagConstraints gridBagConstraints = new GridBagConstraints();
+
+    public SongCard(String musicName, String albumName, File coverFile, long musicLength, boolean isFavorite) {
+        //setting need arguments
+        this.musicName = musicName;
+        this.favorite = isFavorite;
 
         //setting Layout
-        GridBagLayout gridBagLayout = new GridBagLayout();
-        GridBagConstraints gridBagConstraints = new GridBagConstraints();
         gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = GridBagConstraints.LINE_START;
         setLayout(gridBagLayout);
@@ -30,7 +34,7 @@ public class SongCard extends JPanel {
         addMouseListener(MaterialUIMovement.getMovement(this, CustomColors.LIGHTER_GRAY));
 
         //Status icon
-        JLabel stateIcon = new JLabel(IconFontSwing.buildIcon(GoogleMaterialDesignIcons.PAUSE, 20, CustomColors.DARK_GRAY ));
+        stateIcon = new JLabel(IconFontSwing.buildIcon(GoogleMaterialDesignIcons.PAUSE, 20, CustomColors.DARK_GRAY));
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
         gridBagLayout.setConstraints(stateIcon, gridBagConstraints);
@@ -74,7 +78,6 @@ public class SongCard extends JPanel {
         gridBagConstraints.weightx = 0;
         gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 1;
-        gridBagConstraints.weightx = 1;
         gridBagLayout.setConstraints(songLength, gridBagConstraints);
         add(songLength);
 
@@ -82,10 +85,10 @@ public class SongCard extends JPanel {
         gridBagConstraints.gridx = 5;
         gridBagConstraints.gridy = 1;
         Icon favoriteIcon;
-        if(isFavorite){
+        if (isFavorite) {
             favoriteIcon = IconFontSwing.buildIcon(GoogleMaterialDesignIcons.FAVORITE, 20, CustomColors.PRIMARY);
-        }else {
-            favoriteIcon = IconFontSwing.buildIcon(GoogleMaterialDesignIcons.FAVORITE_BORDER, 20,  MaterialColors.BLACK);
+        } else {
+            favoriteIcon = IconFontSwing.buildIcon(GoogleMaterialDesignIcons.FAVORITE_BORDER, 20, MaterialColors.BLACK);
         }
         JLabel favoriteIconLabel = new JLabel(favoriteIcon);
         add(favoriteIconLabel);
@@ -96,5 +99,30 @@ public class SongCard extends JPanel {
         Icon songOptioneIcon = IconFontSwing.buildIcon(GoogleMaterialDesignIcons.MORE_HORIZ, 20, CustomColors.DARK_GRAY);
         JLabel songOptioneLabel = new JLabel(songOptioneIcon);
         add(songOptioneLabel);
+    }
+
+    public String getMusicName() {
+        return musicName;
+    }
+
+    public void setStateIcon(boolean setToPlay) {
+
+        gridBagConstraints.anchor = GridBagConstraints.LINE_START;
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+
+        //remove previous icon
+        remove(stateIcon);
+
+        //create new icon
+        if (setToPlay) {
+            stateIcon = new JLabel(IconFontSwing.buildIcon(GoogleMaterialDesignIcons.PLAY_ARROW, 20, CustomColors.PRIMARY));
+        } else {
+            stateIcon = new JLabel(IconFontSwing.buildIcon(GoogleMaterialDesignIcons.PAUSE, 20, CustomColors.DARK_GRAY));
+        }
+
+        gridBagLayout.setConstraints(stateIcon, gridBagConstraints);
+        add(stateIcon);
+
     }
 }
