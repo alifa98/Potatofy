@@ -88,9 +88,17 @@ public class AdvancedPlayerWrapper {
 
     }
 
+    public void setSongFile(File songFile) throws FileNotFoundException, JavaLayerException {
+        this.songFile = songFile;
+        makeNewPlayer();
+        runnablePlayer.updatePlayer(player);
+
+    }
+
     private synchronized void makeNewPlayer() throws FileNotFoundException, JavaLayerException {
         runnablePlayer.setStartingFrame(lastFrame);
         inputStream = new FileInputStream(songFile);
+        lastFrame=0;
         player = new AdvancedPlayer(inputStream);
         player.setPlayBackListener(playBackListner);
     }
