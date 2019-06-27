@@ -19,7 +19,7 @@ public class ArtistCard extends JPanel {
     private String artistName;
     private int songNumber;
     private JLabel stateIcon;
-
+    private JLabel songNumberLabel;
     //padding for elements
     Border padding = new EmptyBorder(new Insets(5,5,5,20));
 
@@ -72,8 +72,8 @@ public class ArtistCard extends JPanel {
         gridBagLayout.setConstraints(artistNameLabel, gridBagConstraints);
         add(artistNameLabel);
 
-        // song length Label
-        JLabel songNumberLabel = new JLabel(""+songNumber);
+        //number of songs belong to artist Label
+        songNumberLabel = new JLabel(""+songNumber);
         songNumberLabel.setFont(MaterialFonts.BOLD_ITALIC);
         songNumberLabel.setBorder(padding);
         gridBagConstraints.anchor = GridBagConstraints.LINE_END;
@@ -90,6 +90,20 @@ public class ArtistCard extends JPanel {
 
     public int getSongNumber() {
         return songNumber;
+    }
+    public void setSongNumber(int songNumber) {
+        gridBagConstraints.anchor = GridBagConstraints.LINE_END;
+        gridBagConstraints.weightx = 0;
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 0;
+
+        this.songNumber = songNumber;
+        remove(songNumberLabel);
+        songNumberLabel = new JLabel("This play list has "+songNumber+ " Songs.");
+        songNumberLabel.setFont(MaterialFonts.BOLD_ITALIC);
+        songNumberLabel.setBorder(padding);
+        gridBagLayout.setConstraints(songNumberLabel, gridBagConstraints);
+        add(songNumberLabel);
     }
 
     public String getArtistName() {
@@ -115,4 +129,6 @@ public class ArtistCard extends JPanel {
         add(stateIcon);
 
     }
+
+    //todo add listenet to onclick open artit song panel
 }

@@ -1,4 +1,7 @@
 package gui.mainPanels;
 
-public class PlayListsPanel {
+import javax.swing.*;
+
+public class PlayListsPanel extends JPanel {
+
 }
