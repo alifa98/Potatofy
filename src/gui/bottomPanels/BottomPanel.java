@@ -1,6 +1,7 @@
 package gui.bottomPanels;
 
 import com.TimeData;
+import com.manager.Manager;
 import com.mpatric.mp3agic.InvalidDataException;
 import com.mpatric.mp3agic.UnsupportedTagException;
 import mdlaf.utils.MaterialColors;
@@ -21,7 +22,7 @@ public class BottomPanel extends JPanel {
     private long totalSongLengthMS;
     private long currentPlaytimeMS;
 
-    private static final int MAX_SLIDER_VALUE=65535;
+    public static final int MAX_SLIDER_VALUE=65535;
 
     private static final int ALBUM_IMAGE_DIMENSION =64;
 
@@ -99,6 +100,19 @@ public class BottomPanel extends JPanel {
 
         return (int)result;
 
+    }
+
+    public int getSliderValue(){
+        return songSlider.getSliderValue();
+    }
+
+    public void setEventListeners(Manager manager){
+        songSlider.setSliderEvents(manager);
+        volumeControl.setVolumeSliderEvents(manager);
+    }
+
+    public void setVolumeSliderValue(int value){
+        volumeControl.setSliderValue(value);
     }
 
 

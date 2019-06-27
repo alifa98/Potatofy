@@ -1,5 +1,6 @@
 package gui.bottomPanels;
 
+import com.manager.Manager;
 import gui.CustomColors;
 import jiconfont.icons.google_material_design_icons.GoogleMaterialDesignIcons;
 import jiconfont.swing.IconFontSwing;
@@ -14,6 +15,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 class VolumeControl extends JPanel {
+    private JSlider slider;
     VolumeControl(){
         //add(new JLabel("SongSlider"));
         //setBackground(MaterialColors.GRAY_200);
@@ -30,7 +32,8 @@ class VolumeControl extends JPanel {
         volumeLabel.setOpaque(false);
         container.add(volumeLabel, BorderLayout.WEST);
 
-        JSlider slider = new JSlider(JSlider.HORIZONTAL, 0, 65535, 2);
+
+        slider = new JSlider(JSlider.HORIZONTAL, 0, BottomPanel.MAX_SLIDER_VALUE, 2);
         //UIManager sliderUI=new UIManager();
         //slider.setUI(new CustomSliderUi(slider));
         slider.setForeground(CustomColors.PRIMARY);
@@ -57,6 +60,23 @@ class VolumeControl extends JPanel {
         container.setMaximumSize(new Dimension(150,64));
         container.setPreferredSize(new Dimension(150,64));
         add(container,BorderLayout.EAST);
+
+    }
+
+    void setSliderValue(int value) {
+        slider.setValue(value);
+    }
+
+    void setVolumeSliderEvents(Manager manager){
+
+        slider.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                manager.volumeSliderMouseUpEvent(slider.getValue());
+
+            }
+        });
+
 
     }
 }

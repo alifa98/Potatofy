@@ -45,7 +45,7 @@ public class AdvancedPlayerWrapper {
 
     public synchronized void resume() throws FileNotFoundException, JavaLayerException {
         makeNewPlayer();
-        runnablePlayer.updatePlayer(player);
+        runnablePlayer.updatePlayer(player,true);
 
 
     }
@@ -68,11 +68,19 @@ public class AdvancedPlayerWrapper {
      * @param frameNumber the number of the frame to jump to
      */
     public synchronized void goToFrame(int frameNumber) throws FileNotFoundException, JavaLayerException {
-        lastFrame = frameNumber;
-        makeNewPlayer();
-        runnablePlayer.updatePlayer(player);
+        goToFrame(frameNumber,false);
 
     }
+    public synchronized void goToFrame(int frameNumber , boolean playAfterUpdate) throws FileNotFoundException, JavaLayerException {
+        lastFrame = frameNumber;
+        makeNewPlayer();
+        runnablePlayer.updatePlayer(player,playAfterUpdate);
+
+    }
+
+
+
+
 
     public synchronized int getCurrentFrame() {
         if (runnablePlayer.isPlaying()) {
@@ -95,10 +103,12 @@ public class AdvancedPlayerWrapper {
     }
 
     private synchronized void makeNewPlayer() throws FileNotFoundException, JavaLayerException {
+        InputStream placeHolder=inputStream;
         runnablePlayer.setStartingFrame(lastFrame);
         inputStream = new FileInputStream(songFile);
         player = new AdvancedPlayer(inputStream);
         player.setPlayBackListener(playBackListener);
+        placeHolder=null;
     }
 
 

@@ -1,5 +1,6 @@
 package gui.bottomPanels;
 
+import com.manager.Manager;
 import gui.CustomColors;
 import jiconfont.icons.google_material_design_icons.GoogleMaterialDesignIcons;
 import jiconfont.swing.IconFontSwing;
@@ -8,6 +9,8 @@ import mdlaf.utils.MaterialColors;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 class ControlButtons extends JPanel {
 
@@ -29,6 +32,28 @@ class ControlButtons extends JPanel {
         shuffleButton.setIcon(shuffleIcon);
         shuffleButton.setOpaque(false);
         containerPanel.add(shuffleButton);
+        shuffleButton.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+            }
+        });
 
         JLabel previous = new JLabel();
         Icon previousIcon = IconFontSwing.buildIcon(GoogleMaterialDesignIcons.SKIP_PREVIOUS, 20, CustomColors.DARK_GRAY);

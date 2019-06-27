@@ -26,18 +26,30 @@ class SongPlayerThread implements Runnable {
 
     synchronized void updatePlayer(AdvancedPlayer newPlayer) {
 
+        updatePlayer(newPlayer,false);
+    }
+
+    synchronized void updatePlayer(AdvancedPlayer newPlayer, boolean playAfterUpdate) {
+
         needsUpdate = true;
 
-        //todo should close be in the if??
         if (isPlaying) {
             player.stop();
             player.close();
         }
 
+
         player = newPlayer;
 
+        try {
+            Thread.sleep(1);//todo remove
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        if(playAfterUpdate)
         notify();
     }
+
 
     /**
      * just updates its fields. does not effect the song that is currently playing.
@@ -95,7 +107,7 @@ class SongPlayerThread implements Runnable {
                 try {
                     player.play(startingFrame, finalFrame);
                 } catch (JavaLayerException e) {
-                    e.printStackTrace();//todo how to handle it?
+                    //e.printStackTrace();//todo how to handle it?
                 }
                 isPlaying = false;
                 needsUpdate = false;
