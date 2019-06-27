@@ -99,7 +99,7 @@ public class Song {
         return tag.getAlbumImage();
     }
 
-    public Icon getAlbumImageAsSize(int width, int height) throws InvalidDataException, IOException, UnsupportedTagException {
+    public ImageIcon getAlbumImageAsSize(int width, int height) throws InvalidDataException, IOException, UnsupportedTagException {
         if (!hasAlbumImage()) return null;
         ByteArrayInputStream bis = new ByteArrayInputStream(this.getAlbumImage());
         Image image1 = ImageIO.read(bis).getScaledInstance(48, 48, Image.SCALE_DEFAULT);
