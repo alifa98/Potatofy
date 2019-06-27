@@ -33,6 +33,8 @@ public class RightButtons extends JPanel {
         addSongButton.setIcon(addSongButtonIcon);
         addSongButton.setBorder(paddingForElements);
         addSongButton.setMargin(marginInsets);
+        addSongButton.setBackground(MaterialColors.WHITE);
+        addSongButton.addMouseListener(MaterialUIMovement.getMovement(addSongButton,CustomColors.LIGHTER_GRAY));
         add(addSongButton);
 
         JButton playListsButton = new JButton("Play Lists");
@@ -40,6 +42,8 @@ public class RightButtons extends JPanel {
         playListsButton.setIcon(playListsButtonIcon);
         playListsButton.setBorder(paddingForElements);
         playListsButton.setMargin(marginInsets);
+        playListsButton.setBackground(MaterialColors.WHITE);
+        playListsButton.addMouseListener(MaterialUIMovement.getMovement(playListsButton,CustomColors.LIGHTER_GRAY));
         add(playListsButton);
 
         JButton favoritePlayListButton = new JButton("Favorite Songs");
@@ -47,6 +51,8 @@ public class RightButtons extends JPanel {
         favoritePlayListButton.setIcon(favoritePlayListButtonIcon);
         favoritePlayListButton.setBorder(paddingForElements);
         favoritePlayListButton.setMargin(marginInsets);
+        favoritePlayListButton.setBackground(MaterialColors.WHITE);
+        favoritePlayListButton.addMouseListener(MaterialUIMovement.getMovement(favoritePlayListButton,CustomColors.LIGHTER_GRAY));
         add(favoritePlayListButton);
 
         JButton songsButton = new JButton("Songs");
@@ -54,6 +60,8 @@ public class RightButtons extends JPanel {
         songsButton.setIcon(songsButtonIcon);
         songsButton.setBorder(paddingForElements);
         songsButton.setMargin(marginInsets);
+        songsButton.setBackground(MaterialColors.WHITE);
+        songsButton.addMouseListener(MaterialUIMovement.getMovement(songsButton,CustomColors.LIGHTER_GRAY));
         add(songsButton);
 
         JButton albumsButton = new JButton("Albums");
@@ -61,6 +69,8 @@ public class RightButtons extends JPanel {
         albumsButton.setIcon(albumsButtonIcon);
         albumsButton.setBorder(paddingForElements);
         albumsButton.setMargin(marginInsets);
+        albumsButton.setBackground(MaterialColors.WHITE);
+        albumsButton.addMouseListener(MaterialUIMovement.getMovement(albumsButton,CustomColors.LIGHTER_GRAY));
         add(albumsButton);
 
         JButton artistButton = new JButton("Artist");
@@ -68,15 +78,18 @@ public class RightButtons extends JPanel {
         artistButton.setIcon(artistButtonIcon);
         artistButton.setBorder(paddingForElements);
         artistButton.setMargin(marginInsets);
+        artistButton.setBackground(MaterialColors.WHITE);
+        artistButton.addMouseListener(MaterialUIMovement.getMovement(artistButton,CustomColors.LIGHTER_GRAY));
         add(artistButton);
 
 
         JButton videoButton = new JButton("Videos");
         Icon videoButtonIcon = IconFontSwing.buildIcon(GoogleMaterialDesignIcons.VIDEO_LIBRARY, 25, new Color(0, 0, 0));
         videoButton.setIcon(videoButtonIcon);
-        videoButton.addMouseListener(MaterialUIMovement.getMovement(videoButton, MaterialColors.ORANGE_50));
         videoButton.setBorder(paddingForElements);
         videoButton.setMargin(marginInsets);
+        videoButton.setBackground(MaterialColors.WHITE);
+        videoButton.addMouseListener(MaterialUIMovement.getMovement(videoButton, MaterialColors.ORANGE_50));
         add(videoButton);
     }
 }
