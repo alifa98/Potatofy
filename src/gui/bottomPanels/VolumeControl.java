@@ -30,7 +30,7 @@ class VolumeControl extends JPanel {
         volumeLabel.setOpaque(false);
         container.add(volumeLabel, BorderLayout.WEST);
 
-        JSlider slider = new JSlider(JSlider.HORIZONTAL, 0, 65535, 2);
+        JSlider slider = new JSlider(JSlider.HORIZONTAL, 0, BottomPanel.MAX_SLIDER_VALUE, 2);
         //UIManager sliderUI=new UIManager();
         //slider.setUI(new CustomSliderUi(slider));
         slider.setForeground(CustomColors.PRIMARY);
