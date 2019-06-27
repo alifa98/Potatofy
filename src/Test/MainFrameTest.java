@@ -21,6 +21,10 @@ public class MainFrameTest {
         frame.getSidePanel().addCard(user1);
         frame.getSidePanel().addCard(user1);
         frame.getSidePanel().addCard(user1);
+        frame.getSongsPanel().addSongCard("tests song","album 1",user1.getAvatarSrc(),595945488,true);
+        frame.getSongsPanel().addSongCard("tests song","album 1",user1.getAvatarSrc(),595945488,false);
+        frame.getSongsPanel().addSongCard("tsadsong","album 1",user1.getAvatarSrc(),595945488,false);
+        frame.setMainPanel(frame.getSongsPanel());
 //        frame.getSidePanel().addCard(user1);
 //        frame.getSidePanel().addCard(user1);
 //        frame.getSidePanel().addCard(user1);
@@ -30,10 +34,8 @@ public class MainFrameTest {
         frame.setVisible(true);
 
         try{
-            Thread.sleep(3000);
-
+            Thread.sleep(2000);
         }catch (Exception e){
-
         }
         UserInfoCard user2 = new UserInfoCard(
                 new File("src\\gui\\icons\\png\\64\\default-boy-avatar.png"),
@@ -48,6 +50,19 @@ public class MainFrameTest {
 //        frame.getSidePanel().addCard(user1);
 //        frame.getSidePanel().addCard(user1);
 //        frame.getSidePanel().addCard(user1);
+        try{
+            Thread.sleep(2000);
+        }catch (Exception e){
+        }
+        frame.getSongsPanel().addSongCard("tests nex 3 sec","album 2 ",user1.getAvatarSrc(),5959488,false);
+        frame.getSongsPanel().addSongCard("tesdnex 3 sec","album 2 ",user1.getAvatarSrc(),5955488,true);
+        try{
+            Thread.sleep(6000);
+        }catch (Exception e){
+        }
+        frame.getSongsPanel().setCardState("tsadsong",true);
+
+        frame.setMainPanel(frame.getSongsPanel());
     }
 
 }
