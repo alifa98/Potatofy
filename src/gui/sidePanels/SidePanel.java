@@ -1,10 +1,12 @@
 package gui.sidePanels;
 
 import com.UserInfoCard;
+import gui.CustomColors;
 import gui.CustomScrollBarUI;
 import jiconfont.icons.google_material_design_icons.GoogleMaterialDesignIcons;
 import jiconfont.swing.IconFontSwing;
 import mdlaf.MaterialLookAndFeel;
+import mdlaf.utils.MaterialColors;
 import mdlaf.utils.MaterialFonts;
 
 import javax.swing.*;
@@ -36,16 +38,14 @@ public class SidePanel extends JPanel {
         mainScrollableCardPanel.getVerticalScrollBar().setUI(new CustomScrollBarUI());
 
 
-        //Register Icon Package
-        IconFontSwing.register(GoogleMaterialDesignIcons.getIconFont());
-
-        //title For left side panel
+       //title For left side panel
         JLabel sideTitle = new JLabel("Friends Activity", SwingConstants.LEFT);
         sideTitle.setAlignmentX(JLabel.LEFT_ALIGNMENT); // alignment of Components in BoxLayout should be the same to align really.
         Icon sideTitleIcon = IconFontSwing.buildIcon(GoogleMaterialDesignIcons.HISTORY, 20, new Color(0, 0, 0));
         sideTitle.setIcon(sideTitleIcon);
         sideTitle.setFont(MaterialFonts.BOLD);
         sideTitle.setBorder(new EmptyBorder(new Insets(5, 5, 5, 5))); // Add Padding to title
+        setBackground(CustomColors.LIGHTER_GRAY);
 
         add(sideTitle);
         add(mainScrollableCardPanel);
