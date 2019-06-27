@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 
 public class SongsPanel extends JPanel {
-    ArrayList<SongCard> songCards;
+    private ArrayList<SongCard> songCards;
 
     public SongsPanel() {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -19,13 +19,14 @@ public class SongsPanel extends JPanel {
         SongCard newCard = new SongCard(musicName, albumName, coverFile, musicLength, isFavorite);
         add(newCard);
         songCards.add(newCard);
+        validate();
     }
 
-    public void setCardState(String songName, boolean setToplaying) {
-
+    public void setCardState(String songName, boolean setToPlaying) {
+    //todo when a song go to play or pause state this method must be called to update little state icon next to the cover
         for (SongCard card : songCards) {
             if (card.getMusicName().equals(songName)) {
-                card.setStateIcon(setToplaying);
+                card.setStateIcon(setToPlaying);
                 break;
             }
         }

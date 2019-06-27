@@ -1,6 +1,9 @@
 package gui;
 
 import gui.bottomPanels.BottomPanel;
+import gui.mainPanels.AlbumsPanel;
+import gui.mainPanels.ArtistsPanel;
+import gui.mainPanels.PlayListsPanel;
 import gui.mainPanels.SongsPanel;
 import gui.sidePanels.SidePanel;
 import gui.topPanels.TopPanel;
@@ -14,8 +17,14 @@ import java.awt.*;
 public class MainFrame extends JFrame {
     private TopPanel topPanel;
     private BottomPanel bottomPanel;
-    private JPanel mainPanel;
     private SidePanel sidePanel;
+    private JPanel currrentMainPanel;
+
+    //main panels
+    private SongsPanel songsPanel = new SongsPanel();
+    private AlbumsPanel albumsPanel = new AlbumsPanel();
+    private ArtistsPanel artistsPanel = new ArtistsPanel();
+    private PlayListsPanel playListsPanel = new PlayListsPanel();
 
     public MainFrame(String title){
         super(title);
@@ -43,12 +52,12 @@ public class MainFrame extends JFrame {
         //Setting Default Panels
         topPanel = new TopPanel();
         sidePanel = new SidePanel();
-        mainPanel = new SongsPanel();
+        currrentMainPanel = songsPanel;
         bottomPanel = new BottomPanel();
 
         add(topPanel,BorderLayout.NORTH);
         add(sidePanel,BorderLayout.WEST);
-        add(mainPanel,BorderLayout.CENTER);
+        add(currrentMainPanel,BorderLayout.CENTER);
         add(bottomPanel,BorderLayout.SOUTH);
     }
 
@@ -57,10 +66,26 @@ public class MainFrame extends JFrame {
     }
 
     public void setMainPanel(JPanel mainPanel) {
-        remove(this.mainPanel);
+        remove(currrentMainPanel);
         add(mainPanel);
-        this.mainPanel = mainPanel;
+        currrentMainPanel = mainPanel;
         validate();
+    }
+
+    public SongsPanel getSongsPanel() {
+        return songsPanel;
+    }
+
+    public ArtistsPanel getArtistsPanel() {
+        return artistsPanel;
+    }
+
+    public AlbumsPanel getAlbumsPanel() {
+        return albumsPanel;
+    }
+
+    public PlayListsPanel getPlayListsPanel() {
+        return playListsPanel;
     }
 
     public TopPanel getTopPanel() {
