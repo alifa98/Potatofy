@@ -21,10 +21,10 @@ public class MainFrameTest {
         frame.getSidePanel().addCard(user1);
         frame.getSidePanel().addCard(user1);
         frame.getSidePanel().addCard(user1);
-        frame.getSongsPanel().addSongCard("tests song","album 1","Ali Faraji",user1.getAvatarSrc(),595945488,true);
-        frame.getSongsPanel().addSongCard("testasds song","album 1","Ali Faraji",user1.getAvatarSrc(),595945488,true);
-        frame.getSongsPanel().addSongCard("tesasdts song","album 1","Ali Faraji",user1.getAvatarSrc(),595945488,true);
-        frame.setMainPanel(frame.getSongsPanel());
+//        frame.getSongsPanel().addSongCard("tests song","album 1","Ali Faraji",user1.getAvatarSrc(),595945488,true);
+//        frame.getSongsPanel().addSongCard("testasds song","album 1","Ali Faraji",user1.getAvatarSrc(),595945488,true);
+//        frame.getSongsPanel().addSongCard("tesasdts song","album 1","Ali Faraji",user1.getAvatarSrc(),595945488,true);
+//        frame.setMainPanel(frame.getSongsPanel());
 //        frame.getSidePanel().addCard(user1);
 //        frame.getSidePanel().addCard(user1);
 //        frame.getSidePanel().addCard(user1);
@@ -54,7 +54,7 @@ public class MainFrameTest {
             Thread.sleep(2000);
         }catch (Exception e){
         }
-        frame.getSongsPanel().addSongCard("tesdts asdsong","album 1","Ali Faraji",user1.getAvatarSrc(),595945488,true);
+//        frame.getSongsPanel().addSongCard("tesdts asdsong","album 1","Ali Faraji",user1.getAvatarSrc(),595945488,true);
         try{
             Thread.sleep(6000);
         }catch (Exception e){
