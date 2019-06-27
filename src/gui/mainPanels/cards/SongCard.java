@@ -24,7 +24,7 @@ public class SongCard extends JPanel {
     private GridBagLayout gridBagLayout = new GridBagLayout();
     private GridBagConstraints gridBagConstraints = new GridBagConstraints();
 
-    public SongCard(String musicName, String albumName, String artistName, File coverFile, long musicLength, boolean isFavorite) {
+    public SongCard(String musicName, String albumName, String artistName, ImageIcon scaledCover, long musicLength, boolean isFavorite) {
         //setting need arguments
         this.musicName = musicName;
         this.favorite = isFavorite;
@@ -47,7 +47,6 @@ public class SongCard extends JPanel {
         add(stateIcon);
 
         //Song Cover
-        ImageIcon scaledCover = new ImageIcon(Toolkit.getDefaultToolkit().getImage(coverFile.getPath()).getScaledInstance(48, 48, Image.SCALE_DEFAULT));
         ImageLabel coverPicture = new ImageLabel(scaledCover);
         coverPicture.setBorder(padding);
         gridBagConstraints.gridx = 1;

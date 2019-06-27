@@ -53,7 +53,7 @@ public class AlbumSongsPanel extends JPanel {
         return albumName;
     }
 
-    public void addSongCard(String musicName, String albumName, String artistName, File coverFile, long musicLength, boolean isFavorite) {
+    public void addSongCard(String musicName, String albumName, String artistName, ImageIcon coverFile, long musicLength, boolean isFavorite) {
         SongCard newCard = new SongCard(musicName, albumName, artistName, coverFile, musicLength, isFavorite);
         add(newCard);
         songCards.add(newCard);

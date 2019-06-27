@@ -26,7 +26,7 @@ public class ArtistCard extends JPanel {
     private GridBagLayout gridBagLayout = new GridBagLayout();
     private GridBagConstraints gridBagConstraints = new GridBagConstraints();
 
-    public ArtistCard(String artistName, File coverFile, int songNumber) {
+    public ArtistCard(String artistName, ImageIcon scaledCover, int songNumber) {
 
         //setting need arguments
         this.artistName = artistName;
@@ -50,7 +50,6 @@ public class ArtistCard extends JPanel {
         add(stateIcon);
 
         //Song Cover
-        ImageIcon scaledCover = new ImageIcon(Toolkit.getDefaultToolkit().getImage(coverFile.getPath()).getScaledInstance(48, 48, Image.SCALE_DEFAULT));
         ImageLabel coverPicture = new ImageLabel(scaledCover);
         coverPicture.setBorder(padding);
         gridBagConstraints.gridx = 1;
@@ -130,5 +129,5 @@ public class ArtistCard extends JPanel {
 
     }
 
-    //todo add listenet to onclick open artit song panel
+    //todo add listener to onclick open artist song panel
 }

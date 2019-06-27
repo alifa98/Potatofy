@@ -14,7 +14,7 @@ public class ArtistsPanel extends JPanel {
         artistCards = new ArrayList<>();
     }
 
-    public void addArtistCard(String artistName, File coverFile, int songNumber) {
+    public void addArtistCard(String artistName, ImageIcon coverFile, int songNumber) {
         ArtistCard newCard = new ArtistCard(artistName, coverFile, songNumber);
         add(newCard);
         artistCards.add(newCard);
