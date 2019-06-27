@@ -1,6 +1,7 @@
 package com.manager;
 
 
+import com.manager.audio.Audio;
 import com.mpatric.mp3agic.InvalidDataException;
 import com.mpatric.mp3agic.UnsupportedTagException;
 import gui.MainFrame;
@@ -120,8 +121,17 @@ public class Manager {
     public void setSliderMouseExitEvent() {
 
     }
-
     public void songSliderChangeEventCall() {
+
+    }
+
+    public void volumeSliderMouseUpEvent(int sliderValue){
+        float masterVolume=(float)sliderValue/BottomPanel.MAX_SLIDER_VALUE;
+        Audio.setMasterOutputVolume(masterVolume);
+    }
+
+    public void initialSetting() {
+        bottomPanel.setVolumeSliderValue( (int)(Audio.getMasterOutputVolume()*BottomPanel.MAX_SLIDER_VALUE));
 
     }
 }

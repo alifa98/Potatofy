@@ -108,6 +108,11 @@ public class BottomPanel extends JPanel {
 
     public void setEventListeners(Manager manager){
         songSlider.setSliderEvents(manager);
+        volumeControl.setVolumeSliderEvents(manager);
+    }
+
+    public void setVolumeSliderValue(int value){
+        volumeControl.setSliderValue(value);
     }
 
 
