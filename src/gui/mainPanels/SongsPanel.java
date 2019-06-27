@@ -15,8 +15,8 @@ public class SongsPanel extends JPanel {
         songCards = new ArrayList<>();
     }
 
-    public void addSongCard(String musicName, String albumName, File coverFile, long musicLength, boolean isFavorite) {
-        SongCard newCard = new SongCard(musicName, albumName, coverFile, musicLength, isFavorite);
+    public void addSongCard(String musicName, String albumName, String artistName, File coverFile, long musicLength, boolean isFavorite) {
+        SongCard newCard = new SongCard(musicName, albumName, artistName, coverFile, musicLength, isFavorite);
         add(newCard);
         songCards.add(newCard);
         validate();

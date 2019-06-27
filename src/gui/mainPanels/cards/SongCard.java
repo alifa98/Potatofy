@@ -16,17 +16,15 @@ import java.awt.*;
 import java.io.File;
 
 public class SongCard extends JPanel {
+    //padding for elements
+    Border padding = new EmptyBorder(new Insets(5, 5, 5, 20));
     private String musicName;
     private JLabel stateIcon;
     private boolean favorite = false;
-
-    //padding for elements
-    Border padding = new EmptyBorder(new Insets(5,5,5,20));
-
     private GridBagLayout gridBagLayout = new GridBagLayout();
     private GridBagConstraints gridBagConstraints = new GridBagConstraints();
 
-    public SongCard(String musicName, String albumName, File coverFile, long musicLength, boolean isFavorite) {
+    public SongCard(String musicName, String albumName, String artistName, File coverFile, long musicLength, boolean isFavorite) {
         //setting need arguments
         this.musicName = musicName;
         this.favorite = isFavorite;
@@ -72,7 +70,7 @@ public class SongCard extends JPanel {
         add(musicNameLabel);
 
         // album name Label
-        JLabel albumNameLabel = new JLabel(albumName);
+        JLabel albumNameLabel = new JLabel(albumName + " - " + artistName);
         albumNameLabel.setFont(MaterialFonts.ITALIC);
         albumNameLabel.setBorder(padding);
         gridBagConstraints.gridx = 3;
