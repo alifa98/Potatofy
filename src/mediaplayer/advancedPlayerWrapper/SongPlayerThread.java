@@ -107,7 +107,8 @@ class SongPlayerThread implements Runnable {
                 try {
                     player.play(startingFrame, finalFrame);
                 } catch (JavaLayerException e) {
-                    //e.printStackTrace();//todo how to handle it?
+                    e.printStackTrace();//todo how to handle it?
+
                 }
                 isPlaying = false;
                 needsUpdate = false;
