@@ -104,7 +104,7 @@ public class RightButtons extends JPanel {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                // todo manager.openSelect song dialog for example
+                manager.openAddSongsDialog();
             }
         });
 
@@ -126,7 +126,7 @@ public class RightButtons extends JPanel {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                manager.setAtristsListToMain();
+                manager.setArtistsListToMain();
             }
         });
         favoritePlayListButton.addMouseListener(new MouseAdapter() {
