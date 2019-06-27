@@ -2,5 +2,5 @@ package gui.mainPanels;
 
 import javax.swing.*;
 
-public class AlbumsPanel extends JPanel {
+public class FavoriteSongsPanel extends JPanel {
 }

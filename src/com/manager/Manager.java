@@ -20,7 +20,7 @@ import java.io.IOException;
  * Most of it is HardCoded for now
  */
 public class Manager {
-    private static final String songURL = "D:\\Downloads\\Compressed\\2000 The Marshall Mathers LP\\2000 The Marshall Mathers LP\\03 Stan (Featuring Dido).mp3";
+    private static final String songURL = "C:\\Users\\Ali\\Downloads\\Ehaam - Khoda Negahdar [128].mp3";
     private MainFrame mainFrame;
     private BottomPanel bottomPanel;
     private AdvancedPlayerWrapper songPlayer;
@@ -134,4 +134,25 @@ public class Manager {
         bottomPanel.setVolumeSliderValue( (int)(Audio.getMasterOutputVolume()*BottomPanel.MAX_SLIDER_VALUE));
 
     }
+    public void setAtristsListToMain(){
+        JPanel artistList = mainFrame.getArtistsPanel();
+        mainFrame.setMainPanel(artistList);
+    }
+    public void setAlbumsListTMain(){
+        JPanel albumList = mainFrame.getAlbumsPanel();
+        mainFrame.setMainPanel(albumList);
+    }
+    public void setFavoritePlayListToMain(){
+        JPanel favList = mainFrame.getFavoriteSongsPanel();
+        mainFrame.setMainPanel(favList);
+    }
+    public void setPlayListsListToMain(){
+        JPanel playlists = mainFrame.getPlayListsPanel();
+        mainFrame.setMainPanel(playlists);
+    }
+    public void setSongsListToMain(){
+        JPanel songs = mainFrame.getSongsPanel();
+        mainFrame.setMainPanel(songs);
+    }
+
 }
