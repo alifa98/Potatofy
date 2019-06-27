@@ -3,6 +3,8 @@ package gui.topPanels;
 import gui.CustomColors;
 import jiconfont.icons.google_material_design_icons.GoogleMaterialDesignIcons;
 import jiconfont.swing.IconFontSwing;
+import mdlaf.animation.MaterialUIMovement;
+import mdlaf.utils.MaterialColors;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -19,16 +21,11 @@ public class RightButtons extends JPanel {
         Border paddingForElements = new EmptyBorder(new Insets(5, 5, 5, 5));
 
         // prepare insets for margin of buttons
-        Insets marginInsets = new Insets(5,10,5,10);
+        Insets marginInsets = new Insets(5,10,5,10); //this and set margin method is useless :D
 
         //setting Grid Bag Layout to this Panel
         GridBagLayout gridBagLayout = new GridBagLayout();
-        GridBagConstraints gridBagConstraints = new GridBagConstraints();
-        gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
         setLayout(gridBagLayout);
-        gridBagConstraints.anchor = GridBagConstraints.LINE_END;
-        gridBagConstraints.weightx = 1;
-
 
 
         JButton addSongButton = new JButton("Add Song");
@@ -74,6 +71,12 @@ public class RightButtons extends JPanel {
         add(artistButton);
 
 
-
+        JButton videoButton = new JButton("Videos");
+        Icon videoButtonIcon = IconFontSwing.buildIcon(GoogleMaterialDesignIcons.VIDEO_LIBRARY, 25, new Color(0, 0, 0));
+        videoButton.setIcon(videoButtonIcon);
+        videoButton.addMouseListener(MaterialUIMovement.getMovement(videoButton, MaterialColors.ORANGE_50));
+        videoButton.setBorder(paddingForElements);
+        videoButton.setMargin(marginInsets);
+        add(videoButton);
     }
 }
