@@ -81,7 +81,7 @@ public class FriendCard extends JPanel {
 
         //BoxLayout is one of the few layout managers that respects the minimum and maximum sizes of a component.
         //so following code prevent a panel from stretching
-        setMaximumSize(this.getPreferredSize() );
+        setMaximumSize(this.getPreferredSize());
     }
 
 //    public static void main(String[] args) {
