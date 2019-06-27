@@ -29,8 +29,7 @@ public class Manager {
     private boolean songSliderMouseDown=false;
     private boolean isPlayingSong=false;
 
-    //todo remove the singleton
-    //initialize every eventListener in this class
+
     public Manager() {
 
         mainFrame = new MainFrame("potato");
