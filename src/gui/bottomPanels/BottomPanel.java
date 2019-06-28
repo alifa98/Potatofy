@@ -17,6 +17,7 @@ public class BottomPanel extends JPanel {
     private ControlButtons controlButtons;
     private SongSlider songSlider;
     private VolumeControl volumeControl;
+    private JPanel rightContainer;
     private Song displaySong;
 
     private long totalSongLengthMS;
@@ -34,11 +35,13 @@ public class BottomPanel extends JPanel {
         controlButtons=new ControlButtons();
         songSlider=new SongSlider();
         volumeControl=new VolumeControl();
+        setLayout(new BorderLayout());
 
-        setLayout(new GridBagLayout());
-        setSize(0,500);
-        setMaximumSize(new Dimension(0,500));
-        setBackground(MaterialColors.WHITE);
+        rightContainer=new JPanel();
+        rightContainer.setLayout(new GridBagLayout());
+        rightContainer.setSize(0,500);
+        rightContainer.setMaximumSize(new Dimension(0,500));
+        rightContainer.setBackground(MaterialColors.WHITE);
 
         GridBagConstraints c = new GridBagConstraints();
         c.fill=GridBagConstraints.HORIZONTAL;
@@ -46,19 +49,22 @@ public class BottomPanel extends JPanel {
         c.gridy=0;
         c.gridheight=500;
         c.weightx=1;
-        add(songInfo,c);
+        add(songInfo,BorderLayout.WEST);
+        songInfo.setPreferredSize(new Dimension(300,0));
 
         c.weightx=1;
         c.gridx=2;
-        add(controlButtons,c);
+        rightContainer.add(controlButtons,c);
 
         c.gridx=3;
         c.weightx=5;
-        add(songSlider,c);
+        rightContainer.add(songSlider,c);
 
         c.gridx=4;
         c.weightx=1;
-        add(volumeControl,c);
+        rightContainer.add(volumeControl,c);
+
+        add(rightContainer,BorderLayout.CENTER);
 
 
     }
