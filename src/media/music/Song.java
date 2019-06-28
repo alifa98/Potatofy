@@ -21,8 +21,6 @@ public class Song {
     private long songLengthMilliseconds;//song length in milliseconds
     private int frameCount;
     private double sampleRate;
-
-
     public Song(File source) throws InvalidDataException, IOException, UnsupportedTagException {
         this.source = source;
         updateFields();
@@ -108,5 +106,9 @@ public class Song {
 
     public double getMSPerFrame() {
         return songLengthMilliseconds / frameCount;
+    }
+    
+    public boolean isValid(){
+        return source.exists();
     }
 }
