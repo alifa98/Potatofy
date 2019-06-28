@@ -1,4 +1,4 @@
 package gui.mainPanels.cards;
 
-public class FavoriteSongCard {
+public class PlayListSongCard {
 }

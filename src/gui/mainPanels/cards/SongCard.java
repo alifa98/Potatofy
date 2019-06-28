@@ -1,6 +1,7 @@
 package gui.mainPanels.cards;
 
 import com.TimeData;
+import com.manager.Manager;
 import gui.CustomColors;
 import gui.ImageLabel;
 import jiconfont.icons.google_material_design_icons.GoogleMaterialDesignIcons;
@@ -8,34 +9,33 @@ import jiconfont.swing.IconFontSwing;
 import mdlaf.animation.MaterialUIMovement;
 import mdlaf.utils.MaterialColors;
 import mdlaf.utils.MaterialFonts;
+import media.music.Song;
 
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.io.File;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class SongCard extends JPanel {
-    //padding for elements
-    Border padding = new EmptyBorder(new Insets(5, 5, 5, 20));
-    private String musicName;
+    Border padding = new EmptyBorder(new Insets(5, 5, 5, 20)); //padding for elements
+    private Song song;
     private JLabel stateIcon;
-    private boolean favorite = false;
-    private GridBagLayout gridBagLayout = new GridBagLayout();
+    private ImageLabel coverPicture;
+    private JLabel musicNameLabel;
+    private JLabel albumNameLabel;
+    private JLabel favoriteIconLabel;
     private GridBagConstraints gridBagConstraints = new GridBagConstraints();
+    private SongCard thisCardObject = this;
 
-    public SongCard(String musicName, String albumName, String artistName, ImageIcon scaledCover, long musicLength, boolean isFavorite) {
-        //setting need arguments
-        this.musicName = musicName;
-        this.favorite = isFavorite;
-
-        //setting Layout
+    public SongCard(Song song) {
+        this.song = song;
+        setLayout(new GridBagLayout());
         gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = GridBagConstraints.LINE_START;
-        setLayout(gridBagLayout);
-
-        //Mouse hover on card -> change bg color
         addMouseListener(MaterialUIMovement.getMovement(this, CustomColors.LIGHTER_GRAY));
+
 
         //Status icon
         stateIcon = new JLabel(IconFontSwing.buildIcon(GoogleMaterialDesignIcons.PAUSE, 25, CustomColors.DARK_GRAY));
@@ -43,21 +43,19 @@ public class SongCard extends JPanel {
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.gridheight = 2;
-        gridBagLayout.setConstraints(stateIcon, gridBagConstraints);
-        add(stateIcon);
+        add(stateIcon, gridBagConstraints);
 
         //Song Cover
-        ImageLabel coverPicture = new ImageLabel(scaledCover);
+        coverPicture = new ImageLabel(song.getAlbumImageAsSize(48, 48));
         coverPicture.setBorder(padding);
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.gridheight = 2;
-        gridBagLayout.setConstraints(coverPicture, gridBagConstraints);
-        add(coverPicture);
+        add(coverPicture, gridBagConstraints);
 
         // music name label
-        JLabel musicNameLabel = new JLabel(musicName);
+        musicNameLabel = new JLabel(song.getTitle());
         musicNameLabel.setFont(MaterialFonts.MEDIUM);
         musicNameLabel.setBorder(padding);
         gridBagConstraints.gridx = 3;
@@ -65,87 +63,100 @@ public class SongCard extends JPanel {
         gridBagConstraints.gridwidth = 1;
         gridBagConstraints.gridheight = 1;
         gridBagConstraints.weightx = 1;
-        gridBagLayout.setConstraints(musicNameLabel, gridBagConstraints);
-        add(musicNameLabel);
+        add(musicNameLabel, gridBagConstraints);
 
-        // album name Label
-        JLabel albumNameLabel = new JLabel(albumName + " - " + artistName);
+        // album name and artist Label
+        albumNameLabel = new JLabel(song.getAlbum() + " - " + song.getArtist());
         albumNameLabel.setFont(MaterialFonts.ITALIC);
         albumNameLabel.setBorder(padding);
         gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.weightx = 1;
-        gridBagLayout.setConstraints(albumNameLabel, gridBagConstraints);
-        add(albumNameLabel);
+        add(albumNameLabel, gridBagConstraints);
 
         // song length Label
-        JLabel songLength = new JLabel(TimeData.reformatMilisecForSong(musicLength));
+        JLabel songLength = new JLabel(TimeData.reformatMilisecForSong(song.getSongLengthMilliseconds()));
         songLength.setFont(MaterialFonts.LIGHT);
         songLength.setBorder(padding);
         gridBagConstraints.anchor = GridBagConstraints.LINE_END;
-        gridBagConstraints.weightx = 0;
         gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.gridheight = 2;
-        gridBagLayout.setConstraints(songLength, gridBagConstraints);
-        add(songLength);
+        gridBagConstraints.weightx = 0;
+        add(songLength, gridBagConstraints);
 
         //add music favorite icon
-        gridBagConstraints.weightx = 0;
-        gridBagConstraints.gridx = 5;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridheight = 2;
         Icon favoriteIcon;
-        if (isFavorite) {
+        if (song.isFavorite()) {
             favoriteIcon = IconFontSwing.buildIcon(GoogleMaterialDesignIcons.FAVORITE, 20, CustomColors.PRIMARY);
         } else {
             favoriteIcon = IconFontSwing.buildIcon(GoogleMaterialDesignIcons.FAVORITE_BORDER, 20, MaterialColors.BLACK);
         }
-        JLabel favoriteIconLabel = new JLabel(favoriteIcon);
+        favoriteIconLabel = new JLabel(favoriteIcon);
         favoriteIconLabel.setBorder(padding);
-        gridBagLayout.setConstraints(favoriteIconLabel, gridBagConstraints);
-        add(favoriteIconLabel);
-
-        //add music option icon
-        gridBagConstraints.weightx = 0;
-        gridBagConstraints.gridx = 6;
+        gridBagConstraints.gridx = 5;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.gridheight = 2;
-        Icon songOptionIcon = IconFontSwing.buildIcon(GoogleMaterialDesignIcons.MORE_HORIZ, 20, CustomColors.DARK_GRAY);
-        JLabel songOptionLabel = new JLabel(songOptionIcon);
-        songOptionLabel.setBorder(padding);
-        gridBagLayout.setConstraints(songOptionLabel, gridBagConstraints);
-        add(songOptionLabel);
+        add(favoriteIconLabel, gridBagConstraints);
 
-        //BoxLayout is one of the few layout managers that respects the minimum and maximum sizes of a component.
-        //so following code prevent a panel from stretching
-        setMaximumSize(new Dimension(1900, (int) getPreferredSize().getHeight()));
+        setMaximumSize(new Dimension(2500, (int) getPreferredSize().getHeight()));
     }
 
-    public String getMusicName() {
-        return musicName;
+    public Song getSong() {
+        return song;
     }
 
-    public void setStateIcon(boolean setToPlay) {
-
-        gridBagConstraints.anchor = GridBagConstraints.LINE_START;
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-
-        //remove previous icon
-        remove(stateIcon);
-
-        //create new icon
-        if (setToPlay) {
-            stateIcon = new JLabel(IconFontSwing.buildIcon(GoogleMaterialDesignIcons.PLAY_ARROW, 25, CustomColors.PRIMARY));
-
+    public void setStateIcon(boolean isPlaying) {
+        if (isPlaying) {
+            stateIcon.setIcon(IconFontSwing.buildIcon(GoogleMaterialDesignIcons.PLAY_ARROW, 25, CustomColors.PRIMARY));
         } else {
-            stateIcon = new JLabel(IconFontSwing.buildIcon(GoogleMaterialDesignIcons.PAUSE, 25, CustomColors.DARK_GRAY));
+            stateIcon.setIcon(IconFontSwing.buildIcon(GoogleMaterialDesignIcons.PAUSE, 25, CustomColors.DARK_GRAY));
         }
-        stateIcon.setBorder(padding);
-        gridBagLayout.setConstraints(stateIcon, gridBagConstraints);
-        add(stateIcon);
     }
-//todo listener for on click
 
+    public void setEventListeners(Manager manager) {
+        musicNameLabel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                //  todo call a function in manager to play this song
+                thisCardObject.setStateIcon(true);
+            }
+        });
+
+        albumNameLabel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                //  todo call a function in manager to play this song
+                thisCardObject.setStateIcon(true);
+            }
+        });
+
+        stateIcon.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                //  todo call a function in manager to play this song
+                thisCardObject.setStateIcon(true);
+            }
+        });
+        coverPicture.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                //  todo call a function in manager to play this song
+                thisCardObject.setStateIcon(true);
+            }
+        });
+
+        favoriteIconLabel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (song.isFavorite()) {
+                    song.setFavorite(false);
+                    favoriteIconLabel.setIcon(IconFontSwing.buildIcon(GoogleMaterialDesignIcons.FAVORITE_BORDER, 20, MaterialColors.BLACK));
+                } else {
+                    song.setFavorite(true);
+                    favoriteIconLabel.setIcon(IconFontSwing.buildIcon(GoogleMaterialDesignIcons.FAVORITE, 20, CustomColors.PRIMARY));
+                }
+            }
+        });
+    }
 }
