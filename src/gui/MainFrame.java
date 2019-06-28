@@ -1,5 +1,6 @@
 package gui;
 
+import com.manager.Manager;
 import gui.bottomPanels.BottomPanel;
 import gui.mainPanels.*;
 import gui.sidePanels.SidePanel;
@@ -17,11 +18,11 @@ public class MainFrame extends JFrame {
     private BottomPanel bottomPanel;
     private SidePanel sidePanel;
     private JScrollPane currentMainPanel;
+    private Manager manager;
 
-
-    public MainFrame(String title) {
+    public MainFrame(String title,Manager manager) {
         super(title);
-
+        this.manager = manager;
         // Initialize the Look and feel to material design
         try {
             UIManager.setLookAndFeel(new MaterialLookAndFeel());
@@ -29,7 +30,7 @@ public class MainFrame extends JFrame {
             e.printStackTrace();
         }
 
-        MyPanel panel = new MyPanel(false);
+        MyPanel panel = new MyPanel(false, manager);
         JScrollPane scrollablePanel = new JScrollPane(panel);
         scrollablePanel.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         scrollablePanel.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);

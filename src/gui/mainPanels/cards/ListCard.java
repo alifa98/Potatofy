@@ -49,7 +49,7 @@ public class ListCard extends JPanel {
         titleLabel.setBorder(padding);
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridwidth = GridBagConstraints.REMAINDER;
+        gridBagConstraints.gridwidth = 1;
         gridBagConstraints.gridheight = 2;
         add(titleLabel, gridBagConstraints);
 

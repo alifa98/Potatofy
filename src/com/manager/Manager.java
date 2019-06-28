@@ -36,7 +36,7 @@ public class Manager {
 
 
     public Manager() {
-        mainFrame = new MainFrame("Potatofy");
+        mainFrame = new MainFrame("Potatofy",this);
         mainFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         mainFrame.setVisible(true);
         bottomPanel = mainFrame.getBottomPanel();
@@ -214,7 +214,7 @@ public class Manager {
                     }
             );
         }
-        GUIManager.showAllSongs(mainFrame, songs);
+        GUIManager.showAllSongs(mainFrame, songs, this);
         updateQueue();
         System.out.println("REPAINTING ... ");
         mainFrame.validate();
