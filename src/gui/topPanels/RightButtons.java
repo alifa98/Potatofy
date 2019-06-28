@@ -103,7 +103,6 @@ public class RightButtons extends JPanel {
         addSongButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                super.mouseClicked(e);
                 manager.openAddSongsDialog();
             }
         });

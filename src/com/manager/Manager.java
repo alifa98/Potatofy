@@ -1,4 +1,5 @@
 package com.manager;
+
 import com.manager.audio.Audio;
 import com.mpatric.mp3agic.InvalidDataException;
 import com.mpatric.mp3agic.UnsupportedTagException;
@@ -8,6 +9,7 @@ import gui.bottomPanels.ControlButtons;
 import javazoom.jl.decoder.JavaLayerException;
 import media.music.Song;
 import mediaplayer.advancedPlayerWrapper.AdvancedPlayerWrapper;
+
 import javax.swing.*;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -17,7 +19,8 @@ import java.util.Arrays;
 
 public class Manager {
     private static final String songURL = "D:\\Downloads\\Compressed\\2000 The Marshall Mathers LP\\2000 The Marshall Mathers LP\\08 The Real Slim Shady.mp3";
-    private static final String secondSongUrl="D:\\Downloads\\Compressed\\2000 The Marshall Mathers LP\\2000 The Marshall Mathers LP\\\\07 The Way I Am.mp3";
+    private static final String secondSongUrl = "D:\\Downloads\\Compressed\\2000 The Marshall Mathers LP\\2000 The Marshall Mathers LP\\\\07 The Way I Am.mp3";
+    private static volatile boolean thereIsAFinishedSong = false;
     private MainFrame mainFrame;
     private BottomPanel bottomPanel;
     private AdvancedPlayerWrapper songPlayer;
@@ -27,11 +30,9 @@ public class Manager {
     private boolean isPlayingSong = false;
     private ArrayList<Song> songs;
     private ArrayList<Song> playingQueue;
-    private static volatile boolean thereIsAFinishedSong =false;
     private boolean shuffleIsActive;
     private boolean repeatIsActive;
-    private int activeSongIndex=0;
-
+    private int activeSongIndex = 0;
 
 
     public Manager() {
@@ -44,10 +45,13 @@ public class Manager {
         timer.start();
 
         songs = new ArrayList<>();
-        playingQueue=new ArrayList<>();
+        playingQueue = new ArrayList<>();
 
     }
 
+    public static synchronized void setFinishedSong(boolean thereIsAFinishedSong) {
+        Manager.thereIsAFinishedSong = thereIsAFinishedSong;
+    }
 
     public void setEventListeners() {
         bottomPanel.setEventListeners(this);
@@ -60,9 +64,9 @@ public class Manager {
             updateSlider();
         }
 
-        if( Manager.thereIsAFinishedSong){
+        if (Manager.thereIsAFinishedSong) {
             checkAfterFinishedSong();
-            Manager.thereIsAFinishedSong =false;
+            Manager.thereIsAFinishedSong = false;
         }
 
         isActivatedByInterval = false;
@@ -70,28 +74,26 @@ public class Manager {
 
     private void checkAfterFinishedSong() {
         //todo it goes to nex currently
-        if(repeatIsActive){
+        if (repeatIsActive) {
             playActiveSong();
-        }
-        else{
+        } else {
             incrementActiveSongIndex();
         }
 
     }
 
     private void incrementActiveSongIndex() {
-        if(playingQueue.size()<=activeSongIndex){
-            activeSongIndex=0;
-        }
-        else{
+        if (playingQueue.size() <= activeSongIndex) {
+            activeSongIndex = 0;
+        } else {
             activeSongIndex++;
         }
     }
 
-    private void decrementActiveSongIndex(){
-        if(playingQueue.size()<=0){
-            activeSongIndex=0;
-        }else{
+    private void decrementActiveSongIndex() {
+        if (activeSongIndex <= 0) {
+            activeSongIndex = 0;
+        } else {
             activeSongIndex--;
         }
     }
@@ -179,7 +181,6 @@ public class Manager {
 
     }
 
-
     public void openAddSongsDialog() {
         System.out.println("Add song method called ...");
 //        LookAndFeel currLF = UIManager.getLookAndFeel();
@@ -213,6 +214,11 @@ public class Manager {
                     }
             );
         }
+        GUIManager.showAllSongs(mainFrame, songs);
+        updateQueue();
+        System.out.println("REPAINTING ... ");
+        mainFrame.validate();
+        mainFrame.repaint();
     }
 
     private void addSongFilesFromDirectory(File dir) {
@@ -225,7 +231,7 @@ public class Manager {
                     addSongFile(file);
                 }
             });
-            updateQueue();
+
         }
     }
 
@@ -234,12 +240,6 @@ public class Manager {
             try {
                 Song newSong = new Song(file);
                 songs.add(newSong);
-
-                //create and add song card to Songs
-                //mainFrame.getSongsPanel().addSongCard(newSong.getTitle(), newSong.getAlbum(), newSong.getArtist(), newSong.getAlbumImageAsSize(48, 48), newSong.getSongLengthMilliseconds(), false);
-                System.out.println("added an item");
-
-                //todo add to or create cards artist and album !
             } catch (Exception e) {
                 //todo handle !! by showing a error dialog? I don't know !
             }
@@ -247,98 +247,96 @@ public class Manager {
         }
     }
 
-    public static synchronized void setFinishedSong(boolean thereIsAFinishedSong) {
-        Manager.thereIsAFinishedSong =thereIsAFinishedSong;
+    public void shuffleClickEvent(boolean shuffleIsActive) {
+        this.shuffleIsActive = shuffleIsActive;
     }
 
-
-    public void shuffleClickEvent(boolean shuffleIsActive){
-        this.shuffleIsActive=shuffleIsActive;
-    }
-
-    public void previousClickEvent(){
-        if(songPlayer.getCurrentFrame()>=100){
+    public void previousClickEvent() {
+        if (songPlayer.getCurrentFrame() >= 100) {
             try {
-                if(songPlayer!=null){
+                if (songPlayer != null) {
                     songPlayer.goToFrame(0);
                 }
             } catch (IOException | JavaLayerException e) {
                 e.printStackTrace();
             }
-        }else{
+        } else {
             decrementActiveSongIndex();
             playActiveSong();
         }
 
     }
-    public void playPauseClickEvent(ControlButtons newState){
-        if(newState.isPlaying()){
-            pausePlayingSong(newState);
-        }
 
-        else {
+    public void playPauseClickEvent(ControlButtons newState) {
+        if (newState.isPlaying()) {
+            pausePlayingSong(newState);
+        } else {
 
             playActiveSongEventCall(newState);
         }
     }
-    public void nextClickEvent(){
+
+    public void nextClickEvent() {
         incrementActiveSongIndex();
         playActiveSong();
         System.out.println("here");
 
     }
-    public void repeatClickEvent(boolean repeatActive){
-        this.repeatIsActive=repeatActive;
+
+    public void repeatClickEvent(boolean repeatActive) {
+        this.repeatIsActive = repeatActive;
     }
 
-    private void pausePlayingSong(ControlButtons newState){
-        if(songPlayer!=null){
+    private void pausePlayingSong(ControlButtons newState) {
+        if (songPlayer != null) {
             songPlayer.pause();
-            isPlayingSong=false;
+            isPlayingSong = false;
             newState.setPlaying(false);
         }
 
 
     }
-    private void playActiveSongEventCall(ControlButtons newState){
-        if(songPlayer!=null){
+
+    private void playActiveSongEventCall(ControlButtons newState) {
+        if (songPlayer != null) {
             try {
 
                 songPlayer.resume();
             } catch (IOException | JavaLayerException e) {
                 e.printStackTrace();
             }
-            isPlayingSong=true;
+            isPlayingSong = true;
             newState.setPlaying(true);
-        }
-        else {
+        } else {
             playActiveSong();
         }
 
     }
 
-    private void updateQueue(){
-        playingQueue=new ArrayList<>(songs);
-        if(!playingQueue.isEmpty())
-            activeSong=playingQueue.get(activeSongIndex);
+    private void updateQueue() {
+        playingQueue = new ArrayList<>(songs);
+        if (!playingQueue.isEmpty())
+            activeSong = playingQueue.get(activeSongIndex);
     }
 
-    private void playActiveSong(){
-        if(playingQueue==null)return;
-        if(playingQueue.size()==0)return;
+    private void playActiveSong() {
+        if (playingQueue == null) return;
+        if (playingQueue.size() == 0) return;
 
-        activeSong=playingQueue.get(activeSongIndex);
-        if(!activeSong.isValid()) {
+        activeSong = playingQueue.get(activeSongIndex);
+        //todo line at above encountred a out of bund exception
+
+        if (!activeSong.isValid()) {
             int i;
-            for(i = 0; i<playingQueue.size(); i++){
+            for (i = 0; i < playingQueue.size(); i++) {
                 incrementActiveSongIndex();
-                activeSong=playingQueue.get(activeSongIndex);
-                if(activeSong.isValid())return;
+                activeSong = playingQueue.get(activeSongIndex);
+                if (activeSong.isValid()) return;
             }
-            if(i==playingQueue.size())return;
+            if (i == playingQueue.size()) return;
         }
 
-        System.out.println("playActiveSong");
+        //System.out.println("playActiveSong");
         try {
             bottomPanel.setSong(activeSong);
         } catch (InvalidDataException | IOException | UnsupportedTagException e) {
@@ -346,26 +344,22 @@ public class Manager {
         }
 
 
-            if(songPlayer==null) {
-                try {
-                    songPlayer=new AdvancedPlayerWrapper(activeSong.getSource());
-                } catch (FileNotFoundException | JavaLayerException e) {
-                    e.printStackTrace();
-                }
+        if (songPlayer == null) {
+            try {
+                songPlayer = new AdvancedPlayerWrapper(activeSong.getSource());
+            } catch (FileNotFoundException | JavaLayerException e) {
+                e.printStackTrace();
             }
-
-
-
-            else{
-                if(songPlayer.isPlaying()){
-                    songPlayer.pause();
-                }
-                try {
-                    songPlayer.setSongFile(activeSong.getSource());
-                } catch (IOException | JavaLayerException e) {
-                    e.printStackTrace();
-                }
+        } else {
+            if (songPlayer.isPlaying()) {
+                songPlayer.pause();
             }
+            try {
+                songPlayer.setSongFile(activeSong.getSource());
+            } catch (IOException | JavaLayerException e) {
+                e.printStackTrace();
+            }
+        }
 
         try {
             songPlayer.goToFrame(0);
