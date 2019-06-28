@@ -30,6 +30,7 @@ class VolumeControl extends JPanel {
         Icon VolumeIcon = IconFontSwing.buildIcon(GoogleMaterialDesignIcons.VOLUME_UP	, 20, CustomColors.DARK_GRAY);
         volumeLabel.setIcon(VolumeIcon);
         volumeLabel.setOpaque(false);
+        container.setBackground(CustomColors.LIGHTERER_GRAY);
         container.add(volumeLabel, BorderLayout.WEST);
 
 

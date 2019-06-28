@@ -1,5 +1,6 @@
 package gui.bottomPanels;
 
+import gui.CustomColors;
 import mdlaf.utils.MaterialColors;
 
 import javax.swing.*;
@@ -15,14 +16,14 @@ class SongInfo extends JPanel {
      SongInfo(){
          super();
          //add(new JLabel("song info"));
-         setBackground(MaterialColors.WHITE);
+         setBackground(CustomColors.LIGHTER_GRAY);
          setBorder(new EmptyBorder(new Insets(5,5,5,5)));
          setLayout(new BorderLayout());
 
          imagePanel = new JLabel();
 
          imagePanel.setPreferredSize(new Dimension(64,64));
-         imagePanel.setIcon(new ImageIcon("C:\\Users\\Erfan\\APProject\\src\\gui\\icons\\png\\64\\default-girl-avatar.png"));
+         imagePanel.setIcon(new ImageIcon("src\\gui\\icons\\png\\64\\default-girl-avatar.png"));
          add(imagePanel,BorderLayout.WEST);
 
 
@@ -30,6 +31,7 @@ class SongInfo extends JPanel {
          textContainer = new JPanel();
 
          textContainer.setLayout(new BorderLayout());
+         textContainer.setBackground(CustomColors.LIGHTER_GRAY);
 
 
          songTitle = new JLabel();

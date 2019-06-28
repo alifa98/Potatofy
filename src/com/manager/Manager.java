@@ -308,7 +308,11 @@ public class Manager {
             isPlayingSong = true;
             newState.setPlaying(true);
         } else {
-            playActiveSong();
+            if(playActiveSong()){
+                isPlayingSong = true;
+                newState.setPlaying(true);
+            }
+
         }
 
     }
@@ -319,9 +323,9 @@ public class Manager {
             activeSong = playingQueue.get(activeSongIndex);
     }
 
-    private void playActiveSong() {
-        if (playingQueue == null) return;
-        if (playingQueue.size() == 0) return;
+    private boolean playActiveSong() {
+        if (playingQueue == null) return false;
+        if (playingQueue.size() == 0) return false;
 
         activeSong = playingQueue.get(activeSongIndex);
         //todo line at above encountred a out of bund exception
@@ -331,9 +335,9 @@ public class Manager {
             for (i = 0; i < playingQueue.size(); i++) {
                 incrementActiveSongIndex();
                 activeSong = playingQueue.get(activeSongIndex);
-                if (activeSong.isValid()) return;
+                if (activeSong.isValid()) break;
             }
-            if (i == playingQueue.size()) return;
+            if (i == playingQueue.size()) return false;
         }
 
         //System.out.println("playActiveSong");
@@ -374,7 +378,7 @@ public class Manager {
             e.printStackTrace();
         }
 
-
+        return true;
     }
 
 

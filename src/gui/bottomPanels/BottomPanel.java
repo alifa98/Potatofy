@@ -4,6 +4,7 @@ import com.TimeData;
 import com.manager.Manager;
 import com.mpatric.mp3agic.InvalidDataException;
 import com.mpatric.mp3agic.UnsupportedTagException;
+import gui.CustomColors;
 import mdlaf.utils.MaterialColors;
 import media.music.Song;
 
@@ -29,7 +30,7 @@ public class BottomPanel extends JPanel {
 
     public BottomPanel(){
         super();
-
+        setBackground(CustomColors.LIGHTERER_GRAY);
 
         songInfo=new SongInfo();
         controlButtons=new ControlButtons();
@@ -41,7 +42,7 @@ public class BottomPanel extends JPanel {
         rightContainer.setLayout(new GridBagLayout());
         rightContainer.setSize(0,500);
         rightContainer.setMaximumSize(new Dimension(0,500));
-        rightContainer.setBackground(MaterialColors.WHITE);
+        rightContainer.setBackground(CustomColors.LIGHTERER_GRAY);
 
         GridBagConstraints c = new GridBagConstraints();
         c.fill=GridBagConstraints.HORIZONTAL;
@@ -54,14 +55,18 @@ public class BottomPanel extends JPanel {
 
         c.weightx=1;
         c.gridx=2;
+        controlButtons.setBackground(CustomColors.LIGHTERER_GRAY);
         rightContainer.add(controlButtons,c);
+
 
         c.gridx=3;
         c.weightx=5;
+        songSlider.setBackground(CustomColors.LIGHTERER_GRAY);
         rightContainer.add(songSlider,c);
 
         c.gridx=4;
         c.weightx=1;
+        volumeControl.setBackground(CustomColors.LIGHTERER_GRAY);
         rightContainer.add(volumeControl,c);
 
         add(rightContainer,BorderLayout.CENTER);
