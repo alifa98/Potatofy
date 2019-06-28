@@ -12,5 +12,6 @@ public class CustomColors {
     public static final Color DARK_GRAY = MaterialColors.GRAY_600;
     public static final Color LIGHT_GRAY = MaterialColors.GRAY_400;
     public static final Color LIGHTER_GRAY = MaterialColors.GRAY_100;
+    public static final Color LIGHTERER_GRAY = MaterialColors.GRAY_50;
 
 }
