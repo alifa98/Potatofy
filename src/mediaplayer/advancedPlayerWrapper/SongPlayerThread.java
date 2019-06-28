@@ -1,9 +1,11 @@
 package mediaplayer.advancedPlayerWrapper;
 
 import javazoom.jl.decoder.JavaLayerException;
+import com.manager.Manager;
 import javazoom.jl.player.advanced.AdvancedPlayer;
 
 import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.Date;
 
 class SongPlayerThread implements Runnable {
@@ -14,6 +16,7 @@ class SongPlayerThread implements Runnable {
     private volatile boolean keepAlive = true;
     private volatile boolean isPlaying;
     private volatile long lastPlayTime;
+    private volatile boolean pause;
 
     SongPlayerThread(AdvancedPlayer advancedPlayer) {
         player = advancedPlayer;
@@ -21,105 +24,92 @@ class SongPlayerThread implements Runnable {
         startingFrame = 0;
         finalFrame = Integer.MAX_VALUE;
         isPlaying = false;
+        pause=true;
     }
 
 
-    synchronized void updatePlayer(AdvancedPlayer newPlayer) {
 
-        updatePlayer(newPlayer,false);
-    }
+    @Override
+    public void run() {
+        while (keepAlive){
 
-    synchronized void updatePlayer(AdvancedPlayer newPlayer, boolean playAfterUpdate) {
+            if(keepAlive && pause){
+                try {
+                    isPlaying=false;
+                    setThreadToSleep();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
 
-        needsUpdate = true;
 
-        if (isPlaying) {
+            try {
+                isPlaying=true;
+                if (!player.play(1)){
+                    keepAlive=false;
+                }
+            } catch (JavaLayerException e) {
+                keepAlive=false;
+            }
+            startingFrame=startingFrame+1;
+
+
+
+        }
+        try{
             player.stop();
-            player.close();
+        }catch (Exception e){
+
         }
 
+        player.close();
+        Manager.setFinishedSong(true);
+        //end of stream event
 
-        player = newPlayer;
+    }
+    synchronized void pause(){
+        pause=true;
+    }
 
-        try {
-            Thread.sleep(1);//todo remove
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        if(playAfterUpdate)
-        notify();
+    synchronized void resume(){
+        pause=false;
+        notifyAll();
+    }
+
+    synchronized void kill(){
+        keepAlive=false;
+        resume();
     }
 
 
-    /**
-     * just updates its fields. does not effect the song that is currently playing.
-     * call updatePlayer to apply it.
-     *
-     * @param startingFrame :\
-     */
-    synchronized void setStartingFrame(int startingFrame) {//todo maybe update the player????
-        this.startingFrame = startingFrame;
+    synchronized int getCurrentFrame(){
+        return startingFrame;
     }
 
-    synchronized void setFinalFrame(int finalFrame) {
-        this.finalFrame = finalFrame;
-    }
-
-    synchronized boolean isPlaying() {
-        return isPlaying;
-    }
-
-
-    /**
-     * initial playing
-     * call it after you called the constructor
-     */
-    synchronized void play() {
-        if (!isPlaying) {
-            needsUpdate = true;
-            notify();
-        }
-
-    }
-
-    synchronized void stop() {
-        if (isPlaying) {
-            player.stop();
-            player.close();
-        }
-    }
-
-    synchronized long getLastPlayTime() {
-        return lastPlayTime;
-    }
 
     private synchronized void setThreadToSleep() throws InterruptedException {
         wait();
     }
 
-    @Override
-    public void run() {
-        while (keepAlive) {
-            if (needsUpdate) {
-                isPlaying = true;
-                Date date = new Date();
-                lastPlayTime= date.getTime();
-                try {
-                    player.play(startingFrame, finalFrame);
-                } catch (JavaLayerException e) {
-                    e.printStackTrace();//todo how to handle it?
-                }
-                isPlaying = false;
-                needsUpdate = false;
-            }
 
+    public void seekTo(int frame , InputStream stream) {
+        synchronized (player) {
+            player.close();
             try {
-                setThreadToSleep();
-            } catch (InterruptedException e) {
+                player = new AdvancedPlayer(stream);
+            } catch (JavaLayerException e) {
                 e.printStackTrace();
             }
-
+            try {
+                player.play(frame, frame + 1);
+                startingFrame=frame+1;
+            } catch (JavaLayerException e) {
+                e.printStackTrace();
+            }
         }
+    }
 
+    public boolean isPlaying() {
+        return isPlaying;
     }
 }

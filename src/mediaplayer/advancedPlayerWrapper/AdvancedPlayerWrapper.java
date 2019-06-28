@@ -2,12 +2,8 @@ package mediaplayer.advancedPlayerWrapper;
 
 import javazoom.jl.decoder.JavaLayerException;
 import javazoom.jl.player.advanced.AdvancedPlayer;
-import javazoom.jl.player.advanced.PlaybackEvent;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.Date;
 
 public class AdvancedPlayerWrapper {
@@ -18,12 +14,11 @@ public class AdvancedPlayerWrapper {
     private volatile SongEventListener playBackListener;
     private volatile Thread playerThread;
     private volatile SongPlayerThread runnablePlayer;
-    private volatile int lastFrame;
+    private volatile int startingFrame;
 
-    private  double msPerFrame ;
     private static Date date = new Date();
 
-    public AdvancedPlayerWrapper(File source,double msPerFrame) throws FileNotFoundException, JavaLayerException {
+    public AdvancedPlayerWrapper(File source) throws FileNotFoundException, JavaLayerException {
         songFile = source;
         inputStream = new FileInputStream(source);
         player = new AdvancedPlayer(inputStream);
@@ -31,28 +26,30 @@ public class AdvancedPlayerWrapper {
         player.setPlayBackListener(playBackListener);
         runnablePlayer = new SongPlayerThread(player);
         playerThread = new Thread(runnablePlayer);
-        this.msPerFrame=msPerFrame;
         playerThread.start();
-        lastFrame = 0;
+        startingFrame = 0;
 
 
     }
 
 
     public synchronized void pause() {
-        runnablePlayer.stop();
+        runnablePlayer.pause();
     }
 
-    public synchronized void resume() throws FileNotFoundException, JavaLayerException {
-        makeNewPlayer();
-        runnablePlayer.updatePlayer(player,true);
+    public synchronized void resume() throws IOException, JavaLayerException {
+        if(playerThread.getState()!=Thread.State.TERMINATED)
+            runnablePlayer.resume();
+        else{
+            System.out.println("else resume");
+            goToFrame(0);
+            runnablePlayer.resume();
 
+        }
 
     }
 
-    public synchronized void play() {
-        runnablePlayer.play();
-    }
+
 
 
     public synchronized boolean isPlaying() {
@@ -67,14 +64,14 @@ public class AdvancedPlayerWrapper {
      *
      * @param frameNumber the number of the frame to jump to
      */
-    public synchronized void goToFrame(int frameNumber) throws FileNotFoundException, JavaLayerException {
+    public synchronized void goToFrame(int frameNumber) throws IOException, JavaLayerException {
         goToFrame(frameNumber,false);
 
     }
-    public synchronized void goToFrame(int frameNumber , boolean playAfterUpdate) throws FileNotFoundException, JavaLayerException {
-        lastFrame = frameNumber;
+    public synchronized void goToFrame(int frameNumber , boolean playAfterUpdate) throws IOException, JavaLayerException {
+        startingFrame = frameNumber;
         makeNewPlayer();
-        runnablePlayer.updatePlayer(player,playAfterUpdate);
+
 
     }
 
@@ -83,45 +80,48 @@ public class AdvancedPlayerWrapper {
 
 
     public synchronized int getCurrentFrame() {
-        if (runnablePlayer.isPlaying()) {
+        if(playerThread.getState()!=Thread.State.TERMINATED)
+            return  runnablePlayer.getCurrentFrame();
+        return -1;
 
-            date=new Date();
-            //System.out.println("frames since lastFrame: "+((int) ((date.getTime() - runnablePlayer.getLastPlayTime()) / msPerFrame)));
-            return lastFrame + ((int) ((date.getTime() - runnablePlayer.getLastPlayTime()) / msPerFrame));
+    }
+
+    public void setSongFile(File songFile) throws IOException, JavaLayerException {
+        //runnablePlayer.kill();
+        this.songFile = songFile;
+        startingFrame =0;
+        makeNewThread();
+
+    }
+
+    private void makeNewThread() throws IOException, JavaLayerException {
+        InputStream placeHolder=inputStream;
+        System.out.println("reached make new thread");
+        runnablePlayer.kill();
+        inputStream=new FileInputStream(songFile);
+        player=new AdvancedPlayer(inputStream);
+        player.setPlayBackListener(playBackListener);
+        runnablePlayer = new SongPlayerThread(player);
+        playerThread = new Thread(runnablePlayer);
+        playerThread.start();
+        placeHolder.close();
+    }
+
+    private synchronized void makeNewPlayer() throws IOException, JavaLayerException {
+        InputStream placeHolder=inputStream;
+        inputStream = new FileInputStream(songFile);
+        runnablePlayer.seekTo(startingFrame,inputStream);
+        try {
+            placeHolder.close();
+        }catch (IOException e){
 
         }
-        return lastFrame;
 
     }
 
-    public void setSongFile(File songFile) throws FileNotFoundException, JavaLayerException {
-        this.songFile = songFile;
-        makeNewPlayer();
-        lastFrame=0;
-        runnablePlayer.updatePlayer(player);
-
-    }
-
-    private synchronized void makeNewPlayer() throws FileNotFoundException, JavaLayerException {
-        InputStream placeHolder=inputStream;
-        runnablePlayer.setStartingFrame(lastFrame);
-        inputStream = new FileInputStream(songFile);
-        player = new AdvancedPlayer(inputStream);
-        player.setPlayBackListener(playBackListener);
-        placeHolder=null;
-    }
 
 
-    //listener functions
-    // don't touch it :D
-    synchronized void listenerPlaybackStarted(PlaybackEvent playbackEvent) {
-        //System.err.println("startingFrame:" +playbackEvent.getFrame());
-    }
 
-    synchronized void listenerPlaybackFinished(PlaybackEvent playbackEvent) {
-        lastFrame += playbackEvent.getFrame() / msPerFrame;
-
-    }
 
 
 }
