@@ -1,14 +1,16 @@
 package media.music;
-
 import java.util.ArrayList;
 
 public class PlayList {
     private ArrayList<Song> songsArrayList;
     private String playListName;
-    public PlayList(String name){
+
+    public PlayList(String name) {
         playListName = name;
+        songsArrayList = new ArrayList<>();
     }
-    public void addSong(Song song){
+
+    public void addSong(Song song) {
         songsArrayList.add(song);
     }
 
@@ -19,7 +21,9 @@ public class PlayList {
     public ArrayList<Song> getSongsArrayList() {
         return songsArrayList;
     }
-    public void removeSong(Song song){
-            songsArrayList.remove(song);
+
+    public void removeSong(Song song) {
+        songsArrayList.remove(song);
     }
+
 }
