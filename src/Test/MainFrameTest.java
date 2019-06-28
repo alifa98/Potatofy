@@ -59,9 +59,7 @@ public class MainFrameTest {
             Thread.sleep(6000);
         }catch (Exception e){
         }
-        frame.getSongsPanel().setCardState("tsadsong",true);
 
-        frame.setMainPanel(frame.getScrollableSongsPanel());
     }
 
 }
