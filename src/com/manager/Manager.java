@@ -7,6 +7,7 @@ import com.mpatric.mp3agic.UnsupportedTagException;
 import gui.MainFrame;
 import gui.bottomPanels.BottomPanel;
 import javazoom.jl.decoder.JavaLayerException;
+import mdlaf.MaterialLookAndFeel;
 import media.music.Song;
 import mediaplayer.advancedPlayerWrapper.AdvancedPlayerWrapper;
 
@@ -16,7 +17,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Optional;
 
 /**
  * This is Manager Prototype
@@ -53,7 +53,6 @@ public class Manager {
         mainFrame.getTopPanel().getRightButtons().setEventListeners(this);
     }
 
-
     void intervalRun() {
         isActivatedByInterval = true;
         if (songPlayer != null && songPlayer.isPlaying() && !songSliderMouseDown) {
@@ -67,7 +66,6 @@ public class Manager {
             bottomPanel.setCurrentTime((long) (songPlayer.getCurrentFrame() * activeSong.getMSPerFrame()));
         }
     }
-
 
     public void songSliderChangeEvent() {
         if (!isActivatedByInterval && songPlayer != null && !songSliderMouseDown) {
@@ -105,6 +103,7 @@ public class Manager {
         try {
 
             songPlayer = new AdvancedPlayerWrapper(activeSong.getSource(), activeSong.getMSPerFrame(),activeSong.getFrameCount());
+
         } catch (FileNotFoundException | JavaLayerException e) {
             e.printStackTrace();
         }
@@ -142,38 +141,50 @@ public class Manager {
     }
 
     public void setArtistsListToMain() {
-        JPanel artistList = mainFrame.getArtistsPanel();
+        JScrollPane artistList = mainFrame.getScrollableArtistsPanel();
         mainFrame.setMainPanel(artistList);
     }
 
     public void setAlbumsListTMain() {
-        JPanel albumList = mainFrame.getAlbumsPanel();
+        JScrollPane albumList = mainFrame.getScrollableAlbumsPanel();
         mainFrame.setMainPanel(albumList);
     }
 
     public void setFavoritePlayListToMain() {
-        JPanel favList = mainFrame.getFavoriteSongsPanel();
+        JScrollPane favList = mainFrame.getScrollableFavoriteSongsPanel();
         mainFrame.setMainPanel(favList);
     }
 
     public void setPlayListsListToMain() {
-        JPanel playlists = mainFrame.getPlayListsPanel();
+        JScrollPane playlists = mainFrame.getScrollablePlayListsPanel();
         mainFrame.setMainPanel(playlists);
     }
 
     public void setSongsListToMain() {
-        JPanel songs = mainFrame.getSongsPanel();
+        JScrollPane songs = mainFrame.getScrollableSongsPanel();
         mainFrame.setMainPanel(songs);
     }
 
     public void openAddSongsDialog() {
         System.out.println("Add song method called ...");
-
+//        LookAndFeel currLF = UIManager.getLookAndFeel();
+//        try {
+//            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+//        } catch (Exception e) {
+//            System.out.println("System Look And Feel has problem...");
+//        }
         JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setDialogTitle("Choose a mp3 songs or its parent directories ...");
+
+//        try {
+//            UIManager.setLookAndFeel(currLF);
+//        } catch (UnsupportedLookAndFeelException e) {
+//            e.printStackTrace();
+//        }
+//        fileChooser.setDialogTitle("Choose a mp3 songs or its parent directories ...");
         fileChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
         fileChooser.setMultiSelectionEnabled(true);
-        fileChooser.setApproveButtonText("Add Songs");
+//        fileChooser.setApproveButtonText("Add Songs");
+        fileChooser.repaint();
         int dialog = fileChooser.showOpenDialog(mainFrame);
 
         if (dialog == JFileChooser.APPROVE_OPTION) {
@@ -203,8 +214,7 @@ public class Manager {
     }
 
     private void addSongFile(File file) {
-        Optional<String> extension = getExtensionByStringHandling(file.getName());
-        if (extension.isPresent() & extension.get().equals("mp3")) {
+        if (file.getName().endsWith(".mp3") || file.getName().endsWith(".MP3")) {
             try {
                 Song newSong = new Song(file);
                 songs.add(newSong);
@@ -214,15 +224,9 @@ public class Manager {
 
                 //todo add to or create cards artist and album !
             } catch (Exception e) {
-                //todo handle !! by showing a error dialog? I don't khnow !
+                //todo handle !! by showing a error dialog? I don't know !
             }
         }
     }
 
-    //todo this method must be changed .... has some problem
-    private Optional<String> getExtensionByStringHandling(String filename) {
-        return Optional.ofNullable(filename)
-                .filter(f -> f.contains("."))
-                .map(f -> f.substring(filename.lastIndexOf(".") + 1));
-    }
 }
