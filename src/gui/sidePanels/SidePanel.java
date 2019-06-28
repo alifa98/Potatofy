@@ -59,6 +59,5 @@ public class SidePanel extends JPanel {
         FriendCard newCard = new FriendCard(info);
         mainCardContainer.add(newCard,0);
         cards.add(newCard);
-        validate();
     }
 }

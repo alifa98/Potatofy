@@ -145,7 +145,6 @@ public class SongCard extends JPanel {
         stateIcon.setBorder(padding);
         gridBagLayout.setConstraints(stateIcon, gridBagConstraints);
         add(stateIcon);
-        validate();
     }
 //todo listener for on click
 

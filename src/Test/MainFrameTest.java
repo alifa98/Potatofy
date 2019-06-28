@@ -61,7 +61,7 @@ public class MainFrameTest {
         }
         frame.getSongsPanel().setCardState("tsadsong",true);
 
-        frame.setMainPanel(frame.getSongsPanel());
+        frame.setMainPanel(frame.getScrollableSongsPanel());
     }
 
 }
