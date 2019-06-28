@@ -88,6 +88,14 @@ public class Manager {
         }
     }
 
+    private void decrementActiveSongIndex(){
+        if(playingQueue.size()<=0){
+            activeSongIndex=0;
+        }else{
+            activeSongIndex--;
+        }
+    }
+
     private void updateSlider() {
         if (songPlayer != null) {
             bottomPanel.setCurrentTime((long) (songPlayer.getCurrentFrame() * activeSong.getMSPerFrame()));
@@ -171,30 +179,6 @@ public class Manager {
 
     }
 
-    public void setArtistsListToMain() {
-        JScrollPane artistList = mainFrame.getScrollableArtistsPanel();
-        mainFrame.setMainPanel(artistList);
-    }
-
-    public void setAlbumsListTMain() {
-        JScrollPane albumList = mainFrame.getScrollableAlbumsPanel();
-        mainFrame.setMainPanel(albumList);
-    }
-
-    public void setFavoritePlayListToMain() {
-        JScrollPane favList = mainFrame.getScrollableFavoriteSongsPanel();
-        mainFrame.setMainPanel(favList);
-    }
-
-    public void setPlayListsListToMain() {
-        JScrollPane playlists = mainFrame.getScrollablePlayListsPanel();
-        mainFrame.setMainPanel(playlists);
-    }
-
-    public void setSongsListToMain() {
-        JScrollPane songs = mainFrame.getScrollableSongsPanel();
-        mainFrame.setMainPanel(songs);
-    }
 
     public void openAddSongsDialog() {
         System.out.println("Add song method called ...");
@@ -252,7 +236,7 @@ public class Manager {
                 songs.add(newSong);
 
                 //create and add song card to Songs
-                mainFrame.getSongsPanel().addSongCard(newSong.getTitle(), newSong.getAlbum(), newSong.getArtist(), newSong.getAlbumImageAsSize(48, 48), newSong.getSongLengthMilliseconds(), false);
+                //mainFrame.getSongsPanel().addSongCard(newSong.getTitle(), newSong.getAlbum(), newSong.getArtist(), newSong.getAlbumImageAsSize(48, 48), newSong.getSongLengthMilliseconds(), false);
                 System.out.println("added an item");
 
                 //todo add to or create cards artist and album !
@@ -273,6 +257,18 @@ public class Manager {
     }
 
     public void previousClickEvent(){
+        if(songPlayer.getCurrentFrame()>=100){
+            try {
+                if(songPlayer!=null){
+                    songPlayer.goToFrame(0);
+                }
+            } catch (IOException | JavaLayerException e) {
+                e.printStackTrace();
+            }
+        }else{
+            decrementActiveSongIndex();
+            playActiveSong();
+        }
 
     }
     public void playPauseClickEvent(ControlButtons newState){
@@ -328,7 +324,20 @@ public class Manager {
     }
 
     private void playActiveSong(){
+        if(playingQueue==null)return;
+        if(playingQueue.size()==0)return;
+
         activeSong=playingQueue.get(activeSongIndex);
+        if(!activeSong.isValid()) {
+            int i;
+            for(i = 0; i<playingQueue.size(); i++){
+                incrementActiveSongIndex();
+                activeSong=playingQueue.get(activeSongIndex);
+                if(activeSong.isValid())return;
+            }
+            if(i==playingQueue.size())return;
+        }
+
         System.out.println("playActiveSong");
         try {
             bottomPanel.setSong(activeSong);
