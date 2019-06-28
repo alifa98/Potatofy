@@ -14,12 +14,12 @@ class SongEventListener extends PlaybackListener {
 
     @Override
     public void playbackStarted(PlaybackEvent playbackEvent) {
-        advancedPlayerWrapper.listenerPlaybackStarted(playbackEvent);
+        //advancedPlayerWrapper.listenerPlaybackStarted(playbackEvent);
     }
 
     @Override
     public void playbackFinished(PlaybackEvent playbackEvent) {
-        advancedPlayerWrapper.listenerPlaybackFinished(playbackEvent);
+        //advancedPlayerWrapper.listenerPlaybackFinished(playbackEvent);
     }
 
 
