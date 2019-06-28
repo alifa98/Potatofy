@@ -7,6 +7,7 @@ import gui.topPanels.TopPanel;
 import jiconfont.icons.google_material_design_icons.GoogleMaterialDesignIcons;
 import jiconfont.swing.IconFontSwing;
 import mdlaf.MaterialLookAndFeel;
+import media.music.Song;
 
 import javax.swing.*;
 import java.awt.*;
@@ -28,7 +29,13 @@ public class MainFrame extends JFrame {
             e.printStackTrace();
         }
 
-        //todo call create  a songs panel and set so current main panel to add first time
+        MyPanel panel = new MyPanel(false);
+        JScrollPane scrollablePanel = new JScrollPane(panel);
+        scrollablePanel.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        scrollablePanel.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollablePanel.getVerticalScrollBar().setUI(new CustomScrollBarUI());
+
+        currentMainPanel = scrollablePanel;
 
         setLayout(new BorderLayout());
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
