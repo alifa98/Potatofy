@@ -4,10 +4,7 @@ import javazoom.jl.decoder.JavaLayerException;
 import javazoom.jl.player.advanced.AdvancedPlayer;
 import javazoom.jl.player.advanced.PlaybackEvent;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.Date;
 
 public class AdvancedPlayerWrapper {
@@ -19,12 +16,15 @@ public class AdvancedPlayerWrapper {
     private volatile Thread playerThread;
     private volatile SongPlayerThread runnablePlayer;
     private volatile int lastFrame;
+    private volatile int finalFrame;
 
     private  double msPerFrame ;
     private static Date date = new Date();
 
-    public AdvancedPlayerWrapper(File source,double msPerFrame) throws FileNotFoundException, JavaLayerException {
+    public AdvancedPlayerWrapper(File source,double msPerFrame,int frameCount) throws FileNotFoundException, JavaLayerException {
         songFile = source;
+        lastFrame=0;
+        finalFrame=frameCount;
         inputStream = new FileInputStream(source);
         player = new AdvancedPlayer(inputStream);
         playBackListener = new SongEventListener(this);
@@ -105,6 +105,7 @@ public class AdvancedPlayerWrapper {
     private synchronized void makeNewPlayer() throws FileNotFoundException, JavaLayerException {
         InputStream placeHolder=inputStream;
         runnablePlayer.setStartingFrame(lastFrame);
+        runnablePlayer.setFinalFrame(finalFrame);
         inputStream = new FileInputStream(songFile);
         player = new AdvancedPlayer(inputStream);
         player.setPlayBackListener(playBackListener);
@@ -120,6 +121,22 @@ public class AdvancedPlayerWrapper {
 
     synchronized void listenerPlaybackFinished(PlaybackEvent playbackEvent) {
         lastFrame += playbackEvent.getFrame() / msPerFrame;
+
+        try {
+            System.out.println(inputStream.available());
+        } catch (IOException e) {
+            System.out.println("exception");
+            try {
+                inputStream=new FileInputStream(songFile);
+                player=new AdvancedPlayer(inputStream);
+                player.setPlayBackListener(playBackListener);
+                lastFrame=0;
+                runnablePlayer.resetAfterFinishedStream();
+               runnablePlayer.updatePlayer(player,true);
+            } catch (JavaLayerException | FileNotFoundException ex) {
+                ex.printStackTrace();
+            }
+        }
 
     }
 

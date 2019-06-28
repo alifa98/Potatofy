@@ -23,7 +23,7 @@ import java.util.Optional;
  * Most of it is HardCoded for now
  */
 public class Manager {
-    private static final String songURL = "C:\\Users\\Ali\\Downloads\\Ehaam - Khoda Negahdar [128].mp3";
+    private static final String songURL = "D:\\Downloads\\Compressed\\2000 The Marshall Mathers LP\\2000 The Marshall Mathers LP\\08 The Real Slim Shady.mp3";
     private MainFrame mainFrame;
     private BottomPanel bottomPanel;
     private AdvancedPlayerWrapper songPlayer;
@@ -104,7 +104,7 @@ public class Manager {
         songPlayer = null;
         try {
 
-            songPlayer = new AdvancedPlayerWrapper(activeSong.getSource(), activeSong.getMSPerFrame());
+            songPlayer = new AdvancedPlayerWrapper(activeSong.getSource(), activeSong.getMSPerFrame(),activeSong.getFrameCount());
         } catch (FileNotFoundException | JavaLayerException e) {
             e.printStackTrace();
         }

@@ -23,13 +23,6 @@ class SongPlayerThread implements Runnable {
         isPlaying = false;
     }
 
-    synchronized void resetAfterFinishedStream(){
-        needsUpdate = false;
-        startingFrame = 0;
-        finalFrame = Integer.MAX_VALUE;
-        isPlaying = false;
-    }
-
 
     synchronized void updatePlayer(AdvancedPlayer newPlayer) {
 
@@ -48,7 +41,11 @@ class SongPlayerThread implements Runnable {
 
         player = newPlayer;
 
-
+        try {
+            Thread.sleep(1);//todo remove
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         if(playAfterUpdate)
         notify();
     }
@@ -111,7 +108,10 @@ class SongPlayerThread implements Runnable {
                     player.play(startingFrame, finalFrame);
                 } catch (JavaLayerException e) {
                     e.printStackTrace();//todo how to handle it?
+<<<<<<< HEAD
 
+=======
+>>>>>>> master
                 }
                 isPlaying = false;
                 needsUpdate = false;
