@@ -91,16 +91,20 @@ public class AdvancedPlayerWrapper {
         this.songFile = songFile;
         startingFrame =0;
         makeNewThread();
-        makeNewPlayer();
 
     }
 
-    private void makeNewThread(){
+    private void makeNewThread() throws IOException, JavaLayerException {
+        InputStream placeHolder=inputStream;
+        System.out.println("reached make new thread");
         runnablePlayer.kill();
+        inputStream=new FileInputStream(songFile);
+        player=new AdvancedPlayer(inputStream);
+        player.setPlayBackListener(playBackListener);
         runnablePlayer = new SongPlayerThread(player);
         playerThread = new Thread(runnablePlayer);
         playerThread.start();
-        startingFrame = 0;
+        placeHolder.close();
     }
 
     private synchronized void makeNewPlayer() throws IOException, JavaLayerException {

@@ -7,7 +7,7 @@ public class Main {
         Manager manager=new Manager();
         manager.initialSetting();
         manager.setEventListeners();
-        manager.playTheHardCodedSong();
+       // manager.playTheHardCodedSong();
 
     }
 }
