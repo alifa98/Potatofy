@@ -99,11 +99,16 @@ public class Song {
         return tag.getAlbumImage();
     }
 
-    public ImageIcon getAlbumImageAsSize(int width, int height) throws InvalidDataException, IOException, UnsupportedTagException {
-        if (!hasAlbumImage()) return null;
-        ByteArrayInputStream bis = new ByteArrayInputStream(this.getAlbumImage());
-        Image image1 = ImageIO.read(bis).getScaledInstance(48, 48, Image.SCALE_DEFAULT);
-        return new ImageIcon(image1);
+    public ImageIcon getAlbumImageAsSize(int width, int height) {
+        try{
+            if (!hasAlbumImage()) return null;
+            ByteArrayInputStream bis = new ByteArrayInputStream(this.getAlbumImage());
+            Image image1 = ImageIO.read(bis).getScaledInstance(width, height, Image.SCALE_DEFAULT);
+            return new ImageIcon(image1);
+        }catch (Exception e){
+            ImageIcon default_cover = new ImageIcon(Toolkit.getDefaultToolkit().getImage("src\\gui\\icons\\png\\64\\default_avatar.png").getScaledInstance(width, height, Image.SCALE_DEFAULT));
+            return default_cover;
+        }
     }
 
     public double getMSPerFrame() {

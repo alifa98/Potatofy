@@ -1,16 +1,12 @@
 package com.manager;
-
-
 import com.manager.audio.Audio;
 import com.mpatric.mp3agic.InvalidDataException;
 import com.mpatric.mp3agic.UnsupportedTagException;
 import gui.MainFrame;
 import gui.bottomPanels.BottomPanel;
 import javazoom.jl.decoder.JavaLayerException;
-import mdlaf.MaterialLookAndFeel;
 import media.music.Song;
 import mediaplayer.advancedPlayerWrapper.AdvancedPlayerWrapper;
-
 import javax.swing.*;
 import java.io.File;
 import java.io.FileNotFoundException;

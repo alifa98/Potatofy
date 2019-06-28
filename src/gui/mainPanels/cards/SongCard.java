@@ -19,8 +19,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class SongCard extends JPanel {
-    Border padding = new EmptyBorder(new Insets(5, 5, 5, 20)); //padding for elements
-    private Song song;
+    private Border padding = new EmptyBorder(new Insets(5, 5, 5, 20)); //padding for elements
+    protected Song song;
     private JLabel stateIcon;
     private ImageLabel coverPicture;
     private JLabel musicNameLabel;
@@ -60,7 +60,7 @@ public class SongCard extends JPanel {
         musicNameLabel.setBorder(padding);
         gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridwidth = 1;
+        gridBagConstraints.gridwidth = GridBagConstraints.REMAINDER;
         gridBagConstraints.gridheight = 1;
         gridBagConstraints.weightx = 1;
         add(musicNameLabel, gridBagConstraints);
@@ -71,7 +71,7 @@ public class SongCard extends JPanel {
         albumNameLabel.setBorder(padding);
         gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 1;
-        gridBagConstraints.weightx = 1;
+        gridBagConstraints.gridwidth = GridBagConstraints.REMAINDER;
         add(albumNameLabel, gridBagConstraints);
 
         // song length Label
