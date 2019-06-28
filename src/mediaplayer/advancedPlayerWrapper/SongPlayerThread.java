@@ -108,7 +108,10 @@ class SongPlayerThread implements Runnable {
                     player.play(startingFrame, finalFrame);
                 } catch (JavaLayerException e) {
                     e.printStackTrace();//todo how to handle it?
+<<<<<<< HEAD
 
+=======
+>>>>>>> master
                 }
                 isPlaying = false;
                 needsUpdate = false;

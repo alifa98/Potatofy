@@ -3,10 +3,9 @@ package gui.mainPanels;
 import gui.mainPanels.cards.SongCard;
 
 import javax.swing.*;
-import java.io.File;
 import java.util.ArrayList;
 
-
+//todo IMPORTANT ::::==> add scroll bar to ListPanels !!! shuuld be handled in mainframe ?! tomarrow i handle it ! Good night 01:22 AM Friday
 public class SongsPanel extends JPanel {
     private ArrayList<SongCard> songCards;
 
@@ -15,8 +14,8 @@ public class SongsPanel extends JPanel {
         songCards = new ArrayList<>();
     }
 
-    public void addSongCard(String musicName, String albumName, File coverFile, long musicLength, boolean isFavorite) {
-        SongCard newCard = new SongCard(musicName, albumName, coverFile, musicLength, isFavorite);
+    public void addSongCard(String musicName, String albumName, String artistName, ImageIcon coverFile, long musicLength, boolean isFavorite) {
+        SongCard newCard = new SongCard(musicName, albumName, artistName, coverFile, musicLength, isFavorite);
         add(newCard);
         songCards.add(newCard);
         validate();

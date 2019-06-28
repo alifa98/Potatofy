@@ -27,5 +27,9 @@ public class TopPanel extends JPanel {
     public ProfilePanel getProfilePanel() {
         return profilePanel;
     }
+
+    public RightButtons getRightButtons() {
+        return rightButtons;
+    }
 }
 

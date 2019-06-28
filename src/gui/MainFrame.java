@@ -1,10 +1,7 @@
 package gui;
 
 import gui.bottomPanels.BottomPanel;
-import gui.mainPanels.AlbumsPanel;
-import gui.mainPanels.ArtistsPanel;
-import gui.mainPanels.PlayListsPanel;
-import gui.mainPanels.SongsPanel;
+import gui.mainPanels.*;
 import gui.sidePanels.SidePanel;
 import gui.topPanels.TopPanel;
 import jiconfont.icons.google_material_design_icons.GoogleMaterialDesignIcons;
@@ -25,6 +22,7 @@ public class MainFrame extends JFrame {
     private AlbumsPanel albumsPanel = new AlbumsPanel();
     private ArtistsPanel artistsPanel = new ArtistsPanel();
     private PlayListsPanel playListsPanel = new PlayListsPanel();
+    private FavoriteSongsPanel favoriteSongsPanel = new FavoriteSongsPanel();
 
     public MainFrame(String title){
         super(title);
@@ -87,7 +85,9 @@ public class MainFrame extends JFrame {
     public PlayListsPanel getPlayListsPanel() {
         return playListsPanel;
     }
-
+    public FavoriteSongsPanel getFavoriteSongsPanel() {
+        return favoriteSongsPanel;
+    }
     public TopPanel getTopPanel() {
         return topPanel;
     }
@@ -95,4 +95,6 @@ public class MainFrame extends JFrame {
     public SidePanel getSidePanel() {
         return sidePanel;
     }
+
+
 }

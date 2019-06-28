@@ -14,25 +14,28 @@ import javax.swing.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Optional;
 
 /**
  * This is Manager Prototype
  * Most of it is HardCoded for now
  */
 public class Manager {
-    private static final String songURL = "D:\\Downloads\\Compressed\\2000 The Marshall Mathers LP\\2000 The Marshall Mathers LP\\03 Stan (Featuring Dido).mp3";
+    private static final String songURL = "C:\\Users\\Ali\\Downloads\\Ehaam - Khoda Negahdar [128].mp3";
     private MainFrame mainFrame;
     private BottomPanel bottomPanel;
     private AdvancedPlayerWrapper songPlayer;
     private Song activeSong;
     private boolean isActivatedByInterval = false;
-    private boolean songSliderMouseDown=false;
-    private boolean isPlayingSong=false;
+    private boolean songSliderMouseDown = false;
+    private boolean isPlayingSong = false;
+    private ArrayList<Song> songs;
 
 
     public Manager() {
-
-        mainFrame = new MainFrame("potato");
+        mainFrame = new MainFrame("Jpotify");
         mainFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         mainFrame.setVisible(true);
         bottomPanel = mainFrame.getBottomPanel();
@@ -40,12 +43,14 @@ public class Manager {
         timer.setRepeats(true);
         timer.start();
 
-    }
+        songs = new ArrayList<>();
 
+    }
 
 
     public void setEventListeners() {
         bottomPanel.setEventListeners(this);
+        mainFrame.getTopPanel().getRightButtons().setEventListeners(this);
     }
 
 
@@ -65,16 +70,16 @@ public class Manager {
 
 
     public void songSliderChangeEvent() {
-        if (!isActivatedByInterval && songPlayer!=null &&!songSliderMouseDown) {
+        if (!isActivatedByInterval && songPlayer != null && !songSliderMouseDown) {
             int sliderValue = bottomPanel.getSliderValue();
             try {
-                songPlayer.goToFrame(sliderValue * activeSong.getFrameCount() / BottomPanel.MAX_SLIDER_VALUE,isPlayingSong);
+                songPlayer.goToFrame(sliderValue * activeSong.getFrameCount() / BottomPanel.MAX_SLIDER_VALUE, isPlayingSong);
             } catch (FileNotFoundException | JavaLayerException e) {
                 e.printStackTrace();
             }
         }
 
-        if(isPlayingSong && !songPlayer.isPlaying()){
+        if (isPlayingSong && !songPlayer.isPlaying()) {
             try {
                 songPlayer.resume();
             } catch (FileNotFoundException | JavaLayerException e) {
@@ -103,34 +108,121 @@ public class Manager {
         } catch (FileNotFoundException | JavaLayerException e) {
             e.printStackTrace();
         }
-        isPlayingSong=true;
+        isPlayingSong = true;
         songPlayer.play();
 
     }
 
     public void setSliderMouseDownEvent() {
-        songSliderMouseDown=true;
+        songSliderMouseDown = true;
     }
+
     public void setSliderMouseUpEvent() {
-        songSliderMouseDown=false;
+        songSliderMouseDown = false;
         songSliderChangeEvent();
         updateSlider();
-
     }
+
     public void setSliderMouseExitEvent() {
 
     }
+
     public void songSliderChangeEventCall() {
 
     }
 
-    public void volumeSliderMouseUpEvent(int sliderValue){
-        float masterVolume=(float)sliderValue/BottomPanel.MAX_SLIDER_VALUE;
+    public void volumeSliderMouseUpEvent(int sliderValue) {
+        float masterVolume = (float) sliderValue / BottomPanel.MAX_SLIDER_VALUE;
         Audio.setMasterOutputVolume(masterVolume);
     }
 
     public void initialSetting() {
-        bottomPanel.setVolumeSliderValue( (int)(Audio.getMasterOutputVolume()*BottomPanel.MAX_SLIDER_VALUE));
+        bottomPanel.setVolumeSliderValue((int) (Audio.getMasterOutputVolume() * BottomPanel.MAX_SLIDER_VALUE));
 
+    }
+
+    public void setArtistsListToMain() {
+        JPanel artistList = mainFrame.getArtistsPanel();
+        mainFrame.setMainPanel(artistList);
+    }
+
+    public void setAlbumsListTMain() {
+        JPanel albumList = mainFrame.getAlbumsPanel();
+        mainFrame.setMainPanel(albumList);
+    }
+
+    public void setFavoritePlayListToMain() {
+        JPanel favList = mainFrame.getFavoriteSongsPanel();
+        mainFrame.setMainPanel(favList);
+    }
+
+    public void setPlayListsListToMain() {
+        JPanel playlists = mainFrame.getPlayListsPanel();
+        mainFrame.setMainPanel(playlists);
+    }
+
+    public void setSongsListToMain() {
+        JPanel songs = mainFrame.getSongsPanel();
+        mainFrame.setMainPanel(songs);
+    }
+
+    public void openAddSongsDialog() {
+        System.out.println("Add song method called ...");
+
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Choose a mp3 songs or its parent directories ...");
+        fileChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+        fileChooser.setMultiSelectionEnabled(true);
+        fileChooser.setApproveButtonText("Add Songs");
+        int dialog = fileChooser.showOpenDialog(mainFrame);
+
+        if (dialog == JFileChooser.APPROVE_OPTION) {
+            File[] files = fileChooser.getSelectedFiles();
+            Arrays.asList(files).forEach(file -> {
+                        if (file.isDirectory()) {
+                            addSongFilesFromDirectory(file);
+                        } else {
+                            addSongFile(file);
+                        }
+                    }
+            );
+        }
+    }
+
+    private void addSongFilesFromDirectory(File dir) {
+        File[] files = dir.listFiles();
+        if (files != null) {
+            Arrays.asList(files).forEach(file -> {
+                if (file.isDirectory()) {
+                    addSongFilesFromDirectory(file);
+                } else {
+                    addSongFile(file);
+                }
+            });
+        }
+    }
+
+    private void addSongFile(File file) {
+        Optional<String> extension = getExtensionByStringHandling(file.getName());
+        if (extension.isPresent() & extension.get().equals("mp3")) {
+            try {
+                Song newSong = new Song(file);
+                songs.add(newSong);
+
+                //create and add song card to Songs
+                mainFrame.getSongsPanel().addSongCard(newSong.getTitle(), newSong.getAlbum(), newSong.getArtist(), newSong.getAlbumImageAsSize(48, 48), newSong.getSongLengthMilliseconds(), false);
+
+                //todo add to or create cards artist and album !
+            } catch (Exception e) {
+                //todo handle !! by showing a error dialog? I don't khnow !
+            }
+        }
+    }
+
+    //todo this method must be changed .... has some problem
+    private Optional<String> getExtensionByStringHandling(String filename) {
+        return Optional.ofNullable(filename)
+                .filter(f -> f.contains("."))
+                .map(f -> f.substring(filename.lastIndexOf(".") + 1));
     }
 }
