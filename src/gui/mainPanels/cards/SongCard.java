@@ -60,7 +60,7 @@ public class SongCard extends JPanel {
         musicNameLabel.setBorder(padding);
         gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridwidth = GridBagConstraints.REMAINDER;
+        gridBagConstraints.gridwidth = 1;
         gridBagConstraints.gridheight = 1;
         gridBagConstraints.weightx = 1;
         add(musicNameLabel, gridBagConstraints);
@@ -71,7 +71,7 @@ public class SongCard extends JPanel {
         albumNameLabel.setBorder(padding);
         gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridwidth = GridBagConstraints.REMAINDER;
+        gridBagConstraints.gridwidth = 1;
         add(albumNameLabel, gridBagConstraints);
 
         // song length Label
