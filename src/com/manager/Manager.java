@@ -7,7 +7,6 @@ import com.mpatric.mp3agic.UnsupportedTagException;
 import gui.MainFrame;
 import gui.bottomPanels.BottomPanel;
 import javazoom.jl.decoder.JavaLayerException;
-import mdlaf.MaterialLookAndFeel;
 import media.music.Song;
 import mediaplayer.advancedPlayerWrapper.AdvancedPlayerWrapper;
 
@@ -23,7 +22,8 @@ import java.util.Arrays;
  * Most of it is HardCoded for now
  */
 public class Manager {
-    private static final String songURL = "C:\\Users\\Ali\\Downloads\\Ehaam - Khoda Negahdar [128].mp3";
+    private static final String songURL = "D:\\Downloads\\Compressed\\2000 The Marshall Mathers LP\\2000 The Marshall Mathers LP\\08 The Real Slim Shady.mp3";
+    private static final String secondSongUrl="D:\\Downloads\\Compressed\\2000 The Marshall Mathers LP\\2000 The Marshall Mathers LP\\\\07 The Way I Am.mp3";
     private MainFrame mainFrame;
     private BottomPanel bottomPanel;
     private AdvancedPlayerWrapper songPlayer;
@@ -32,9 +32,9 @@ public class Manager {
     private boolean songSliderMouseDown = false;
     private boolean isPlayingSong = false;
     private ArrayList<Song> songs;
+    private static volatile boolean thereIsAFinishedSong =false;
 
-    //todo remove the singleton
-    //initialize every eventListener in this class
+
     public Manager() {
         mainFrame = new MainFrame("Jpotify");
         mainFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -59,7 +59,42 @@ public class Manager {
         if (songPlayer != null && songPlayer.isPlaying() && !songSliderMouseDown) {
             updateSlider();
         }
+
+        if( Manager.thereIsAFinishedSong){
+            checkAfterFinishedSong();
+            Manager.thereIsAFinishedSong =false;
+        }
+
         isActivatedByInterval = false;
+    }
+
+    private void checkAfterFinishedSong() {
+        //todo it goes to nex currently
+        try {
+            activeSong = new Song(new File(secondSongUrl));
+        } catch (InvalidDataException | IOException | UnsupportedTagException e) {
+            e.printStackTrace();
+        }
+        try {
+            bottomPanel.setSong(activeSong);
+        } catch (InvalidDataException | IOException | UnsupportedTagException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            songPlayer.setSongFile(activeSong.getSource());
+        } catch (IOException | JavaLayerException e) {
+            e.printStackTrace();
+        }
+        try {
+            System.out.println(":D");
+
+            songPlayer.resume();
+        } catch (JavaLayerException | IOException e) {
+            e.printStackTrace();
+        }
+
+
     }
 
     private void updateSlider() {
@@ -73,7 +108,7 @@ public class Manager {
             int sliderValue = bottomPanel.getSliderValue();
             try {
                 songPlayer.goToFrame(sliderValue * activeSong.getFrameCount() / BottomPanel.MAX_SLIDER_VALUE, isPlayingSong);
-            } catch (FileNotFoundException | JavaLayerException e) {
+            } catch (IOException | JavaLayerException e) {
                 e.printStackTrace();
             }
         }
@@ -81,7 +116,7 @@ public class Manager {
         if (isPlayingSong && !songPlayer.isPlaying()) {
             try {
                 songPlayer.resume();
-            } catch (FileNotFoundException | JavaLayerException e) {
+            } catch (JavaLayerException | IOException e) {
                 e.printStackTrace();
             }
         }
@@ -102,12 +137,18 @@ public class Manager {
 
         songPlayer = null;
         try {
-            songPlayer = new AdvancedPlayerWrapper(activeSong.getSource(), activeSong.getMSPerFrame());
+
+            songPlayer = new AdvancedPlayerWrapper(activeSong.getSource());
+
         } catch (FileNotFoundException | JavaLayerException e) {
             e.printStackTrace();
         }
         isPlayingSong = true;
-        songPlayer.play();
+        try {
+            songPlayer.resume();
+        } catch (JavaLayerException | IOException e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -226,6 +267,10 @@ public class Manager {
                 //todo handle !! by showing a error dialog? I don't know !
             }
         }
+    }
+
+    public static synchronized void setFinishedSong(boolean thereIsAFinishedSong) {
+        Manager.thereIsAFinishedSong =thereIsAFinishedSong;
     }
 
 }
