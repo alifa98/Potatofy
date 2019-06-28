@@ -18,7 +18,6 @@ public class SongsPanel extends JPanel {
         SongCard newCard = new SongCard(musicName, albumName, artistName, coverFile, musicLength, isFavorite);
         add(newCard);
         songCards.add(newCard);
-        validate();
     }
 
     public void setCardState(String songName, boolean setToPlaying) {

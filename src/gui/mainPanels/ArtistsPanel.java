@@ -18,7 +18,6 @@ public class ArtistsPanel extends JPanel {
         ArtistCard newCard = new ArtistCard(artistName, coverFile, songNumber);
         add(newCard);
         artistCards.add(newCard);
-        validate();
     }
 
     public void setCardState(String artistName, boolean setToPlaying) {
