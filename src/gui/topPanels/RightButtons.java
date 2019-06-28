@@ -112,35 +112,30 @@ public class RightButtons extends JPanel {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                manager.setPlayListsListToMain();
             }
         });
         albumsButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                manager.setAlbumsListTMain();
             }
         });
         artistButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                manager.setArtistsListToMain();
             }
         });
         favoritePlayListButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                manager.setFavoritePlayListToMain();
             }
         });
         songsButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                manager.setSongsListToMain();
             }
         });
         videoButton.addMouseListener(new MouseAdapter() {
