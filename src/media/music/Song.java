@@ -21,6 +21,8 @@ public class Song {
     private long songLengthMilliseconds;//song length in milliseconds
     private int frameCount;
     private double sampleRate;
+    private boolean isFavorite = false;
+
     public Song(File source) throws InvalidDataException, IOException, UnsupportedTagException {
         this.source = source;
         updateFields();
@@ -107,8 +109,16 @@ public class Song {
     public double getMSPerFrame() {
         return songLengthMilliseconds / frameCount;
     }
-    
-    public boolean isValid(){
+
+    public boolean isValid() {
         return source.exists();
+    }
+
+    public boolean isFavorite() {
+        return this.isFavorite;
+    }
+
+    public void setFavorite(boolean isFavorite) {
+        this.isFavorite = isFavorite;
     }
 }
