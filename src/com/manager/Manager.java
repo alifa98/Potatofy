@@ -45,6 +45,7 @@ public class Manager {
     private int activeSongIndex = 0;
     private int volumeSliderValue;
     private PanelState panelState = PanelState.SONGS;
+    private boolean incrementedByNext=false;
 
     // flag for panel state
     private ArrayList<Song> possiblePlayingQueue;
@@ -80,6 +81,7 @@ public class Manager {
     }
 
     private void onCloseEvent() {
+        mainFrame.dispose();
         if (songPlayer != null) {
             MetaData metaData = new MetaData(activeSong, songPlayer.getCurrentFrame(), volumeSliderValue);
             FileCreator fileManager = new FileCreator();
@@ -90,7 +92,7 @@ public class Manager {
                 e.printStackTrace();
             }
         }
-        mainFrame.dispose();
+
         System.exit(0);
     }
 
@@ -114,12 +116,17 @@ public class Manager {
     }
 
     private void checkAfterFinishedSong() {
-        //todo it goes to nex currently
-        if (repeatIsActive) {
-            playActiveSong();
-        } else {
-            incrementActiveSongIndex();
+        if(!incrementedByNext){
+            if (repeatIsActive) {
+                playActiveSong();
+            } else {
+                incrementActiveSongIndex();
+            }
+        }else{
+            incrementedByNext=false;
+            //playActiveSong();
         }
+
 
     }
 
@@ -327,6 +334,7 @@ public class Manager {
     }
 
     public void nextClickEvent() {
+        incrementedByNext=true;
         incrementActiveSongIndex();
         playActiveSong();
         System.out.println("here");
@@ -377,6 +385,8 @@ public class Manager {
         if (playingQueue == null) return false;
         if (playingQueue.size() == 0) return false;
 
+        if(activeSongIndex>=playingQueue.size())
+            activeSongIndex=0;
         activeSong = playingQueue.get(activeSongIndex);
 
         if (!activeSong.isValid()) {
@@ -612,6 +622,95 @@ public class Manager {
         mainFrame.getSidePanel().addCard(new UserInfoCard(new File("src\\gui\\icons\\png\\64\\default-boy-avatar.png"),"Ali Faraji",data2,"GooD timeS"));
 
     }
+
+    public void songCardPlayEvent(Song song) {
+        int i;
+        switch (panelState) {
+            case SONGS:
+
+                for (i = 0; i < songs.size(); i++) {
+                    if (songs.get(i) == song) break;
+                }
+                if (i == songs.size()) {
+                    activeSongIndex = 0;
+                    playingQueue = new ArrayList<>(songs);
+                } else {
+                    playingQueue = new ArrayList<>(songs);
+                    activeSongIndex = i;
+                }
+
+                break;
+            case FAVORITE:
+
+                ArrayList<Song> fav = getFavoriteSongs();
+                for (i = 0; i < fav.size(); i++) {
+                    if (fav.get(i) == song) break;
+                }
+                if (i == fav.size()) {
+                    activeSongIndex = 0;
+                    playingQueue = fav;
+                } else {
+                    activeSongIndex = i;
+                    playingQueue = fav;
+                }
+
+                break;
+            case SHARED:
+                ArrayList<Song> shared = getSharedSongs();
+                for (i = 0; i < shared.size(); i++) {
+                    if (shared.get(i) == song) break;
+                }
+                if (i == shared.size()) {
+                    activeSongIndex = 0;
+                    playingQueue = (shared);
+                } else {
+                    playingQueue = shared;
+                    activeSongIndex = i;
+                }
+
+                break;
+
+            case ALBUM:
+            case PLAYLIST:
+                if(possiblePlayingQueue==null)return;
+                for (i = 0; i < possiblePlayingQueue.size(); i++) {
+                    if (possiblePlayingQueue.get(i) == song) break;
+                }
+                if (i == possiblePlayingQueue.size()) {
+                    activeSongIndex = 0;
+                    playingQueue = new ArrayList<>(possiblePlayingQueue);
+                } else {
+                    playingQueue = new ArrayList<>(possiblePlayingQueue);
+                    activeSongIndex = i;
+                }
+
+                break;
+
+
+        }
+        incrementedByNext=true;
+        bottomPanel.getControlButtons().setPlaying(true);
+        playActiveSong();
+
+
+    }
+
+    private ArrayList<Song> getFavoriteSongs() {
+        ArrayList<Song> result = new ArrayList<>();
+        for (Song song : songs) {
+            if (song.isFavorite()) result.add(song);
+        }
+        return result;
+    }
+
+    private ArrayList<Song> getSharedSongs() {
+        ArrayList<Song> result = new ArrayList<>();
+        for (Song song : songs) {
+            if (song.isShared()) result.add(song);
+        }
+        return result;
+    }
+
 }
 
 
