@@ -110,7 +110,6 @@ public class Manager {
             playActiveSong();
         } else {
             incrementActiveSongIndex();
-            playActiveSong();
         }
 
     }
@@ -262,6 +261,7 @@ public class Manager {
         try {
             Song newSong = new Song(new File(serializableSong.getSource()));
             newSong.setFavorite(serializableSong.isFavorite());
+            newSong.setShared(serializableSong.isShared());
             newSong.setTimeStamp(serializableSong.getLastPlayTime());
             boolean songIsExist = false;
             for (Song s : songs) { //check and prevent duplicate adding
