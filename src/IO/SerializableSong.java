@@ -8,12 +8,14 @@ public class SerializableSong implements Serializable {
     private String source;
     private long lastPlayTime;
     private boolean isFavorite;
+    private boolean isShared;
 
 
     void setDataFromSong(Song song){
         source=song.getSource().getAbsolutePath();
         lastPlayTime=song.getTimeStamp();
         isFavorite=song.isFavorite();
+        isShared=song.isShared();
     }
 
     public String getSource() {
@@ -26,5 +28,9 @@ public class SerializableSong implements Serializable {
 
     public boolean isFavorite() {
         return isFavorite;
+    }
+
+    public boolean isShared() {
+        return isShared;
     }
 }
