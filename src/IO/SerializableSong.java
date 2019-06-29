@@ -1,5 +1,7 @@
 package IO;
 
+import media.music.Song;
+
 import java.io.Serializable;
 
 public class SerializableSong implements Serializable {
@@ -7,4 +9,22 @@ public class SerializableSong implements Serializable {
     private long lastPlayTime;
     private boolean isFavorite;
 
+
+    void setDataFromSong(Song song){
+        source=song.getSource().getAbsolutePath();
+        lastPlayTime=song.getTimeStamp();
+        isFavorite=song.isFavorite();
+    }
+
+    public String getSource() {
+        return source;
+    }
+
+    public long getLastPlayTime() {
+        return lastPlayTime;
+    }
+
+    public boolean isFavorite() {
+        return isFavorite;
+    }
 }
