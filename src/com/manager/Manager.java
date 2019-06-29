@@ -9,6 +9,7 @@ import gui.bottomPanels.ControlButtons;
 import javazoom.jl.decoder.JavaLayerException;
 import media.music.Song;
 import mediaplayer.advancedPlayerWrapper.AdvancedPlayerWrapper;
+import volumeController.Controller;
 
 import javax.swing.*;
 import java.io.File;
@@ -142,12 +143,11 @@ public class Manager {
     }
 
     public void volumeSliderMouseUpEvent(int sliderValue) {
-        float masterVolume = (float) sliderValue / BottomPanel.MAX_SLIDER_VALUE;
-        Audio.setMasterOutputVolume(masterVolume);
+        Controller.setSystemVolume(sliderValue);
     }
 
     public void initialSetting() {
-        bottomPanel.setVolumeSliderValue((int) (Audio.getMasterOutputVolume() * BottomPanel.MAX_SLIDER_VALUE));
+        bottomPanel.setVolumeSliderValue(BottomPanel.MAX_SLIDER_VALUE);
 
     }
 
