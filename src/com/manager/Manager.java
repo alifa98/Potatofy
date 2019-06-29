@@ -110,6 +110,7 @@ public class Manager {
             playActiveSong();
         } else {
             incrementActiveSongIndex();
+            playActiveSong();
         }
 
     }
