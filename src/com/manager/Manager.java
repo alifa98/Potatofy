@@ -115,7 +115,7 @@ public class Manager {
     }
 
     private void incrementActiveSongIndex() {
-        if (playingQueue.size() <= activeSongIndex) {
+        if (playingQueue.size() <= activeSongIndex -1) {
             activeSongIndex = 0;
         } else {
             activeSongIndex++;
