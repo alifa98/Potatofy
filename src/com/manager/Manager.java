@@ -115,6 +115,7 @@ public class Manager {
                 playActiveSong();
             } else {
                 incrementActiveSongIndex();
+                playActiveSong();
             }
         }else{
             incrementedByNext=false;
