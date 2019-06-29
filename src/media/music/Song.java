@@ -56,6 +56,16 @@ public class Song {
         frameCount = mp3File.getFrameCount();
         songLengthMilliseconds = mp3File.getLengthInMilliseconds();
         sampleRate = mp3File.getSampleRate();
+
+        //return here if you want to use id3v1 tags
+        if (!mp3File.hasId3v2Tag()) {
+            return;
+        }
+        ID3v2 id3v2Tag = mp3File.getId3v2Tag();
+        album=id3v2Tag.getAlbum();
+        artist=id3v2Tag.getArtist();
+        title = id3v2Tag.getTitle();
+
     }
 
     public String getArtist() {
