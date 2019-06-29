@@ -121,21 +121,21 @@ public class SongCard extends JPanel {
         musicNameLabel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                //  todo call a function in manager to play this song
+                manager.songCardPlayEvent(song);
             }
         });
 
         albumNameLabel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                //  todo call a function in manager to play this song
+                manager.songCardPlayEvent(song);
             }
         });
 
         coverPicture.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                //  todo call a function in manager to play this song
+                manager.songCardPlayEvent(song);
             }
         });
 

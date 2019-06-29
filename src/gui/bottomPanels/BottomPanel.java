@@ -128,6 +128,7 @@ public class BottomPanel extends JPanel {
     }
 
 
-
-
+    public ControlButtons getControlButtons() {
+        return controlButtons;
+    }
 }
