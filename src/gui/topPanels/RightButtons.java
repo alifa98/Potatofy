@@ -43,14 +43,14 @@ public class RightButtons extends JPanel {
         addSongButton.addMouseListener(MaterialUIMovement.getMovement(addSongButton, CustomColors.LIGHTER_GRAY));
         add(addSongButton);
 
-        playListsButton = new JButton("Play Lists");
-        Icon playListsButtonIcon = IconFontSwing.buildIcon(GoogleMaterialDesignIcons.FORMAT_LIST_BULLETED, 25, new Color(0, 0, 0));
-        playListsButton.setIcon(playListsButtonIcon);
-        playListsButton.setBorder(paddingForElements);
-        playListsButton.setMargin(marginInsets);
-        playListsButton.setBackground(MaterialColors.WHITE);
-        playListsButton.addMouseListener(MaterialUIMovement.getMovement(playListsButton, CustomColors.LIGHTER_GRAY));
-        add(playListsButton);
+        songsButton = new JButton("Songs");
+        Icon songsButtonIcon = IconFontSwing.buildIcon(GoogleMaterialDesignIcons.LIBRARY_MUSIC, 25, new Color(0, 0, 0));
+        songsButton.setIcon(songsButtonIcon);
+        songsButton.setBorder(paddingForElements);
+        songsButton.setMargin(marginInsets);
+        songsButton.setBackground(MaterialColors.WHITE);
+        songsButton.addMouseListener(MaterialUIMovement.getMovement(songsButton, CustomColors.LIGHTER_GRAY));
+        add(songsButton);
 
         favoritePlayListButton = new JButton("Favorite Songs");
         Icon favoritePlayListButtonIcon = IconFontSwing.buildIcon(GoogleMaterialDesignIcons.FAVORITE, 25, new Color(0, 0, 0));
@@ -61,15 +61,6 @@ public class RightButtons extends JPanel {
         favoritePlayListButton.addMouseListener(MaterialUIMovement.getMovement(favoritePlayListButton, CustomColors.LIGHTER_GRAY));
         add(favoritePlayListButton);
 
-        songsButton = new JButton("Songs");
-        Icon songsButtonIcon = IconFontSwing.buildIcon(GoogleMaterialDesignIcons.LIBRARY_MUSIC, 25, new Color(0, 0, 0));
-        songsButton.setIcon(songsButtonIcon);
-        songsButton.setBorder(paddingForElements);
-        songsButton.setMargin(marginInsets);
-        songsButton.setBackground(MaterialColors.WHITE);
-        songsButton.addMouseListener(MaterialUIMovement.getMovement(songsButton, CustomColors.LIGHTER_GRAY));
-        add(songsButton);
-
         albumsButton = new JButton("Albums");
         Icon albumsButtonIcon = IconFontSwing.buildIcon(GoogleMaterialDesignIcons.RECENT_ACTORS, 25, new Color(0, 0, 0));
         albumsButton.setIcon(albumsButtonIcon);
@@ -78,6 +69,15 @@ public class RightButtons extends JPanel {
         albumsButton.setBackground(MaterialColors.WHITE);
         albumsButton.addMouseListener(MaterialUIMovement.getMovement(albumsButton, CustomColors.LIGHTER_GRAY));
         add(albumsButton);
+
+        playListsButton = new JButton("Play Lists");
+        Icon playListsButtonIcon = IconFontSwing.buildIcon(GoogleMaterialDesignIcons.FORMAT_LIST_BULLETED, 25, new Color(0, 0, 0));
+        playListsButton.setIcon(playListsButtonIcon);
+        playListsButton.setBorder(paddingForElements);
+        playListsButton.setMargin(marginInsets);
+        playListsButton.setBackground(MaterialColors.WHITE);
+        playListsButton.addMouseListener(MaterialUIMovement.getMovement(playListsButton, CustomColors.LIGHTER_GRAY));
+        add(playListsButton);
 
         editPlayListsButton = new JButton("Edit PlayLists");
         Icon editPlayListsButtonIcon = IconFontSwing.buildIcon(GoogleMaterialDesignIcons.EDIT, 25, new Color(0, 0, 0));
@@ -116,7 +116,7 @@ public class RightButtons extends JPanel {
         albumsButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-
+                manager.showAlbums();
             }
         });
 

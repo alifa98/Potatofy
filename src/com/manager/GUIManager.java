@@ -3,6 +3,7 @@ package com.manager;
 import gui.CustomScrollBarUI;
 import gui.MainFrame;
 import gui.mainPanels.MyPanel;
+import media.music.Album;
 import media.music.Song;
 
 import javax.swing.*;
@@ -37,4 +38,14 @@ public class GUIManager {
         frame.setMainPanel(getCustomJScollPaneJ(panel));
         frame.validate();
     }
+
+    public static void showAlbums(MainFrame frame, ArrayList<Album> albums, Manager manager) {
+        MyPanel panel = new MyPanel(false, manager);
+        for (Album a : albums) {
+                panel.addCard(a);
+        }
+        frame.setMainPanel(getCustomJScollPaneJ(panel));
+        frame.validate();
+    }
+
 }

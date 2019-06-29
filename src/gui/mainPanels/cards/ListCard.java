@@ -42,26 +42,29 @@ public class ListCard extends JPanel {
 
         // List Title
         JLabel titleLabel = new JLabel(title);
-        Font big = MaterialFonts.BLACK.deriveFont(30f);
+        Font big = MaterialFonts.BLACK.deriveFont(15f);
         titleLabel.setFont(big);
         titleLabel.setBorder(padding);
-        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.gridwidth = 1;
         gridBagConstraints.gridheight = 2;
+        gridBagConstraints.weightx = 1;
         add(titleLabel, gridBagConstraints);
 
         //List info
-        JLabel songsNumber = new JLabel(songs.size() + " Songs");
+        JLabel songsNumber = new JLabel("Has " + ((songs.size() == 1) ? "One Song" : songs.size()+" Songs" ));
         songsNumber.setFont(MaterialFonts.LIGHT);
         songsNumber.setBorder(padding);
         gridBagConstraints.anchor = GridBagConstraints.LINE_END;
-        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.gridwidth = 1;
         gridBagConstraints.gridheight = 2;
+        gridBagConstraints.weightx = 0;
         add(songsNumber, gridBagConstraints);
     }
+
     public void setEventListeners(Manager manager) {
         this.addMouseListener(new MouseAdapter() {
             @Override
@@ -76,7 +79,8 @@ public class ListCard extends JPanel {
     private ImageIcon getCover() {
         if (songs.size() > 0) {
             return songs.get(0).getAlbumImageAsSize(48, 48);
+        } else {
+            return new ImageIcon(Toolkit.getDefaultToolkit().getImage("src\\gui\\icons\\png\\48\\playlists.png"));
         }
-        return new ImageIcon(Toolkit.getDefaultToolkit().getImage("src\\gui\\icons\\png\\64\\playlists.png").getScaledInstance(48, 48, Image.SCALE_DEFAULT));
     }
 }
