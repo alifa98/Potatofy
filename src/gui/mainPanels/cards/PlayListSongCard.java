@@ -13,14 +13,15 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 public class PlayListSongCard extends SongCard {
     private JLabel sweepUpLabel;
     private JLabel sweepDownLabel;
-    private PlayList playlist;
-    public PlayListSongCard(Song song, PlayList playlist) {
+    private ArrayList<Song> playlistsongs;
+    public PlayListSongCard(Song song, ArrayList<Song> songs) {
         super(song);
-        this.playlist = playlist;
+        this.playlistsongs = songs;
 
         GridBagConstraints gridBagConstraints = new GridBagConstraints();
         gridBagConstraints.anchor = GridBagConstraints.LINE_END;
@@ -46,13 +47,13 @@ public class PlayListSongCard extends SongCard {
         sweepUpLabel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                //todo call sweep up method in manager( passing song and playlist ) and re create playlist panel and show;
+                //todo call sweep up method in manager( passing song and ArrayList to swap ) and re create playlist panel and show;
             }
         });
         sweepUpLabel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                //todo call sweep up method in manager( passing song and playlist ) and re create playlist panel and show;
+                //todo call sweep up method in manager( passing song and ArrayList to swap) and re create playlist panel and show;
             }
         });
     }

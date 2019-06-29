@@ -19,8 +19,10 @@ public class ListCard extends JPanel {
     private Border padding = new EmptyBorder(new Insets(5, 5, 5, 20)); //padding for elements
     private ArrayList<Song> songs;
     private boolean isPlayList;
+    private String title;
 
     public ListCard(String title, ArrayList<Song> songs, boolean isPlaylist) {
+        this.title = title;
         this.songs = songs;
         isPlayList = isPlaylist;
 
@@ -53,7 +55,7 @@ public class ListCard extends JPanel {
         add(titleLabel, gridBagConstraints);
 
         //List info
-        JLabel songsNumber = new JLabel("Has " + ((songs.size() == 1) ? "One Song" : songs.size()+" Songs" ));
+        JLabel songsNumber = new JLabel("Has " + ((songs.size() == 1) ? "One Song" : songs.size() + " Songs"));
         songsNumber.setFont(MaterialFonts.LIGHT);
         songsNumber.setBorder(padding);
         gridBagConstraints.anchor = GridBagConstraints.LINE_END;
@@ -71,6 +73,7 @@ public class ListCard extends JPanel {
             public void mouseClicked(MouseEvent e) {
                 //todo call a method in manager that creates a Titled panels (pass title and array list) and Shows this card array List
                 // we must send isPlayList boolean in order to method create PlayListSongCard(Swap-able)
+                manager.showTitledPanel(title, songs, isPlayList);
             }
         });
 

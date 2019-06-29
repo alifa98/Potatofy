@@ -211,13 +211,13 @@ public class Manager {
             try {
                 Song newSong = new Song(file);
                 boolean songIsExist = false;
-                for (Song s :  songs) { //check and prevent duplicate adding
-                    if(newSong.getSource().getAbsolutePath().equals(s.getSource().getAbsolutePath())) {
+                for (Song s : songs) { //check and prevent duplicate adding
+                    if (newSong.getSource().getAbsolutePath().equals(s.getSource().getAbsolutePath())) {
                         songIsExist = true;
                         break;
                     }
                 }
-                if(!songIsExist) {
+                if (!songIsExist) {
                     addSongToSongsArrayList(newSong);
                 }
 
@@ -392,7 +392,12 @@ public class Manager {
     public void showFavoriteSongs() {
         GUIManager.showFavoriteSongs(mainFrame, songs, this);
     }
+
     public void showAlbums() {
         GUIManager.showAlbums(mainFrame, albums, this);
+    }
+
+    public void showTitledPanel(String title, ArrayList<Song> songs, boolean isPlalistt) {
+        GUIManager.showTitledPanel(mainFrame, title, songs, isPlalistt, this);
     }
 }
