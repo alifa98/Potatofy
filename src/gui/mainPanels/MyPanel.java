@@ -44,6 +44,6 @@ public class MyPanel extends JPanel {
     public void addCard(Song song) {  //creates card for normal songs and album songs
         SongCard newcard = new SongCard(song);
         add(newcard);
-        newcard.setEventListeners(manager);
+       newcard.setEventListeners(manager);
     }
 }

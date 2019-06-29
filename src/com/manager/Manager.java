@@ -18,8 +18,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Manager {
-    private static final String songURL = "D:\\Downloads\\Compressed\\2000 The Marshall Mathers LP\\2000 The Marshall Mathers LP\\08 The Real Slim Shady.mp3";
-    private static final String secondSongUrl = "D:\\Downloads\\Compressed\\2000 The Marshall Mathers LP\\2000 The Marshall Mathers LP\\\\07 The Way I Am.mp3";
     private static volatile boolean thereIsAFinishedSong = false;
     private MainFrame mainFrame;
     private BottomPanel bottomPanel;
@@ -123,35 +121,7 @@ public class Manager {
         }
     }
 
-    public void playTheHardCodedSong() {
-        activeSong = null;
-        try {
-            activeSong = new Song(new File(songURL));
-        } catch (InvalidDataException | IOException | UnsupportedTagException e) {
-            e.printStackTrace();
-        }
-        try {
-            bottomPanel.setSong(activeSong);
-        } catch (InvalidDataException | IOException | UnsupportedTagException e) {
-            e.printStackTrace();
-        }
 
-        songPlayer = null;
-        try {
-
-            songPlayer = new AdvancedPlayerWrapper(activeSong.getSource());
-
-        } catch (FileNotFoundException | JavaLayerException e) {
-            e.printStackTrace();
-        }
-        isPlayingSong = true;
-        try {
-            songPlayer.resume();
-        } catch (JavaLayerException | IOException e) {
-            e.printStackTrace();
-        }
-
-    }
 
     public void setSliderMouseDownEvent() {
         songSliderMouseDown = true;

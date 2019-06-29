@@ -21,7 +21,6 @@ import java.awt.event.MouseEvent;
 public class SongCard extends JPanel {
     private Border padding = new EmptyBorder(new Insets(5, 5, 5, 20)); //padding for elements
     protected Song song;
-    private JLabel stateIcon;
     private ImageLabel coverPicture;
     private JLabel musicNameLabel;
     private JLabel albumNameLabel;
@@ -36,17 +35,9 @@ public class SongCard extends JPanel {
         gridBagConstraints.anchor = GridBagConstraints.LINE_START;
         addMouseListener(MaterialUIMovement.getMovement(this, CustomColors.LIGHTER_GRAY));
 
-
-        //Status icon
-        stateIcon = new JLabel(IconFontSwing.buildIcon(GoogleMaterialDesignIcons.PAUSE, 25, CustomColors.DARK_GRAY));
-        stateIcon.setBorder(padding);
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridheight = 2;
-        add(stateIcon, gridBagConstraints);
-
         //Song Cover
         coverPicture = new ImageLabel(song.getAlbumImageAsSize(48, 48));
+        coverPicture.addMouseListener(MaterialUIMovement.getMovement(this, CustomColors.LIGHTER_GRAY));
         coverPicture.setBorder(padding);
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
@@ -56,6 +47,7 @@ public class SongCard extends JPanel {
 
         // music name label
         musicNameLabel = new JLabel(song.getTitle());
+        musicNameLabel.addMouseListener(MaterialUIMovement.getMovement(this, CustomColors.LIGHTER_GRAY));
         musicNameLabel.setFont(MaterialFonts.MEDIUM);
         musicNameLabel.setBorder(padding);
         gridBagConstraints.gridx = 3;
@@ -67,6 +59,7 @@ public class SongCard extends JPanel {
 
         // album name and artist Label
         albumNameLabel = new JLabel(song.getAlbum() + " - " + song.getArtist());
+        albumNameLabel.addMouseListener(MaterialUIMovement.getMovement(this, CustomColors.LIGHTER_GRAY));
         albumNameLabel.setFont(MaterialFonts.ITALIC);
         albumNameLabel.setBorder(padding);
         gridBagConstraints.gridx = 3;
@@ -76,6 +69,7 @@ public class SongCard extends JPanel {
 
         // song length Label
         JLabel songLength = new JLabel(TimeData.reformatMilisecForSong(song.getSongLengthMilliseconds()));
+        songLength.addMouseListener(MaterialUIMovement.getMovement(this, CustomColors.LIGHTER_GRAY));
         songLength.setFont(MaterialFonts.LIGHT);
         songLength.setBorder(padding);
         gridBagConstraints.anchor = GridBagConstraints.LINE_END;
@@ -93,6 +87,7 @@ public class SongCard extends JPanel {
             favoriteIcon = IconFontSwing.buildIcon(GoogleMaterialDesignIcons.FAVORITE_BORDER, 20, MaterialColors.BLACK);
         }
         favoriteIconLabel = new JLabel(favoriteIcon);
+        favoriteIconLabel.addMouseListener(MaterialUIMovement.getMovement(this, CustomColors.LIGHTER_GRAY));
         favoriteIconLabel.setBorder(padding);
         gridBagConstraints.gridx = 5;
         gridBagConstraints.gridy = 0;
@@ -106,20 +101,11 @@ public class SongCard extends JPanel {
         return song;
     }
 
-    public void setStateIcon(boolean isPlaying) {
-        if (isPlaying) {
-            stateIcon.setIcon(IconFontSwing.buildIcon(GoogleMaterialDesignIcons.PLAY_ARROW, 25, CustomColors.PRIMARY));
-        } else {
-            stateIcon.setIcon(IconFontSwing.buildIcon(GoogleMaterialDesignIcons.PAUSE, 25, CustomColors.DARK_GRAY));
-        }
-    }
-
     public void setEventListeners(Manager manager) {
         musicNameLabel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 //  todo call a function in manager to play this song
-                thisCardObject.setStateIcon(true);
             }
         });
 
@@ -127,22 +113,13 @@ public class SongCard extends JPanel {
             @Override
             public void mouseClicked(MouseEvent e) {
                 //  todo call a function in manager to play this song
-                thisCardObject.setStateIcon(true);
             }
         });
 
-        stateIcon.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                //  todo call a function in manager to play this song
-                thisCardObject.setStateIcon(true);
-            }
-        });
         coverPicture.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 //  todo call a function in manager to play this song
-                thisCardObject.setStateIcon(true);
             }
         });
 
