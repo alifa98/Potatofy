@@ -475,7 +475,16 @@ public class Manager {
         if (index == 0) {
             //todo swap and show list again
         }
+
     }
+    public void swapDownSong(Song song, ArrayList<Song> list, String title) {
+        int index = list.indexOf(song);
+        if (index == 0) {
+            //todo swap and show list again
+        }
+
+    }
+
 
     public void showSharedPlayList() {
         GUIManager.showSharedSongs(mainFrame, songs, this);
