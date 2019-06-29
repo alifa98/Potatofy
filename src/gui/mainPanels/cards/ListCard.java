@@ -17,9 +17,9 @@ import java.util.ArrayList;
 
 public class ListCard extends JPanel {
     private Border padding = new EmptyBorder(new Insets(5, 5, 5, 20)); //padding for elements
-    private ArrayList<Song> songs;
-    private boolean isPlayList;
-    private String title;
+    protected ArrayList<Song> songs;
+    protected boolean isPlayList;
+    protected String title;
 
     public ListCard(String title, ArrayList<Song> songs, boolean isPlaylist) {
         this.title = title;
@@ -72,12 +72,9 @@ public class ListCard extends JPanel {
         this.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                //todo call a method in manager that creates a Titled panels (pass title and array list) and Shows this card array List
-                // we must send isPlayList boolean in order to method create PlayListSongCard(Swap-able)
                 manager.showTitledPanel(title, songs, isPlayList);
             }
         });
-
     }
 
     private ImageIcon getCover() {

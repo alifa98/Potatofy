@@ -87,5 +87,13 @@ public class GUIManager {
         frame.setMainPanel(getCustomJScollPaneJ(panel));
         frame.validate();
     }
-
+    public static void showSharedSongs(MainFrame frame, ArrayList<Song> songs, Manager manager) {
+        MyPanel panel = new MyPanel(false, manager);
+        for (Song s : songs) {
+            if (s.isShared())
+                panel.addCard(s);
+        }
+        frame.setMainPanel(getCustomJScollPaneJ(panel));
+        frame.validate();
+    }
 }

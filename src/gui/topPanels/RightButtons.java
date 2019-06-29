@@ -13,10 +13,9 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 
 public class RightButtons extends JPanel {
-    private JButton editPlayListsButton, addPlayListsButton, addSongButton, playListsButton, favoritePlayListButton, songsButton, albumsButton, videoButton;
+    private JButton editPlayListsButton, addPlayListsButton, addSongButton, playListsButton, favoritePlayListButton, songsButton, albumsButton, sharedPlayListButton;
 
     public RightButtons() {
         //Padding to Button Section
@@ -97,14 +96,14 @@ public class RightButtons extends JPanel {
         addPlayListsButton.addMouseListener(MaterialUIMovement.getMovement(addPlayListsButton, CustomColors.LIGHTER_GRAY));
         add(addPlayListsButton);
 
-        videoButton = new JButton("Videos");
-        Icon videoButtonIcon = IconFontSwing.buildIcon(GoogleMaterialDesignIcons.VIDEO_LIBRARY, 25, new Color(0, 0, 0));
-        videoButton.setIcon(videoButtonIcon);
-        videoButton.setBorder(paddingForElements);
-        videoButton.setMargin(marginInsets);
-        videoButton.setBackground(MaterialColors.WHITE);
-        videoButton.addMouseListener(MaterialUIMovement.getMovement(videoButton, MaterialColors.ORANGE_50));
-        add(videoButton);
+        sharedPlayListButton = new JButton("Shared Songs");
+        Icon sharedIcon = IconFontSwing.buildIcon(GoogleMaterialDesignIcons.SHARE, 25, new Color(0, 0, 0));
+        sharedPlayListButton.setIcon(sharedIcon);
+        sharedPlayListButton.setBorder(paddingForElements);
+        sharedPlayListButton.setMargin(marginInsets);
+        sharedPlayListButton.setBackground(MaterialColors.WHITE);
+        sharedPlayListButton.addMouseListener(MaterialUIMovement.getMovement(sharedPlayListButton, MaterialColors.ORANGE_50));
+        add(sharedPlayListButton);
     }
 
     private void setButtonsEvents(Manager manager) {
@@ -149,10 +148,10 @@ public class RightButtons extends JPanel {
                 manager.showAllSongs();
             }
         });
-        videoButton.addMouseListener(new MouseAdapter() {
+        sharedPlayListButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                // todo video button in to menu clicked --> load video Lists
+                manager.showSharedPlayList();
             }
         });
     }

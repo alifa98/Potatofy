@@ -30,7 +30,6 @@ public class EditPlayListCard extends JPanel {
     private GridBagConstraints gridBagConstraints = new GridBagConstraints();
     private EditPlayListCard thisCardObject = this;
     private boolean isInPlaylist;
-    Icon checkIcon;
     public EditPlayListCard(Song song, ArrayList<Song> songs, boolean isInPlaylist) {
         this.song = song;
         this.songs = songs;
@@ -83,6 +82,7 @@ public class EditPlayListCard extends JPanel {
         add(songLength, gridBagConstraints);
 
         //add music check Icon
+        Icon checkIcon;
         if (isInPlaylist) {
             checkIcon = IconFontSwing.buildIcon(GoogleMaterialDesignIcons.DONE, 40, CustomColors.GREEN);
         } else {
@@ -115,14 +115,11 @@ public class EditPlayListCard extends JPanel {
     //add or remove from play list
     private void toggler(Manager manager){
         if(isInPlaylist){
-
-            checkIcon = IconFontSwing.buildIcon(GoogleMaterialDesignIcons.DONE, 40, CustomColors.GRAY);
-            checkIconLabel.setIcon(checkIcon);
+            checkIconLabel.setIcon(IconFontSwing.buildIcon(GoogleMaterialDesignIcons.DONE, 40, CustomColors.GRAY));
             isInPlaylist = false;
             songs.remove(song);
         }else {
-            checkIcon = IconFontSwing.buildIcon(GoogleMaterialDesignIcons.DONE, 40, CustomColors.GREEN);
-            checkIconLabel.setIcon(checkIcon);
+            checkIconLabel.setIcon(IconFontSwing.buildIcon(GoogleMaterialDesignIcons.DONE, 40, CustomColors.GREEN));
             isInPlaylist = true;
             songs.add(song);
         }
