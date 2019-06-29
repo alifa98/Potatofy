@@ -5,6 +5,7 @@ import gui.MainFrame;
 import gui.mainPanels.MyPanel;
 import gui.mainPanels.TitledMyPanel;
 import media.music.Album;
+import media.music.PlayList;
 import media.music.Song;
 
 import javax.swing.*;
@@ -59,4 +60,32 @@ public class GUIManager {
         frame.validate();
 
     }
+
+    public static String getANamyByDialog() {
+        String input = JOptionPane.showInputDialog("Enter Playlist name");
+        if (input == null || input.equals("")) {
+            input = "My List";
+        }
+        return input;
+    }
+
+    public static void showEditPlayList(MainFrame frame, String title, ArrayList<Song> allSongs, ArrayList<Song> playListSongs, Manager manager) {
+        TitledMyPanel panel = new TitledMyPanel(title, playListSongs, false , manager);
+
+        for (Song s : allSongs) {
+            panel.editPlaylistCard(s, playListSongs);
+        }
+
+        frame.setMainPanel(getCustomJScollPaneJ(panel));
+        frame.validate();
+    }
+    public static void showPlayLists(MainFrame frame, ArrayList<PlayList> playLists, Manager manager) {
+        MyPanel panel = new MyPanel(false, manager);
+        for (PlayList p : playLists) {
+            panel.addCard(p);
+        }
+        frame.setMainPanel(getCustomJScollPaneJ(panel));
+        frame.validate();
+    }
+
 }

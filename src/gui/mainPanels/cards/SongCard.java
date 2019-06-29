@@ -36,7 +36,7 @@ public class SongCard extends JPanel {
         addMouseListener(MaterialUIMovement.getMovement(this, CustomColors.LIGHTER_GRAY));
 
         //Song Cover
-        coverPicture = new ImageLabel(song.getAlbumImageAsSize(48, 48));
+        coverPicture = new ImageLabel(song.getAlbumImageAsSize(53, 53));
         coverPicture.addMouseListener(MaterialUIMovement.getMovement(this, CustomColors.LIGHTER_GRAY));
         coverPicture.setBorder(padding);
         gridBagConstraints.gridx = 1;

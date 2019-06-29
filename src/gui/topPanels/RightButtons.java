@@ -16,7 +16,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 public class RightButtons extends JPanel {
-    private JButton editPlayListsButton, addSongButton, playListsButton, favoritePlayListButton, songsButton, albumsButton, videoButton;
+    private JButton editPlayListsButton, addPlayListsButton, addSongButton, playListsButton, favoritePlayListButton, songsButton, albumsButton, videoButton;
 
     public RightButtons() {
         //Padding to Button Section
@@ -88,6 +88,15 @@ public class RightButtons extends JPanel {
         editPlayListsButton.addMouseListener(MaterialUIMovement.getMovement(editPlayListsButton, CustomColors.LIGHTER_GRAY));
         add(editPlayListsButton);
 
+        addPlayListsButton = new JButton("Add Playlist");
+        Icon addPlayListsButtonIcon = IconFontSwing.buildIcon(GoogleMaterialDesignIcons.PLAYLIST_ADD, 25, new Color(0, 0, 0));
+        addPlayListsButton.setIcon(addPlayListsButtonIcon);
+        addPlayListsButton.setBorder(paddingForElements);
+        addPlayListsButton.setMargin(marginInsets);
+        addPlayListsButton.setBackground(MaterialColors.WHITE);
+        addPlayListsButton.addMouseListener(MaterialUIMovement.getMovement(addPlayListsButton, CustomColors.LIGHTER_GRAY));
+        add(addPlayListsButton);
+
         videoButton = new JButton("Videos");
         Icon videoButtonIcon = IconFontSwing.buildIcon(GoogleMaterialDesignIcons.VIDEO_LIBRARY, 25, new Color(0, 0, 0));
         videoButton.setIcon(videoButtonIcon);
@@ -110,7 +119,7 @@ public class RightButtons extends JPanel {
         playListsButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-
+                manager.showPlayLists();
             }
         });
         albumsButton.addMouseListener(new MouseAdapter() {
@@ -126,6 +135,14 @@ public class RightButtons extends JPanel {
                 manager.showFavoriteSongs();
             }
         });
+
+        addPlayListsButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                manager.createAPlayList();
+            }
+        });
+
         songsButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {

@@ -10,8 +10,11 @@ public class CustomColors {
     public static final Color PRIMARY_BRIGHT_1 = new Color(200, 150,255);
     public static final Color PRIMARY_BRIGHTER = new Color(235, 198,255);
     public static final Color DARK_GRAY = MaterialColors.GRAY_600;
+    public static final Color GRAY = MaterialColors.GRAY_500;
     public static final Color LIGHT_GRAY = MaterialColors.GRAY_400;
     public static final Color LIGHTER_GRAY = MaterialColors.GRAY_100;
     public static final Color LIGHTERER_GRAY = MaterialColors.GRAY_50;
+    public static final Color GREEN = new Color(1, 134, 1);
+
 
 }

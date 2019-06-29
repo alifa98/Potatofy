@@ -1,6 +1,7 @@
 package gui.mainPanels;
 
 import com.manager.Manager;
+import gui.mainPanels.cards.EditPlayListCard;
 import gui.mainPanels.cards.ListCard;
 import gui.mainPanels.cards.PlayListSongCard;
 import gui.mainPanels.cards.SongCard;
@@ -49,5 +50,10 @@ public class MyPanel extends JPanel {
         SongCard newcard = new SongCard(song);
         add(newcard);
        newcard.setEventListeners(manager);
+    }
+    public void editPlaylistCard(Song song, ArrayList<Song> playlistSongArray){
+        EditPlayListCard newcard = new EditPlayListCard(song, playlistSongArray, playlistSongArray.contains(song));
+        add(newcard);
+        newcard.setEventListeners(manager);
     }
 }

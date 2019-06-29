@@ -10,6 +10,8 @@ import media.music.PlayList;
 import media.music.Song;
 
 import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -23,34 +25,33 @@ public class PlayListSongCard extends SongCard {
         super(song);
         this.playlistsongs = songs;
 
-        GridBagConstraints gridBagConstraints = new GridBagConstraints();
-        gridBagConstraints.anchor = GridBagConstraints.LINE_END;
-        gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
-
-        gridBagConstraints.gridx = 5;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridheight = 1;
-        sweepUpLabel = new JLabel(IconFontSwing.buildIcon(GoogleMaterialDesignIcons.KEYBOARD_ARROW_UP, 40, MaterialColors.BLACK));
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.anchor = GridBagConstraints.LINE_END;
+        gbc.gridx = 6;
+        gbc.gridy = 0;
+        gbc.gridheight = 1;
+        sweepUpLabel = new JLabel(IconFontSwing.buildIcon(GoogleMaterialDesignIcons.KEYBOARD_ARROW_UP, 20, MaterialColors.BLACK));
+        sweepUpLabel.setBorder(new EmptyBorder(new Insets(5, 5, 0, 10)));
         sweepUpLabel.addMouseListener(MaterialUIMovement.getMovement(this, CustomColors.LIGHTER_GRAY));
-        add(sweepUpLabel, gridBagConstraints);
+        add(sweepUpLabel, gbc);
 
-        gridBagConstraints.gridy = 1;
-        sweepDownLabel = new JLabel(IconFontSwing.buildIcon(GoogleMaterialDesignIcons.KEYBOARD_ARROW_DOWN, 40, MaterialColors.BLACK));
+        gbc.gridy = 1;
+        sweepDownLabel = new JLabel(IconFontSwing.buildIcon(GoogleMaterialDesignIcons.KEYBOARD_ARROW_DOWN, 20, MaterialColors.BLACK));
         sweepDownLabel.addMouseListener(MaterialUIMovement.getMovement(this, CustomColors.LIGHTER_GRAY));
-        add(sweepDownLabel, gridBagConstraints);
+        sweepDownLabel.setBorder(new EmptyBorder(new Insets(0, 5, 2, 10)));
+        add(sweepDownLabel, gbc);
     }
 
-    @Override
-    public void setEventListeners(Manager manager) {
+    public void setEventListeners(Manager manager, String title) {
         super.setEventListeners(manager);
-
         sweepUpLabel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                //todo call sweep up method in manager( passing song and ArrayList to swap ) and re create playlist panel and show;
+                manager.swapUpSong(song,playlistsongs,title);
             }
         });
-        sweepUpLabel.addMouseListener(new MouseAdapter() {
+        sweepDownLabel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 //todo call sweep up method in manager( passing song and ArrayList to swap) and re create playlist panel and show;

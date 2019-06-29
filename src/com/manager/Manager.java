@@ -62,14 +62,14 @@ public class Manager {
 
     }
 
+    public static synchronized void setFinishedSong(boolean thereIsAFinishedSong) {
+        Manager.thereIsAFinishedSong = thereIsAFinishedSong;
+    }
+
     private void onCloseEvent() {
         //todo save files
         mainFrame.dispose();
         System.exit(0);
-    }
-
-    public static synchronized void setFinishedSong(boolean thereIsAFinishedSong) {
-        Manager.thereIsAFinishedSong = thereIsAFinishedSong;
     }
 
     public void setEventListeners() {
@@ -415,5 +415,25 @@ public class Manager {
 
     public void showTitledPanel(String title, ArrayList<Song> songs, boolean isPlalistt) {
         GUIManager.showTitledPanel(mainFrame, title, songs, isPlalistt, this);
+    }
+
+    public void showEditPlayListPanel(String title, ArrayList<Song> playlistSongs) {
+        GUIManager.showEditPlayList(mainFrame, title, songs, playlistSongs, this);
+    }
+
+    public void createAPlayList() {
+        String name = GUIManager.getANamyByDialog();
+        PlayList newPlayList = new PlayList(name);
+        playlists.add(newPlayList);
+        showEditPlayListPanel(newPlayList.getPlayListName(), newPlayList.getSongsArrayList());
+    }
+    public void showPlayLists() {
+        GUIManager.showPlayLists(mainFrame, playlists, this);
+    }
+    public void swapUpSong(Song song, ArrayList<Song> list,String title){
+        int index = list.indexOf(song);
+        if(index == 0){
+            //todo swap and show list again
+        }
     }
 }
