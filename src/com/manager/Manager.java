@@ -118,7 +118,7 @@ public class Manager {
     }
 
     private void incrementActiveSongIndex() {
-        if (playingQueue.size() <= activeSongIndex -1) {
+        if (playingQueue.size() <= activeSongIndex - 1) {
             activeSongIndex = 0;
         } else {
             activeSongIndex++;
@@ -481,17 +481,27 @@ public class Manager {
 
     public void swapUpSong(Song song, ArrayList<Song> list, String title) {
         int index = list.indexOf(song);
-        if (index == 0) {
-            //todo swap and show list again
-        }
+        System.out.println("Swap up called current index = " + index);
 
+        list.remove(index);
+        if (index == 0) {
+            list.add(song);
+        } else {
+            list.add(index - 1, song);
+        }
+        showTitledPanel(title, list, true);
     }
+
     public void swapDownSong(Song song, ArrayList<Song> list, String title) {
         int index = list.indexOf(song);
-        if (index == 0) {
-            //todo swap and show list again
+        System.out.println("Swap down called current index = " + index);
+        list.remove(index);
+        if (index == (list.size())) {
+            list.add(0, song);
+        } else {
+            list.add(index + 1, song);
         }
-
+        showTitledPanel(title, list, true);
     }
 
 

@@ -31,18 +31,6 @@ public class MyPanel extends JPanel {
         newCard.setEventListeners(manager);
     }
 
-    public void addCard(Song song, ArrayList<Song> list) {  //creates card for Playlist Songs and album songs
-        if (isPlayList) {
-            PlayListSongCard newcard = new PlayListSongCard(song, list);
-            add(newcard);
-            newcard.setEventListeners(manager);
-        }else {
-            SongCard newcard = new SongCard(song);
-            add(newcard);
-            newcard.setEventListeners(manager);
-        }
-    }
-
     public void addCard(Song song) {  //creates card for normal songs and album songs
         SongCard newcard = new SongCard(song);
         add(newcard);

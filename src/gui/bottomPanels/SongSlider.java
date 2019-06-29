@@ -119,7 +119,6 @@ class SongSlider extends JPanel {
             public void stateChanged(ChangeEvent e) {
 
                 manager.songSliderChangeEventCall();
-                //todo pay attention
             }
         });
     }
