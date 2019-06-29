@@ -12,8 +12,8 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class TitledMyPanel extends MyPanel {
-    public TitledMyPanel(String title, ArrayList<Song> list, Manager manager) { //passed for mouse event listener
-        super(false, manager);
+    public TitledMyPanel(String title, ArrayList<Song> list, boolean isPlaylist, Manager manager) { //passed for mouse event listener
+        super(isPlaylist, manager);
 
         JPanel titlePanel = new JPanel(new GridBagLayout());
         GridBagConstraints gridBagConstraints = new GridBagConstraints();
@@ -49,7 +49,7 @@ public class TitledMyPanel extends MyPanel {
         gridBagConstraints.gridwidth = GridBagConstraints.REMAINDER;
         gridBagConstraints.gridheight = 2;
         titlePanel.add(numberOfSongs, gridBagConstraints);
-
+        add(titlePanel);
         titlePanel.setMaximumSize(new Dimension(2500, (int) getPreferredSize().getHeight()));
 
     }

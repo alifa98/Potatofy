@@ -225,7 +225,17 @@ public class Manager {
         if (file.getName().endsWith(".mp3") || file.getName().endsWith(".MP3")) {
             try {
                 Song newSong = new Song(file);
-                addSongToSongsArrayList(newSong);
+                boolean songIsExist = false;
+                for (Song s : songs) { //check and prevent duplicate adding
+                    if (newSong.getSource().getAbsolutePath().equals(s.getSource().getAbsolutePath())) {
+                        songIsExist = true;
+                        break;
+                    }
+                }
+                if (!songIsExist) {
+                    addSongToSongsArrayList(newSong);
+                }
+
             } catch (Exception e) {
                 //todo handle !! by showing a error dialog? I don't know !
             }
@@ -320,7 +330,6 @@ public class Manager {
         if (playingQueue.size() == 0) return false;
 
         activeSong = playingQueue.get(activeSongIndex);
-        //todo line at above encountred a out of bund exception
 
         if (!activeSong.isValid()) {
             int i;
@@ -380,11 +389,13 @@ public class Manager {
         for (Album a : albums) {
             if (a.getAlbumName().equals(song.getAlbum())) {
                 a.addSong(song);
+                albumFound = true;
                 break;
             }
         }
         if (!albumFound) {
             Album newAlbum = new Album(song.getAlbum());
+            newAlbum.addSong(song);
             albums.add(newAlbum);
         }
     }
@@ -396,5 +407,13 @@ public class Manager {
 
     public void showFavoriteSongs() {
         GUIManager.showFavoriteSongs(mainFrame, songs, this);
+    }
+
+    public void showAlbums() {
+        GUIManager.showAlbums(mainFrame, albums, this);
+    }
+
+    public void showTitledPanel(String title, ArrayList<Song> songs, boolean isPlalistt) {
+        GUIManager.showTitledPanel(mainFrame, title, songs, isPlalistt, this);
     }
 }
