@@ -5,6 +5,7 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.util.Date;
 
 import com.mpatric.mp3agic.*;
 
@@ -22,6 +23,7 @@ public class Song {
     private int frameCount;
     private double sampleRate;
     private boolean isFavorite = false;
+    private long timeStamp;
 
     public Song(File source) throws InvalidDataException, IOException, UnsupportedTagException {
         this.source = source;
@@ -125,5 +127,13 @@ public class Song {
 
     public void setFavorite(boolean isFavorite) {
         this.isFavorite = isFavorite;
+    }
+
+    public void updateTimeStamp(){
+        timeStamp=new Date().getTime();
+    }
+
+    public long getTimeStamp() {
+        return timeStamp;
     }
 }
