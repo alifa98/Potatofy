@@ -16,7 +16,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 public class RightButtons extends JPanel {
-    private JButton artistButton, addSongButton, playListsButton, favoritePlayListButton, songsButton, albumsButton, videoButton;
+    private JButton editPlayListsButton, addSongButton, playListsButton, favoritePlayListButton, songsButton, albumsButton, videoButton;
 
     public RightButtons() {
         //Padding to Button Section
@@ -79,14 +79,14 @@ public class RightButtons extends JPanel {
         albumsButton.addMouseListener(MaterialUIMovement.getMovement(albumsButton, CustomColors.LIGHTER_GRAY));
         add(albumsButton);
 
-        artistButton = new JButton("Artist");
-        Icon artistButtonIcon = IconFontSwing.buildIcon(GoogleMaterialDesignIcons.PERSON, 25, new Color(0, 0, 0));
-        artistButton.setIcon(artistButtonIcon);
-        artistButton.setBorder(paddingForElements);
-        artistButton.setMargin(marginInsets);
-        artistButton.setBackground(MaterialColors.WHITE);
-        artistButton.addMouseListener(MaterialUIMovement.getMovement(artistButton, CustomColors.LIGHTER_GRAY));
-        add(artistButton);
+        editPlayListsButton = new JButton("Edit PlayLists");
+        Icon editPlayListsButtonIcon = IconFontSwing.buildIcon(GoogleMaterialDesignIcons.EDIT, 25, new Color(0, 0, 0));
+        editPlayListsButton.setIcon(editPlayListsButtonIcon);
+        editPlayListsButton.setBorder(paddingForElements);
+        editPlayListsButton.setMargin(marginInsets);
+        editPlayListsButton.setBackground(MaterialColors.WHITE);
+        editPlayListsButton.addMouseListener(MaterialUIMovement.getMovement(editPlayListsButton, CustomColors.LIGHTER_GRAY));
+        add(editPlayListsButton);
 
         videoButton = new JButton("Videos");
         Icon videoButtonIcon = IconFontSwing.buildIcon(GoogleMaterialDesignIcons.VIDEO_LIBRARY, 25, new Color(0, 0, 0));
@@ -110,37 +110,31 @@ public class RightButtons extends JPanel {
         playListsButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                super.mouseClicked(e);
+
             }
         });
         albumsButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                super.mouseClicked(e);
+
             }
         });
-        artistButton.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                super.mouseClicked(e);
-            }
-        });
+
         favoritePlayListButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                super.mouseClicked(e);
+                manager.showFavoriteSongs();
             }
         });
         songsButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                super.mouseClicked(e);
+                manager.showAllSongs();
             }
         });
         videoButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                super.mouseClicked(e);
                 // todo video button in to menu clicked --> load video Lists
             }
         });

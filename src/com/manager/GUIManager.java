@@ -10,18 +10,31 @@ import java.util.ArrayList;
 
 public class GUIManager {
 
-
-    public static void showAllSongs(MainFrame frame, ArrayList<Song> songs, Manager manager) { //pass manager instance for event listeners in cards.
-        MyPanel panel = new MyPanel(false, manager);
+    private static JScrollPane getCustomJScollPaneJ(JPanel panel) {
         JScrollPane scrollablePanel = new JScrollPane(panel);
         scrollablePanel.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         scrollablePanel.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         scrollablePanel.getVerticalScrollBar().setUI(new CustomScrollBarUI());
+        return scrollablePanel;
+    }
+
+    public static void showAllSongs(MainFrame frame, ArrayList<Song> songs, Manager manager) { //pass manager instance for event listeners in cards.
+        MyPanel panel = new MyPanel(false, manager);
 
         for (Song s : songs) {
             panel.addCard(s);
         }
+        frame.setMainPanel(getCustomJScollPaneJ(panel));
+        frame.validate();
+    }
 
-        frame.setMainPanel(scrollablePanel);
+    public static void showFavoriteSongs(MainFrame frame, ArrayList<Song> songs, Manager manager) {
+        MyPanel panel = new MyPanel(false, manager);
+        for (Song s : songs) {
+            if (s.isFavorite())
+                panel.addCard(s);
+        }
+        frame.setMainPanel(getCustomJScollPaneJ(panel));
+        frame.validate();
     }
 }

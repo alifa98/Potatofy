@@ -7,6 +7,8 @@ import gui.MainFrame;
 import gui.bottomPanels.BottomPanel;
 import gui.bottomPanels.ControlButtons;
 import javazoom.jl.decoder.JavaLayerException;
+import media.music.Album;
+import media.music.PlayList;
 import media.music.Song;
 import mediaplayer.advancedPlayerWrapper.AdvancedPlayerWrapper;
 
@@ -28,13 +30,14 @@ public class Manager {
     private boolean isPlayingSong = false;
     private ArrayList<Song> songs;
     private ArrayList<Song> playingQueue;
+    private ArrayList<Album> albums;
+    private ArrayList<PlayList> playlists;
     private boolean shuffleIsActive;
     private boolean repeatIsActive;
     private int activeSongIndex = 0;
 
-
     public Manager() {
-        mainFrame = new MainFrame("Potatofy",this);
+        mainFrame = new MainFrame("Potatofy", this);
         mainFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         mainFrame.setVisible(true);
         bottomPanel = mainFrame.getBottomPanel();
@@ -43,6 +46,8 @@ public class Manager {
         timer.start();
 
         songs = new ArrayList<>();
+        albums = new ArrayList<>();
+        playlists = new ArrayList<>();
         playingQueue = new ArrayList<>();
 
     }
@@ -122,7 +127,6 @@ public class Manager {
     }
 
 
-
     public void setSliderMouseDownEvent() {
         songSliderMouseDown = true;
     }
@@ -186,9 +190,6 @@ public class Manager {
         }
         GUIManager.showAllSongs(mainFrame, songs, this);
         updateQueue();
-        System.out.println("REPAINTING ... ");
-        mainFrame.validate();
-        mainFrame.repaint();
     }
 
     private void addSongFilesFromDirectory(File dir) {
@@ -209,12 +210,18 @@ public class Manager {
         if (file.getName().endsWith(".mp3") || file.getName().endsWith(".MP3")) {
             try {
                 Song newSong = new Song(file);
-                songs.add(newSong);
+                addSongToSongsArrayList(newSong);
             } catch (Exception e) {
                 //todo handle !! by showing a error dialog? I don't know !
             }
 
         }
+    }
+
+    private void addSongToSongsArrayList(Song song) {
+        //todo for adding a song in array list please use this method.
+        songs.add(song);
+        detectAndAddSongToAlbums(song);
     }
 
     public void shuffleClickEvent(boolean shuffleIsActive) {
@@ -278,7 +285,7 @@ public class Manager {
             isPlayingSong = true;
             newState.setPlaying(true);
         } else {
-            if(playActiveSong()){
+            if (playActiveSong()) {
                 isPlayingSong = true;
                 newState.setPlaying(true);
             }
@@ -351,5 +358,27 @@ public class Manager {
         return true;
     }
 
+    //todo call this method when you add
+    private void detectAndAddSongToAlbums(Song song) {
+        boolean albumFound = false;
+        for (Album a : albums) {
+            if (a.getAlbumName().equals(song.getAlbum())) {
+                a.addSong(song);
+                break;
+            }
+        }
+        if (!albumFound) {
+            Album newAlbum = new Album(song.getAlbum());
+            albums.add(newAlbum);
+        }
+    }
 
+    // listeners calls this methods please don't touch them.
+    public void showAllSongs() {
+        GUIManager.showAllSongs(mainFrame, songs, this);
+    }
+
+    public void showFavoriteSongs() {
+        GUIManager.showFavoriteSongs(mainFrame, songs, this);
+    }
 }

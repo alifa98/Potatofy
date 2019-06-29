@@ -3,8 +3,6 @@ package gui.mainPanels.cards;
 import com.manager.Manager;
 import gui.CustomColors;
 import gui.ImageLabel;
-import jiconfont.icons.google_material_design_icons.GoogleMaterialDesignIcons;
-import jiconfont.swing.IconFontSwing;
 import mdlaf.animation.MaterialUIMovement;
 import mdlaf.utils.MaterialFonts;
 import media.music.Song;

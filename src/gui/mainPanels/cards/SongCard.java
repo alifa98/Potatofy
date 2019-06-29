@@ -127,11 +127,11 @@ public class SongCard extends JPanel {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (song.isFavorite()) {
-                    System.out.println("I Love it"); //for debug
+                    //System.out.println("I don't Love it"); //for debug
                     song.setFavorite(false);
                     favoriteIconLabel.setIcon(IconFontSwing.buildIcon(GoogleMaterialDesignIcons.FAVORITE_BORDER, 20, MaterialColors.BLACK));
                 } else {
-                    System.out.println("I don't Love it"); //for debug
+                    //System.out.println("I Love it"); //for debug
                     song.setFavorite(true);
                     favoriteIconLabel.setIcon(IconFontSwing.buildIcon(GoogleMaterialDesignIcons.FAVORITE, 20, CustomColors.PRIMARY));
                 }

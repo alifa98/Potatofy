@@ -1,8 +1,10 @@
 package gui.mainPanels.cards;
 
 import com.manager.Manager;
+import gui.CustomColors;
 import jiconfont.icons.google_material_design_icons.GoogleMaterialDesignIcons;
 import jiconfont.swing.IconFontSwing;
+import mdlaf.animation.MaterialUIMovement;
 import mdlaf.utils.MaterialColors;
 import media.music.PlayList;
 import media.music.Song;
@@ -28,10 +30,12 @@ public class PlayListSongCard extends SongCard {
         gridBagConstraints.gridy = 0;
         gridBagConstraints.gridheight = 1;
         sweepUpLabel = new JLabel(IconFontSwing.buildIcon(GoogleMaterialDesignIcons.KEYBOARD_ARROW_UP, 40, MaterialColors.BLACK));
+        sweepUpLabel.addMouseListener(MaterialUIMovement.getMovement(this, CustomColors.LIGHTER_GRAY));
         add(sweepUpLabel, gridBagConstraints);
 
         gridBagConstraints.gridy = 1;
         sweepDownLabel = new JLabel(IconFontSwing.buildIcon(GoogleMaterialDesignIcons.KEYBOARD_ARROW_DOWN, 40, MaterialColors.BLACK));
+        sweepDownLabel.addMouseListener(MaterialUIMovement.getMovement(this, CustomColors.LIGHTER_GRAY));
         add(sweepDownLabel, gridBagConstraints);
     }
 
