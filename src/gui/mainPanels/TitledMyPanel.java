@@ -1,5 +1,6 @@
 package gui.mainPanels;
 
+import com.manager.Manager;
 import gui.ImageLabel;
 import mdlaf.utils.MaterialFonts;
 import media.music.PlayList;
@@ -11,8 +12,8 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class TitledMyPanel extends MyPanel {
-    public TitledMyPanel(String title, ArrayList<Song> list) {
-        super(false);
+    public TitledMyPanel(String title, ArrayList<Song> list, Manager manager) { //passed for mouse event listener
+        super(false, manager);
 
         JPanel titlePanel = new JPanel(new GridBagLayout());
         GridBagConstraints gridBagConstraints = new GridBagConstraints();
@@ -29,7 +30,7 @@ public class TitledMyPanel extends MyPanel {
         gridBagConstraints.gridheight = 5;
         ImageLabel coverLabel = new ImageLabel(cover);
         coverLabel.setBorder(new EmptyBorder(new Insets(10, 5, 10, 10)));
-        titlePanel.add(coverLabel,gridBagConstraints);
+        titlePanel.add(coverLabel, gridBagConstraints);
 
         JLabel titleLabel = new JLabel(title);
         titleLabel.setFont(MaterialFonts.BLACK.deriveFont(30f));
@@ -49,7 +50,7 @@ public class TitledMyPanel extends MyPanel {
         gridBagConstraints.gridheight = 2;
         titlePanel.add(numberOfSongs, gridBagConstraints);
 
-        titlePanel.setMaximumSize(new Dimension(2500,(int) getPreferredSize().getHeight()));
+        titlePanel.setMaximumSize(new Dimension(2500, (int) getPreferredSize().getHeight()));
 
     }
 }

@@ -18,8 +18,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Manager {
-    private static final String songURL = "D:\\Downloads\\Compressed\\2000 The Marshall Mathers LP\\2000 The Marshall Mathers LP\\08 The Real Slim Shady.mp3";
-    private static final String secondSongUrl = "D:\\Downloads\\Compressed\\2000 The Marshall Mathers LP\\2000 The Marshall Mathers LP\\\\07 The Way I Am.mp3";
     private static volatile boolean thereIsAFinishedSong = false;
     private MainFrame mainFrame;
     private BottomPanel bottomPanel;
@@ -36,7 +34,7 @@ public class Manager {
 
 
     public Manager() {
-        mainFrame = new MainFrame("Potatofy");
+        mainFrame = new MainFrame("Potatofy",this);
         mainFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         mainFrame.setVisible(true);
         bottomPanel = mainFrame.getBottomPanel();
@@ -123,35 +121,7 @@ public class Manager {
         }
     }
 
-    public void playTheHardCodedSong() {
-        activeSong = null;
-        try {
-            activeSong = new Song(new File(songURL));
-        } catch (InvalidDataException | IOException | UnsupportedTagException e) {
-            e.printStackTrace();
-        }
-        try {
-            bottomPanel.setSong(activeSong);
-        } catch (InvalidDataException | IOException | UnsupportedTagException e) {
-            e.printStackTrace();
-        }
 
-        songPlayer = null;
-        try {
-
-            songPlayer = new AdvancedPlayerWrapper(activeSong.getSource());
-
-        } catch (FileNotFoundException | JavaLayerException e) {
-            e.printStackTrace();
-        }
-        isPlayingSong = true;
-        try {
-            songPlayer.resume();
-        } catch (JavaLayerException | IOException e) {
-            e.printStackTrace();
-        }
-
-    }
 
     public void setSliderMouseDownEvent() {
         songSliderMouseDown = true;
@@ -214,7 +184,7 @@ public class Manager {
                     }
             );
         }
-        GUIManager.showAllSongs(mainFrame, songs);
+        GUIManager.showAllSongs(mainFrame, songs, this);
         updateQueue();
         System.out.println("REPAINTING ... ");
         mainFrame.validate();
