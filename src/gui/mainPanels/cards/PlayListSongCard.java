@@ -54,7 +54,7 @@ public class PlayListSongCard extends SongCard {
         sweepDownLabel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                //todo call sweep up method in manager( passing song and ArrayList to swap) and re create playlist panel and show;
+                manager.swapDownSong(song,playlistsongs,title);
             }
         });
     }

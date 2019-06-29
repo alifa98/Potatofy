@@ -2,6 +2,8 @@ package gui.mainPanels;
 
 import com.manager.Manager;
 import gui.ImageLabel;
+import gui.mainPanels.cards.PlayListSongCard;
+import gui.mainPanels.cards.SongCard;
 import mdlaf.utils.MaterialFonts;
 import media.music.PlayList;
 import media.music.Song;
@@ -12,9 +14,12 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class TitledMyPanel extends MyPanel {
+    String title;
+    boolean isPlaylist;
     public TitledMyPanel(String title, ArrayList<Song> list, boolean isPlaylist, Manager manager) { //passed for mouse event listener
         super(isPlaylist, manager);
-
+        this.isPlaylist =isPlaylist;
+        this.title = title;
         JPanel titlePanel = new JPanel(new GridBagLayout());
         GridBagConstraints gridBagConstraints = new GridBagConstraints();
         gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
@@ -51,6 +56,16 @@ public class TitledMyPanel extends MyPanel {
         titlePanel.add(numberOfSongs, gridBagConstraints);
         add(titlePanel);
         titlePanel.setMaximumSize(new Dimension(2500, (int) getPreferredSize().getHeight()));
-
+    }
+    public void addCard(Song song, ArrayList<Song> list) {  //creates card for Playlist Songs and album songs
+        if (isPlaylist) {
+            PlayListSongCard newcard = new PlayListSongCard(song, list);
+            newcard.setEventListeners(manager,title);
+            add(newcard);
+        }else {
+            SongCard newcard = new SongCard(song);
+            add(newcard);
+            newcard.setEventListeners(manager);
+        }
     }
 }

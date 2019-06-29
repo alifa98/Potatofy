@@ -26,6 +26,6 @@ public class SearchBox extends JPanel {
         gridBagLayout.setConstraints(textinput, gridBagConstraints);
         add(textinput);
 
-        //todo key up listener for call search shuld be added here.
+        //todo key up listener for call search should be added here - similarity score for correcting spell problems.
     }
 }
