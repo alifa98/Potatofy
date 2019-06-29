@@ -65,6 +65,7 @@ public class ListCard extends JPanel {
         gridBagConstraints.gridheight = 2;
         gridBagConstraints.weightx = 0;
         add(songsNumber, gridBagConstraints);
+        setMaximumSize(new Dimension(2500, (int) getPreferredSize().getHeight()));
     }
 
     public void setEventListeners(Manager manager) {
