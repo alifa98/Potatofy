@@ -14,6 +14,8 @@ import mediaplayer.advancedPlayerWrapper.AdvancedPlayerWrapper;
 import volumeController.Controller;
 
 import javax.swing.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -39,7 +41,14 @@ public class Manager {
 
     public Manager() {
         mainFrame = new MainFrame("Potatofy", this);
-        mainFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        mainFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        mainFrame.addWindowListener(
+                new WindowAdapter() {
+                    public void windowClosing(WindowEvent e) {
+                        onCloseEvent();
+                    }
+                }
+        );
         mainFrame.setVisible(true);
         bottomPanel = mainFrame.getBottomPanel();
         Timer timer = new Timer(500, new TimerEventListener(this));
@@ -51,6 +60,12 @@ public class Manager {
         playlists = new ArrayList<>();
         playingQueue = new ArrayList<>();
 
+    }
+
+    private void onCloseEvent() {
+        //todo save files
+        mainFrame.dispose();
+        System.exit(0);
     }
 
     public static synchronized void setFinishedSong(boolean thereIsAFinishedSong) {
@@ -364,6 +379,7 @@ public class Manager {
             e.printStackTrace();
         }
 
+        activeSong.updateTimeStamp();
         return true;
     }
 

@@ -5,6 +5,7 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.util.Date;
 
 import com.mpatric.mp3agic.*;
 
@@ -22,6 +23,7 @@ public class Song {
     private int frameCount;
     private double sampleRate;
     private boolean isFavorite = false;
+    private long timeStamp;
 
     public Song(File source) throws InvalidDataException, IOException, UnsupportedTagException {
         this.source = source;
@@ -54,6 +56,16 @@ public class Song {
         frameCount = mp3File.getFrameCount();
         songLengthMilliseconds = mp3File.getLengthInMilliseconds();
         sampleRate = mp3File.getSampleRate();
+
+        //return here if you want to use id3v1 tags
+        if (!mp3File.hasId3v2Tag()) {
+            return;
+        }
+        ID3v2 id3v2Tag = mp3File.getId3v2Tag();
+        album=id3v2Tag.getAlbum();
+        artist=id3v2Tag.getArtist();
+        title = id3v2Tag.getTitle();
+
     }
 
     public String getArtist() {
@@ -125,5 +137,13 @@ public class Song {
 
     public void setFavorite(boolean isFavorite) {
         this.isFavorite = isFavorite;
+    }
+
+    public void updateTimeStamp(){
+        timeStamp=new Date().getTime();
+    }
+
+    public long getTimeStamp() {
+        return timeStamp;
     }
 }
