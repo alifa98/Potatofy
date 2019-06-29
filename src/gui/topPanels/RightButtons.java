@@ -154,6 +154,12 @@ public class RightButtons extends JPanel {
                 manager.showSharedPlayList();
             }
         });
+        editPlayListsButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                manager.showEditPlayLists();
+            }
+        });
     }
 
     public void setEventListeners(Manager manager) {

@@ -6,6 +6,7 @@ import jiconfont.icons.google_material_design_icons.GoogleMaterialDesignIcons;
 import jiconfont.swing.IconFontSwing;
 import mdlaf.animation.MaterialUIMovement;
 import mdlaf.utils.MaterialColors;
+import media.music.PlayList;
 import media.music.Song;
 
 import javax.swing.*;
@@ -17,9 +18,11 @@ import java.util.ArrayList;
 
 public class EditListCard extends ListCard { // for editing play list songs - name - and deleted
     JLabel renameLabel, editOriderLabel, deleteLabel;
+    PlayList playList;
 
-    public EditListCard(String title, ArrayList<Song> songs, boolean isPlaylist) {
-        super(title, songs, isPlaylist);
+    public EditListCard(PlayList p) {
+        super(p.getPlayListName(), p.getSongsArrayList(), true);
+        playList =p;
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.anchor = GridBagConstraints.LINE_END;
@@ -44,7 +47,7 @@ public class EditListCard extends ListCard { // for editing play list songs - na
         gbc.gridx = 7;
         gbc.gridy = 0;
         gbc.gridheight = 2;
-        deleteLabel = new JLabel(IconFontSwing.buildIcon(GoogleMaterialDesignIcons.DELETE_FOREVER , 20, MaterialColors.BLACK));
+        deleteLabel = new JLabel(IconFontSwing.buildIcon(GoogleMaterialDesignIcons.DELETE_FOREVER, 20, MaterialColors.BLACK));
         deleteLabel.setBorder(new EmptyBorder(new Insets(10, 10, 5, 10)));
         deleteLabel.addMouseListener(MaterialUIMovement.getMovement(this, CustomColors.LIGHTER_GRAY));
         add(deleteLabel, gbc);
@@ -55,20 +58,21 @@ public class EditListCard extends ListCard { // for editing play list songs - na
         deleteLabel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-
+                manager.deletePlayList(playList);
             }
         });
         renameLabel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-
+                manager.renamePlayList(playList);
             }
         });
         editOriderLabel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-
+                manager.showEditPlayListPanel(playList.getPlayListName(),playList.getSongsArrayList());
             }
         });
+
     }
 }
