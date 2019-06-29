@@ -25,6 +25,7 @@ public class SongCard extends JPanel {
     private JLabel musicNameLabel;
     private JLabel albumNameLabel;
     private JLabel favoriteIconLabel;
+    private JLabel sharedIconLabel;
     private GridBagConstraints gridBagConstraints = new GridBagConstraints();
     private SongCard thisCardObject = this;
 
@@ -94,6 +95,21 @@ public class SongCard extends JPanel {
         gridBagConstraints.gridheight = 2;
         add(favoriteIconLabel, gridBagConstraints);
 
+        //add shared icon
+        Icon sharedIcon;
+        if (song.isShared()) {
+            sharedIcon = IconFontSwing.buildIcon(GoogleMaterialDesignIcons.SHARE, 20, MaterialColors.ORANGE_600);
+        } else {
+            sharedIcon = IconFontSwing.buildIcon(GoogleMaterialDesignIcons.SHARE, 20, CustomColors.GRAY);
+        }
+        sharedIconLabel = new JLabel(sharedIcon);
+        sharedIconLabel.addMouseListener(MaterialUIMovement.getMovement(this, CustomColors.LIGHTER_GRAY));
+        sharedIconLabel.setBorder(padding);
+        gridBagConstraints.gridx = 6;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridheight = 2;
+        add(sharedIconLabel, gridBagConstraints);
+
         setMaximumSize(new Dimension(2500, (int) getPreferredSize().getHeight()));
     }
 
@@ -137,5 +153,21 @@ public class SongCard extends JPanel {
                 }
             }
         });
+
+        sharedIconLabel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (song.isShared()) {
+                    //System.out.println("I don't Share it"); //for debug
+                    song.setShared(false);
+                    sharedIconLabel.setIcon(IconFontSwing.buildIcon(GoogleMaterialDesignIcons.SHARE, 20, CustomColors.GRAY));
+                } else {
+                    //System.out.println("I Share it"); //for debug
+                    song.setShared(true);
+                    sharedIconLabel.setIcon(IconFontSwing.buildIcon(GoogleMaterialDesignIcons.SHARE, 20, MaterialColors.ORANGE_600));
+                }
+            }
+        });
     }
+
 }

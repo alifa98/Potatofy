@@ -28,7 +28,7 @@ public class PlayListSongCard extends SongCard {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.anchor = GridBagConstraints.LINE_END;
-        gbc.gridx = 6;
+        gbc.gridx = 7;
         gbc.gridy = 0;
         gbc.gridheight = 1;
         sweepUpLabel = new JLabel(IconFontSwing.buildIcon(GoogleMaterialDesignIcons.KEYBOARD_ARROW_UP, 20, MaterialColors.BLACK));

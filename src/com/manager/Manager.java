@@ -473,6 +473,9 @@ public class Manager {
             //todo swap and show list again
         }
     }
+    public void showSharedPlayList(){
+        GUIManager.showSharedSongs(mainFrame,songs,this);
+    }
     public void attemptReadingSavedFile() {
         FileReader fileReader = new FileReader();
         if (!fileReader.hasSavedData()) return;
@@ -547,4 +550,5 @@ class SongComparetor implements Comparator<Song> {
         if (o1.getTimeStamp() == o2.getTimeStamp()) return 0;
         return (o1.getTimeStamp() > o2.getTimeStamp() ? -1 : 1);
     }
+
 }
