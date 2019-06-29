@@ -23,6 +23,7 @@ public class Song {
     private int frameCount;
     private double sampleRate;
     private boolean isFavorite = false;
+    private boolean isShared = false;
     private long timeStamp;
 
     public Song(File source) throws InvalidDataException, IOException, UnsupportedTagException {
@@ -137,6 +138,14 @@ public class Song {
 
     public void setFavorite(boolean isFavorite) {
         this.isFavorite = isFavorite;
+    }
+
+    public void setShared(boolean isSared) {
+        this.isShared = isSared;
+    }
+
+    public boolean isShared() {
+        return isShared;
     }
 
     public void updateTimeStamp(){
