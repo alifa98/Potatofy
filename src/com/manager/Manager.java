@@ -1,6 +1,8 @@
 package com.manager;
 
 import IO.*;
+import com.TimeData;
+import com.UserInfoCard;
 import com.mpatric.mp3agic.InvalidDataException;
 import com.mpatric.mp3agic.UnsupportedTagException;
 import gui.MainFrame;
@@ -14,6 +16,7 @@ import mediaplayer.advancedPlayerWrapper.AdvancedPlayerWrapper;
 import volumeController.Controller;
 
 import javax.swing.*;
+import javax.xml.crypto.Data;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
@@ -22,6 +25,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.Date;
 
 public class Manager {
     private static volatile boolean thereIsAFinishedSong = false;
@@ -42,6 +46,8 @@ public class Manager {
     private int volumeSliderValue;
     private PanelState panelState = PanelState.SONGS;
     private boolean incrementedByNext=false;
+    private ArrayList<Song> shuffeledList;
+    private boolean shuffleNewList=false;
 
     // flag for panel state
     private ArrayList<Song> possiblePlayingQueue;
@@ -68,6 +74,8 @@ public class Manager {
         playlists = new ArrayList<>();
         playingQueue = new ArrayList<>();
 
+        //This hard code create friend card and it to side Panel
+        hardCodeNetSimulator();
     }
 
     public static synchronized void setFinishedSong(boolean thereIsAFinishedSong) {
@@ -382,7 +390,20 @@ public class Manager {
 
         if(activeSongIndex>=playingQueue.size())
             activeSongIndex=0;
-        activeSong = playingQueue.get(activeSongIndex);
+
+        if(shuffleIsActive){
+            if(shuffeledList==null || shuffleNewList ){
+                shuffeledList=getShuffledQueueFromIndex(activeSongIndex);
+            }else {
+                shuffeledList=reshuffleList(activeSongIndex);
+            }
+            activeSong=shuffeledList.get(activeSongIndex);
+        }else{
+            activeSong = playingQueue.get(activeSongIndex);
+        }
+
+
+
 
         if (!activeSong.isValid()) {
             int i;
@@ -436,6 +457,8 @@ public class Manager {
         return true;
     }
 
+
+
     //todo call this method when you add
     private void detectAndAddSongToAlbums(Song song) {
         boolean albumFound = false;
@@ -456,16 +479,19 @@ public class Manager {
     // listeners calls this methods please don't touch them.
     public void showAllSongs() {
         panelState = PanelState.SONGS;
+        songs.sort(new SongComparetor());
         GUIManager.showAllSongs(mainFrame, songs, this);
     }
 
     public void showFavoriteSongs() {
         panelState = PanelState.FAVORITE;
+        songs.sort(new SongComparetor());
         GUIManager.showFavoriteSongs(mainFrame, songs, this);
     }
 
     public void showAlbums() {
         panelState = PanelState.ALBUM;
+        songs.sort(new SongComparetor());
         GUIManager.showAlbums(mainFrame, albums, this);
     }
 
@@ -487,6 +513,7 @@ public class Manager {
 
     public void showPlayLists() {
         panelState = PanelState.PLAYLIST;
+        songs.sort(new SongComparetor());
         GUIManager.showPlayLists(mainFrame, playlists, this);
     }
 
@@ -609,9 +636,18 @@ public class Manager {
         return null;
 
     }
+    private void hardCodeNetSimulator(){
+        long curr = new Date().getTime();
+        TimeData data1 = new TimeData(curr-77645426);
+        mainFrame.getSidePanel().addCard(new UserInfoCard(new File("src\\gui\\icons\\png\\64\\default-girl-avatar.png"),"Erfan Hadizadeh",data1,"salam salam"));
+        TimeData data2 = new TimeData(curr-66626);
+        mainFrame.getSidePanel().addCard(new UserInfoCard(new File("src\\gui\\icons\\png\\64\\default-boy-avatar.png"),"Ali Faraji",data2,"GooD timeS"));
+
+    }
 
     public void songCardPlayEvent(Song song) {
         int i;
+
         switch (panelState) {
             case SONGS:
 
@@ -675,6 +711,7 @@ public class Manager {
 
 
         }
+        shuffleNewList=true;
         incrementedByNext=true;
         bottomPanel.getControlButtons().setPlaying(true);
         playActiveSong();
@@ -695,6 +732,23 @@ public class Manager {
         for (Song song : songs) {
             if (song.isShared()) result.add(song);
         }
+        return result;
+    }
+
+    private ArrayList<Song> getShuffledQueueFromIndex(int index){
+        ArrayList<Song>  result=new ArrayList<>(playingQueue);
+        int newIndex=(int)(Math.random()*(playingQueue.size()-index))+index;
+        Song temp=result.get(newIndex);
+        result.set(newIndex,result.get(index));
+        result.set(index,temp);
+        return result;
+    }
+    private ArrayList<Song> reshuffleList(int index) {
+        ArrayList<Song>  result=new ArrayList<>(shuffeledList);
+        int newIndex=(int)(Math.random()*(playingQueue.size()-index))+index;
+        Song temp=result.get(newIndex);
+        result.set(newIndex,result.get(index));
+        result.set(index,temp);
         return result;
     }
 
