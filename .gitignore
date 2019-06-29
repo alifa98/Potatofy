@@ -1,6 +1,6 @@
 # Compiled class file
 *.class
-
+src/saved data/
 # Log file
 *.log
 

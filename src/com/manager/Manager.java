@@ -1,6 +1,6 @@
 package com.manager;
 
-import com.manager.audio.Audio;
+import IO.*;
 import com.mpatric.mp3agic.InvalidDataException;
 import com.mpatric.mp3agic.UnsupportedTagException;
 import gui.MainFrame;
@@ -14,13 +14,16 @@ import mediaplayer.advancedPlayerWrapper.AdvancedPlayerWrapper;
 import volumeController.Controller;
 
 import javax.swing.*;
+import javax.swing.plaf.synth.SynthRadioButtonMenuItemUI;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 
 public class Manager {
     private static volatile boolean thereIsAFinishedSong = false;
@@ -38,6 +41,7 @@ public class Manager {
     private boolean shuffleIsActive;
     private boolean repeatIsActive;
     private int activeSongIndex = 0;
+    private int volumeSliderValue;
 
     public Manager() {
         mainFrame = new MainFrame("Potatofy", this);
@@ -63,7 +67,16 @@ public class Manager {
     }
 
     private void onCloseEvent() {
-        //todo save files
+        if (songPlayer != null) {
+            MetaData metaData = new MetaData(activeSong, songPlayer.getCurrentFrame(), volumeSliderValue);
+            FileCreator fileManager = new FileCreator();
+            fileManager.setData(metaData, songs, playlists);
+            try {
+                fileManager.writeData();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
         mainFrame.dispose();
         System.exit(0);
     }
@@ -162,6 +175,7 @@ public class Manager {
     }
 
     public void volumeSliderMouseUpEvent(int sliderValue) {
+        volumeSliderValue = sliderValue;
         Controller.setSystemVolume(sliderValue);
     }
 
@@ -241,6 +255,29 @@ public class Manager {
             }
 
         }
+    }
+
+    private void addSongFile(SerializableSong serializableSong) {
+        try {
+            Song newSong = new Song(new File(serializableSong.getSource()));
+            newSong.setFavorite(serializableSong.isFavorite());
+            newSong.setTimeStamp(serializableSong.getLastPlayTime());
+            boolean songIsExist = false;
+            for (Song s : songs) { //check and prevent duplicate adding
+                if (newSong.getSource().getAbsolutePath().equals(s.getSource().getAbsolutePath())) {
+                    songIsExist = true;
+                    break;
+                }
+            }
+            if (!songIsExist) {
+                addSongToSongsArrayList(newSong);
+            }
+
+        } catch (Exception e) {
+            //todo handle !! by showing a error dialog? I don't know !
+        }
+
+
     }
 
     private void addSongToSongsArrayList(Song song) {
@@ -415,5 +452,79 @@ public class Manager {
 
     public void showTitledPanel(String title, ArrayList<Song> songs, boolean isPlalistt) {
         GUIManager.showTitledPanel(mainFrame, title, songs, isPlalistt, this);
+    }
+
+    public void attemptReadingSavedFile() {
+        FileReader fileReader = new FileReader();
+        if (!fileReader.hasSavedData()) return;
+        try {
+            fileReader.readSavedData();
+        } catch (IOException | ClassNotFoundException e) {
+            return;
+        }
+        MetaData metaData = fileReader.getMetaData();
+        ArrayList<SerializableSong> serializableSongs = fileReader.getSerializableSongs();
+        ArrayList<SerializablePlaylist> serializablePlaylists = fileReader.getSerializablePlaylists();
+
+        for (SerializableSong serializableSong : serializableSongs) {
+            addSongFile(serializableSong);
+        }
+        songs.sort(new SongComparetor());
+
+        GUIManager.showAllSongs(mainFrame, songs, this);
+
+        for (SerializablePlaylist serializablePlaylist : serializablePlaylists) {
+            PlayList newPlaylist = new PlayList(serializablePlaylist.getPlaylistName());
+            playlists.add(newPlaylist);
+            ArrayList<SerializableSong> serializablePlaylistSongs = serializablePlaylist.getSerializableSongs();
+
+            for (SerializableSong serializableSong : serializablePlaylistSongs) {
+                Song playListSong = getSongByAddress(serializableSong.getSource());
+                if (playListSong != null) {
+                    newPlaylist.addSong(playListSong);
+                }
+            }
+        }
+        updateQueue();
+        activeSongIndex = 0;
+        playActiveSong();
+
+
+        try {
+            songPlayer.goToFrame(metaData.getFrameNumber());
+        } catch (IOException | JavaLayerException e) {
+            e.printStackTrace();
+        }
+
+        songPlayer.pause();
+        isPlayingSong = false;
+
+        try {
+            songPlayer.goToFrame(metaData.getFrameNumber());
+        } catch (IOException | JavaLayerException e) {
+            e.printStackTrace();
+        }
+        updateSlider();
+
+        songPlayer.pause();
+
+        bottomPanel.setVolumeSliderValue(metaData.getVolumeStatus());
+
+    }
+
+    private Song getSongByAddress(String source) {
+        for (Song song : songs) {
+            if (song.getSource().getAbsolutePath().equals(source)) return song;
+        }
+        return null;
+    }
+}
+
+
+class SongComparetor implements Comparator<Song> {
+    @Override
+    public int compare(Song o1, Song o2) {
+        if (o1.getTimeStamp() == o2.getTimeStamp()) return 0;
+        return (o1.getTimeStamp() > o2.getTimeStamp() ? -1 : 1);
     }
 }
