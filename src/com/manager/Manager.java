@@ -14,13 +14,11 @@ import mediaplayer.advancedPlayerWrapper.AdvancedPlayerWrapper;
 import volumeController.Controller;
 
 import javax.swing.*;
-import javax.swing.plaf.synth.SynthRadioButtonMenuItemUI;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -42,6 +40,10 @@ public class Manager {
     private boolean repeatIsActive;
     private int activeSongIndex = 0;
     private int volumeSliderValue;
+    private PanelState panelState = PanelState.SONGS;
+
+    // flag for panel state
+    private ArrayList<Song> possiblePlayingQueue;
 
     public Manager() {
         mainFrame = new MainFrame("Potatofy", this);
@@ -53,6 +55,7 @@ public class Manager {
                     }
                 }
         );
+
         mainFrame.setVisible(true);
         bottomPanel = mainFrame.getBottomPanel();
         Timer timer = new Timer(500, new TimerEventListener(this));
@@ -185,6 +188,7 @@ public class Manager {
     }
 
     public void openAddSongsDialog() {
+        panelState = PanelState.SONGS;
         System.out.println("Add song method called ...");
 //        LookAndFeel currLF = UIManager.getLookAndFeel();
 //        try {
@@ -440,18 +444,22 @@ public class Manager {
 
     // listeners calls this methods please don't touch them.
     public void showAllSongs() {
+        panelState = PanelState.SONGS;
         GUIManager.showAllSongs(mainFrame, songs, this);
     }
 
     public void showFavoriteSongs() {
+        panelState = PanelState.FAVORITE;
         GUIManager.showFavoriteSongs(mainFrame, songs, this);
     }
 
     public void showAlbums() {
+        panelState = PanelState.ALBUM;
         GUIManager.showAlbums(mainFrame, albums, this);
     }
 
     public void showTitledPanel(String title, ArrayList<Song> songs, boolean isPlalistt) {
+        possiblePlayingQueue = songs;
         GUIManager.showTitledPanel(mainFrame, title, songs, isPlalistt, this);
     }
 
@@ -467,6 +475,7 @@ public class Manager {
     }
 
     public void showPlayLists() {
+        panelState = PanelState.PLAYLIST;
         GUIManager.showPlayLists(mainFrame, playlists, this);
     }
 
@@ -487,6 +496,7 @@ public class Manager {
 
 
     public void showSharedPlayList() {
+        panelState = PanelState.SHARED;
         GUIManager.showSharedSongs(mainFrame, songs, this);
     }
 
