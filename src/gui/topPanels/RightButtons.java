@@ -102,7 +102,7 @@ public class RightButtons extends JPanel {
         sharedPlayListButton.setBorder(paddingForElements);
         sharedPlayListButton.setMargin(marginInsets);
         sharedPlayListButton.setBackground(MaterialColors.WHITE);
-        sharedPlayListButton.addMouseListener(MaterialUIMovement.getMovement(sharedPlayListButton, MaterialColors.ORANGE_50));
+        sharedPlayListButton.addMouseListener(MaterialUIMovement.getMovement(sharedPlayListButton, CustomColors.LIGHTER_GRAY));
         add(sharedPlayListButton);
     }
 

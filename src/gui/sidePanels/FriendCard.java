@@ -48,6 +48,7 @@ public class FriendCard extends JPanel {
         gridBagConstraints.gridy = 0;
         gridBagConstraints.gridwidth = 1;
         gridBagConstraints.gridheight = 1;
+        gridBagConstraints.weightx = 1;
         JLabel friendNameLabel = new JLabel(userInfo.getFriendName());
         friendNameLabel.setFont(MaterialFonts.BLACK);
         friendNameLabel.setBorder(paddingForElements);

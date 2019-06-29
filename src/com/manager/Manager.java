@@ -1,6 +1,8 @@
 package com.manager;
 
 import IO.*;
+import com.TimeData;
+import com.UserInfoCard;
 import com.mpatric.mp3agic.InvalidDataException;
 import com.mpatric.mp3agic.UnsupportedTagException;
 import gui.MainFrame;
@@ -14,6 +16,7 @@ import mediaplayer.advancedPlayerWrapper.AdvancedPlayerWrapper;
 import volumeController.Controller;
 
 import javax.swing.*;
+import javax.xml.crypto.Data;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
@@ -22,6 +25,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.Date;
 
 public class Manager {
     private static volatile boolean thereIsAFinishedSong = false;
@@ -70,6 +74,8 @@ public class Manager {
         playlists = new ArrayList<>();
         playingQueue = new ArrayList<>();
 
+        //This hard code create friend card and it to side Panel
+        hardCodeNetSimulator();
     }
 
     public static synchronized void setFinishedSong(boolean thereIsAFinishedSong) {
@@ -628,6 +634,14 @@ public class Manager {
             if (song.getSource().getAbsolutePath().equals(source)) return song;
         }
         return null;
+
+    }
+    private void hardCodeNetSimulator(){
+        long curr = new Date().getTime();
+        TimeData data1 = new TimeData(curr-77645426);
+        mainFrame.getSidePanel().addCard(new UserInfoCard(new File("src\\gui\\icons\\png\\64\\default-girl-avatar.png"),"Erfan Hadizadeh",data1,"salam salam"));
+        TimeData data2 = new TimeData(curr-66626);
+        mainFrame.getSidePanel().addCard(new UserInfoCard(new File("src\\gui\\icons\\png\\64\\default-boy-avatar.png"),"Ali Faraji",data2,"GooD timeS"));
 
     }
 
