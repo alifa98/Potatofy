@@ -6,6 +6,7 @@ public class Main {
 
         Manager manager=new Manager();
         manager.initialSetting();
+        manager.attemptReadingSavedFile();
         manager.setEventListeners();
        // manager.playTheHardCodedSong();
 

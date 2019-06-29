@@ -68,6 +68,7 @@ class VolumeControl extends JPanel {
         slider.setValue(value);
     }
 
+
     void setVolumeSliderEvents(Manager manager){
 
         slider.addMouseListener(new MouseAdapter() {
