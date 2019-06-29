@@ -465,18 +465,45 @@ public class Manager {
         playlists.add(newPlayList);
         showEditPlayListPanel(newPlayList.getPlayListName(), newPlayList.getSongsArrayList());
     }
+
     public void showPlayLists() {
         GUIManager.showPlayLists(mainFrame, playlists, this);
     }
-    public void swapUpSong(Song song, ArrayList<Song> list,String title) {
+
+    public void swapUpSong(Song song, ArrayList<Song> list, String title) {
         int index = list.indexOf(song);
         if (index == 0) {
             //todo swap and show list again
         }
     }
-    public void showSharedPlayList(){
-        GUIManager.showSharedSongs(mainFrame,songs,this);
+
+    public void showSharedPlayList() {
+        GUIManager.showSharedSongs(mainFrame, songs, this);
     }
+
+    public void renamePlayList(PlayList playList) {
+        String newName = GUIManager.getANamyByDialog();
+
+        //serach to find play list
+        for (PlayList p : playlists) {
+            if (p == playList) {
+                p.setPlayListName(newName);
+                break;
+            }
+        }
+        GUIManager.showEditPlayLists(mainFrame, playlists, this);
+    }
+
+    public void deletePlayList(PlayList playlist) {
+        playlists.remove(playlist);
+        GUIManager.showEditPlayLists(mainFrame, playlists, this);
+
+    }
+
+    public void showEditPlayLists() {
+        GUIManager.showEditPlayLists(mainFrame, playlists, this);
+    }
+
     public void attemptReadingSavedFile() {
         FileReader fileReader = new FileReader();
         if (!fileReader.hasSavedData()) return;

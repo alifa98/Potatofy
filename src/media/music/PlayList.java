@@ -22,8 +22,7 @@ public class PlayList {
         return songsArrayList;
     }
 
-    public void removeSong(Song song) {
-        songsArrayList.remove(song);
+    public void setPlayListName(String playListName) {
+        this.playListName = playListName;
     }
-
 }

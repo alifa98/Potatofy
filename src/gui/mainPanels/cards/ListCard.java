@@ -18,7 +18,7 @@ import java.util.ArrayList;
 public class ListCard extends JPanel {
     private Border padding = new EmptyBorder(new Insets(5, 5, 5, 20)); //padding for elements
     protected ArrayList<Song> songs;
-    protected boolean isPlayList;
+    private boolean isPlayList;
     protected String title;
 
     public ListCard(String title, ArrayList<Song> songs, boolean isPlaylist) {

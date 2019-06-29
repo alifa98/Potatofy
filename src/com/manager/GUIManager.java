@@ -87,6 +87,14 @@ public class GUIManager {
         frame.setMainPanel(getCustomJScollPaneJ(panel));
         frame.validate();
     }
+    public static void showEditPlayLists(MainFrame frame, ArrayList<PlayList> playLists, Manager manager) {
+        MyPanel panel = new MyPanel(false, manager);
+        for (PlayList p : playLists) {
+           panel.editPlaylistsCard(p);
+        }
+        frame.setMainPanel(getCustomJScollPaneJ(panel));
+        frame.validate();
+    }
     public static void showSharedSongs(MainFrame frame, ArrayList<Song> songs, Manager manager) {
         MyPanel panel = new MyPanel(false, manager);
         for (Song s : songs) {
