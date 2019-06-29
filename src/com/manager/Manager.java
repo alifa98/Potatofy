@@ -42,6 +42,8 @@ public class Manager {
     private int volumeSliderValue;
     private PanelState panelState = PanelState.SONGS;
     private boolean incrementedByNext=false;
+    private ArrayList<Song> shuffeledList;
+    private boolean shuffleNewList=false;
 
     // flag for panel state
     private ArrayList<Song> possiblePlayingQueue;
@@ -115,6 +117,7 @@ public class Manager {
                 playActiveSong();
             } else {
                 incrementActiveSongIndex();
+                playActiveSong();
             }
         }else{
             incrementedByNext=false;
@@ -381,7 +384,20 @@ public class Manager {
 
         if(activeSongIndex>=playingQueue.size())
             activeSongIndex=0;
-        activeSong = playingQueue.get(activeSongIndex);
+
+        if(shuffleIsActive){
+            if(shuffeledList==null || shuffleNewList ){
+                shuffeledList=getShuffledQueueFromIndex(activeSongIndex);
+            }else {
+                shuffeledList=reshuffleList(activeSongIndex);
+            }
+            activeSong=shuffeledList.get(activeSongIndex);
+        }else{
+            activeSong = playingQueue.get(activeSongIndex);
+        }
+
+
+
 
         if (!activeSong.isValid()) {
             int i;
@@ -435,6 +451,8 @@ public class Manager {
         return true;
     }
 
+
+
     //todo call this method when you add
     private void detectAndAddSongToAlbums(Song song) {
         boolean albumFound = false;
@@ -455,16 +473,19 @@ public class Manager {
     // listeners calls this methods please don't touch them.
     public void showAllSongs() {
         panelState = PanelState.SONGS;
+        songs.sort(new SongComparetor());
         GUIManager.showAllSongs(mainFrame, songs, this);
     }
 
     public void showFavoriteSongs() {
         panelState = PanelState.FAVORITE;
+        songs.sort(new SongComparetor());
         GUIManager.showFavoriteSongs(mainFrame, songs, this);
     }
 
     public void showAlbums() {
         panelState = PanelState.ALBUM;
+        songs.sort(new SongComparetor());
         GUIManager.showAlbums(mainFrame, albums, this);
     }
 
@@ -486,6 +507,7 @@ public class Manager {
 
     public void showPlayLists() {
         panelState = PanelState.PLAYLIST;
+        songs.sort(new SongComparetor());
         GUIManager.showPlayLists(mainFrame, playlists, this);
     }
 
@@ -611,6 +633,7 @@ public class Manager {
 
     public void songCardPlayEvent(Song song) {
         int i;
+
         switch (panelState) {
             case SONGS:
 
@@ -674,6 +697,7 @@ public class Manager {
 
 
         }
+        shuffleNewList=true;
         incrementedByNext=true;
         bottomPanel.getControlButtons().setPlaying(true);
         playActiveSong();
@@ -694,6 +718,23 @@ public class Manager {
         for (Song song : songs) {
             if (song.isShared()) result.add(song);
         }
+        return result;
+    }
+
+    private ArrayList<Song> getShuffledQueueFromIndex(int index){
+        ArrayList<Song>  result=new ArrayList<>(playingQueue);
+        int newIndex=(int)(Math.random()*(playingQueue.size()-index))+index;
+        Song temp=result.get(newIndex);
+        result.set(newIndex,result.get(index));
+        result.set(index,temp);
+        return result;
+    }
+    private ArrayList<Song> reshuffleList(int index) {
+        ArrayList<Song>  result=new ArrayList<>(shuffeledList);
+        int newIndex=(int)(Math.random()*(playingQueue.size()-index))+index;
+        Song temp=result.get(newIndex);
+        result.set(newIndex,result.get(index));
+        result.set(index,temp);
         return result;
     }
 
