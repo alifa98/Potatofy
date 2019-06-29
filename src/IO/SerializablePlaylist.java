@@ -12,7 +12,7 @@ public class SerializablePlaylist implements Serializable {
 
     void setData(PlayList playlist){
         playlistName=playlist.getPlayListName();
-        serializableSongs=null;
+        serializableSongs=new ArrayList<>();
         ArrayList<Song> songArrayList=playlist.getSongsArrayList();
         for(Song song:songArrayList){
             SerializableSong songData=new SerializableSong();
