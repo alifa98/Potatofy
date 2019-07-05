@@ -23,7 +23,7 @@ _Albums:_
 ![Albums](ss/albums.png)
 
 _Album:_
-![an Album](ss/album.png)
+![an Album](ss/album.PNG)
 
 _Create and add PlayLis:_
 ![Create Play List](ss/createplaylist.png)
@@ -32,7 +32,7 @@ _Playlists:_
 ![playlists](ss/playlists.PNG)
 
 _Add Songs (serach recursively and add mp3 files):_
-![playlists](ss/AddSong.PNG)
+![add song](ss/addSong.png)
 
 ## incompleted sections :
    * search : we use similarity algorithms to search in songs title (this helps find misspelling text)
