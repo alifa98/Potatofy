@@ -1,10 +1,10 @@
 # Advanced Programming Course Project (Spring 2019)
 ## Jpotify
-This is our first **java** project for _AP course_.
+This is our **java** project for _AP course_.
 
 We are:
- * Erfan Hadizadeh
  * Ali Faraji
+ * Erfan Hadizadeh
  
 ### Dependencies:
  * Maven:
@@ -25,15 +25,15 @@ _Albums:_
 _Album:_
 ![an Album](ss/album.PNG)
 
-_Create and add PlayLis:_
+_Create and add PlayList:_
 ![Create Play List](ss/createplaylist.png)
 
 _Playlists:_
 ![playlists](ss/playlists.PNG)
 
-_Add Songs (serach recursively and add mp3 files):_
+_Add Songs (It searchs recursively and adds mp3 files):_
 ![add song](ss/addSong.png)
 
 ## incompleted sections :
-   * search : we use similarity algorithms to search in songs title (this helps find misspelling text)
-   * network: this section backend isn't completed....see todo(s) in project.
+   * search : We should use similarity algorithms to search in songs title (this helps find misspelling text)
+   * network: This section's backend isn't completed....see todo(s) in project.
